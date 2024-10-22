@@ -1,0 +1,184 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["omitApi"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// user model =============================================================
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  username  String   @unique
+  password  String
+  avatar    String?
+  roles     String[] @default(["User"])
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+// atv model ==============================================================
+model Atv {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  category       String
+  name           String   @unique
+  price          Int
+  currency       String? // Kod waluty, np. 'PLN', 'USD'
+  priceInfo      String?
+  description    String
+  colorNames     Color[]
+  images         String[]
+  daneTechniczne TechData
+  createdAt      DateTime @default(now())
+}
+
+type Color {
+  name  String?
+  color String?
+}
+
+type TechData {
+  silnik               Silnik?
+  podwozie             Podwozie?
+  wymiary              Wymiary?
+  obciazenieMaksymalne ObciazenieMaksymalne?
+  informacjeDodatkowe  InformacjeDodatkowe?
+}
+
+type Silnik {
+  typSilnika         Properties?
+  pojemnosc          Properties?
+  srednicaXskokTloka Properties?
+  stopienSprezania   Properties?
+  ukladSmarowania    Properties?
+  ukladPaliwowy      Properties?
+  ukladZaplonu       Properties?
+  ukladRozrusznika   Properties?
+  skrzyniaBiegow     Properties?
+  naped              Properties?
+  napedKoncowy       Properties?
+}
+
+type Podwozie {
+  ukladPrzedniegoZawieszenia Properties?
+  ukladTylnegoZawieszenia    Properties?
+  hamulecPrzedni             Properties?
+  hamulecTylny               Properties?
+  ogumieniePrzednie          Properties?
+  ogumienieTylne             Properties?
+}
+
+type Wymiary {
+  dlugoscCalkowita         Properties?
+  szerokoscCalkowita       Properties?
+  wysokoscCalkowita        Properties?
+  wysokoscSiodelka         Properties?
+  rozstawOsi               Properties?
+  minimalnyPrzeswit        Properties?
+  masaZObciazeniem         Properties?
+  minPromienSkretu         Properties?
+  pojemnoscZbiornikaPaliwa Properties?
+  pojemnoscZbiornikaOleju  Properties?
+}
+
+type ObciazenieMaksymalne {
+  bagaznikPrzedni Properties?
+  bagaznikTylny   Properties?
+}
+
+type InformacjeDodatkowe {
+  ukladKierowniczy  Properties?
+  frontMountedWinch Properties?
+  trailerHitch      Properties?
+  seleFeatures      Properties?
+  towingCapacity    Properties?
+}
+
+type Properties {
+  title String?
+  desc  Json?
+}
+
+// motocycles model ==============================================================
+model Moto {
+  id                String       @id @default(auto()) @map("_id") @db.ObjectId
+  name              String       @unique
+  price             Int
+  category          String
+  currency          String? // Kod waluty, np. 'PLN', 'USD'
+  priceInfo         String?
+  license           String
+  description2Title String
+  description2      String
+  klauzula          String?
+  maxPower          Int
+  version35kW       Boolean
+  description       String
+  colorNames        ColorMoto[]
+  images            String[]
+  daneTechniczne    TechDataMoto
+  createdAt         DateTime     @default(now())
+}
+
+type ColorMoto {
+  name  String?
+  color String?
+}
+
+type TechDataMoto {
+  silnik   SilnikMoto?
+  podwozie PodwozieMoto?
+  wymiary  WymiaryMoto?
+}
+
+type SilnikMoto {
+  typSilnika         PropertiesMoto?
+  pojemnosc          PropertiesMoto?
+  srednicaXskokTloka PropertiesMoto?
+  stopienSprezania   PropertiesMoto?
+  mocMaksymalna      PropertiesMoto?
+  maxMomentObrotowy  PropertiesMoto?
+  typSprzegla        PropertiesMoto?
+  ukladSmarowania    PropertiesMoto?
+  ukladZaplonu       PropertiesMoto?
+  ukladRozrusznika   PropertiesMoto?
+  ukladZasilania     PropertiesMoto?
+  skrzyniaBiegow     PropertiesMoto?
+  spalanie           PropertiesMoto?
+  emisjaCO2          PropertiesMoto?
+  napedKoncowy       PropertiesMoto?
+}
+
+type PodwozieMoto {
+  rama                       PropertiesMoto?
+  katWyprzGlowkiRamy         PropertiesMoto?
+  wyprzedzenie               PropertiesMoto?
+  ukladPrzedniegoZawieszenia PropertiesMoto?
+  ukladTylnegoZawieszenia    PropertiesMoto?
+  skokPrzedniegoZawieszenia  PropertiesMoto?
+  skokTylnegoZawieszenia     PropertiesMoto?
+  hamulecPrzedni             PropertiesMoto?
+  hamulecTylny               PropertiesMoto?
+  oponaPrzednia              PropertiesMoto?
+  oponaTylna                 PropertiesMoto?
+}
+
+type WymiaryMoto {
+  dlugoscCalkowita         PropertiesMoto?
+  szerokoscCalkowita       PropertiesMoto?
+  wysokoscCalkowita        PropertiesMoto?
+  wysokoscSiodelka         PropertiesMoto?
+  rozstawKol               PropertiesMoto?
+  minimalnyPrzeswit        PropertiesMoto?
+  masaZobciazeniem         PropertiesMoto?
+  pojemnoscZbiornikaPaliwa PropertiesMoto?
+  pojemnoscZbiornikaOleju  PropertiesMoto?
+}
+
+type PropertiesMoto {
+  title String
+  desc  Json
+}

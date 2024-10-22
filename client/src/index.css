@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    --radius: 0.5rem
+  }
+}
+
+
+
+.bg-custom-gradient {
+    background-image: linear-gradient(to bottom right, #3B82F6 0%, #3B82F6 30%, #000000 90%, #3B82F6 70%, #3B82F6 100%);
+  }
+  
+@layer base {
+  .bg-custom-gradient-after {
+    @apply bg-gradient-to-r from-[#3B82F6] from-70% to-[#000000] to-[140%] ;
+  }
+  .custom-input {
+    @apply border-2 border-black px-3 py-2 rounded-[var(--radius)] outline-none;
+  }
+  .input-box {
+    @apply flex flex-col gap-2 mb-3;
+  }
+  .input-box label {
+    @apply w-fit text-[.9rem]
+  }
+  .input-box p {
+    @apply text-red-500 text-[1rem]
+  }
+  .tech-data-container h3 {
+    @apply mt-14 md:mt-0
+  }
+  .cust-gradient {
+    @apply bg-gradient-to-br from-blue-700 from-10% via-sky-700 via-20% to-black to-100% 
+  }
+  .nice-gradient {
+    @apply bg-gradient-to-r from-gray-800 via-blue-700 to-gray-900
+  }
+  .nice-gradient-2 {
+    @apply bg-gradient-to-l from-zinc-500 via-stone-600 to-zinc-900
+  }
+}
