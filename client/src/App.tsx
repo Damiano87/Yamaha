@@ -9,6 +9,7 @@ import EditUserPage from './routes/EditUserPage/EditUserPage';
 import CreateVehiclePage from "./routes/CreateVehicle/CreateVehiclePage";
 import { getAllAtvsLoader, getSingleAtvLoader } from "./loaders/atvLoader";
 import { getAllMotosLoader, getSingleMotoLoader } from "./loaders/motoLoaders";
+import AtvUpdatePage from "./routes/UpdateAtv/UpdateAtvPage";
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,12 @@ const router = createBrowserRouter([
       {
         path: 'add-vehicle',
         element: <CreateVehiclePage />
-      }
+      },
+      {
+        path: 'update-atv/:id',
+        element: <AtvUpdatePage />,
+        loader: getSingleAtvLoader
+      },
     ],
   },
 ]);

@@ -23,14 +23,14 @@ const SingleAtvProduct = () => {
 
     useEffect(() => {
       const foundColor = colorNames.find(color => color.name === colorName);
-      setColor(foundColor?.color)
+      setColor(foundColor?.color || null)
     }, [color, colorName, colorNames])
 
 
     return (
       <main>
         <section 
-          className="flex items-end h-screen px-10 bg-cover bg-black/65 bg-blend-darken bg-no-repeat bg-center"
+          className="flex items-end h-80 md:h-screen px-10 bg-cover bg-black/65 bg-blend-darken bg-no-repeat bg-center"
           style={{ backgroundImage: `url(${images[3]})` }}
         >
           <div className="text-white h-fit w-full max-w-7xl mx-auto mb-24">
@@ -48,7 +48,7 @@ const SingleAtvProduct = () => {
         </section>
         <section
           className="lg:flex gap-8  max-w-7xl mx-auto p-10 -mt-10 bg-white border-t-[8px]"
-          style={{ borderColor: color }}
+          style={{ borderColor: color || undefined }}
         >
           <Karuzela images={images} name={name} />
           <Info

@@ -388,9 +388,236 @@ const createAtv = async (req, res) => {
 };
 
 // @desc update atv
-// @route PATCH /vehicles
+// @route PATCH /vehicles/:id
 // @access Private
-const updateAtv = async (req, res) => {};
+const updateAtv = async (req, res) => {
+  // const { id } = req.params;
+  const {
+    id,
+    name,
+    price,
+    priceInfo,
+    desc,
+    images,
+    color,
+    color2,
+    color3,
+    hex,
+    hex2,
+    hex3,
+    engineType,
+    capacity,
+    diameterXtlok,
+    stopienSprezania,
+    ukladSmarowania,
+    ukladPaliwowy,
+    ukladZaplonu,
+    ukladRozrusznika,
+    gearBox,
+    naped,
+    napedKoncowy,
+    ukladPrzedZawieszenia,
+    ukladTylZawieszenia,
+    hamulecPrzedni,
+    hamulecTylny,
+    ogumieniePrzednie,
+    ogumienieTylne,
+    dlugoscCalk,
+    szerCalk,
+    wysokoscCalk,
+    wysSiodelka,
+    rozstawOsi,
+    minPrzeswit,
+    minPromien,
+    masaZobciazeniem,
+    pojemnoscPaliwa,
+    pojemnoscOleju,
+    bagaznikPrzedni,
+    bagaznikTylny,
+    ukladKier,
+    frontMountedWinch,
+    trailerHitch,
+    seleFeatures,
+    towingCapacity,
+  } = req.body;
+
+  try {
+    // Znalezienie pojazdu na podstawie ID
+    const atv = await prisma.atv.findUnique({ where: { id } });
+
+    if (!atv) {
+      return res.status(404).json({ message: "ATV not found" });
+    }
+
+    // Tworzymy obiekt aktualizacji na podstawie przekazanych danych
+    const updateData = {
+      ...(name && { name }),
+      ...(price && { price }),
+      ...(priceInfo && { priceInfo }),
+      ...(desc && { description: desc }),
+      ...(images && { images }),
+    };
+
+    // Update colorNames array
+    updateData.colorNames = atv.colorNames.map((existingColor, index) => {
+      if (index === 0) {
+        return {
+          name: color || existingColor.name,
+          color: hex || existingColor.color,
+        };
+      } else if (index === 1) {
+        return {
+          name: color2 || existingColor.name,
+          color: hex2 || existingColor.color,
+        };
+      } else if (index === 2) {
+        return {
+          name: color3 || existingColor.name,
+          color: hex3 || existingColor.color,
+        };
+      }
+      // If more colors return them with no change
+      return existingColor;
+    });
+
+    // update 'desc' fields in 'daneTechniczne' object
+    const updateDescFields = (currentData, newData, fieldNames) => {
+      if (!newData) return currentData;
+      const updatedData = { ...currentData };
+
+      fieldNames.forEach((field) => {
+        if (newData[field]) {
+          updatedData[field] = {
+            ...updatedData[field],
+            desc: newData[field],
+          };
+        }
+      });
+
+      return updatedData;
+    };
+
+    // Update daneTechniczne
+    updateData.daneTechniczne = {
+      silnik: updateDescFields(
+        atv.daneTechniczne?.silnik,
+        {
+          typSilnika: engineType,
+          pojemnosc: capacity,
+          srednicaXskokTloka: diameterXtlok,
+          stopienSprezania,
+          ukladSmarowania,
+          ukladPaliwowy,
+          ukladZaplonu,
+          ukladRozrusznika,
+          skrzyniaBiegow: gearBox,
+          naped,
+          napedKoncowy,
+        },
+        [
+          "typSilnika",
+          "pojemnosc",
+          "srednicaXskokTloka",
+          "stopienSprezania",
+          "ukladSmarowania",
+          "ukladPaliwowy",
+          "ukladZaplonu",
+          "ukladRozrusznika",
+          "skrzyniaBiegow",
+          "naped",
+          "napedKoncowy",
+        ]
+      ),
+
+      podwozie: updateDescFields(
+        atv.daneTechniczne?.podwozie,
+        {
+          ukladPrzedZawieszenia,
+          ukladTylZawieszenia,
+          hamulecPrzedni,
+          hamulecTylny,
+          ogumieniePrzednie,
+          ogumienieTylne,
+        },
+        [
+          "ukladPrzedniegoZawieszenia",
+          "ukladTylZawieszenia",
+          "hamulecPrzedni",
+          "hamulecTylny",
+          "ogumieniePrzednie",
+          "ogumienieTylne",
+        ]
+      ),
+
+      wymiary: updateDescFields(
+        atv.daneTechniczne?.wymiary,
+        {
+          dlugoscCalkowita: dlugoscCalk,
+          szerokoscCalkowita: szerCalk,
+          wysokoscCalkowita: wysokoscCalk,
+          wysokoscSiodelka: wysSiodelka,
+          rozstawOsi,
+          masaZObciazeniem: masaZobciazeniem,
+          minimalnyPrzeswit: minPrzeswit,
+          minPromienSkretu: minPromien,
+          pojemnoscZbiornikaPaliwa: pojemnoscPaliwa,
+          pojemnoscZbiornikaOleju: pojemnoscOleju,
+        },
+        [
+          "dlugoscCalkowita",
+          "szerokoscCalkowita",
+          "wysokoscCalkowita",
+          "wysokoscSiodelka",
+          "rozstawOsi",
+          "masaZObciazeniem",
+          "minimalnyPrzeswit",
+          "minPromienSkretu",
+          "pojemnoscZbiornikaPaliwa",
+          "pojemnoscZbiornikaOleju",
+        ]
+      ),
+
+      obciazenieMaksymalne: updateDescFields(
+        atv.daneTechniczne?.obciazenieMaksymalne,
+        {
+          bagaznikPrzedni,
+          bagaznikTylny,
+        },
+        ["bagaznikPrzedni", "bagaznikTylny"]
+      ),
+
+      informacjeDodatkowe: updateDescFields(
+        atv.daneTechniczne?.informacjeDodatkowe,
+        {
+          ukladKierowniczy: ukladKier,
+          frontMountedWinch,
+          trailerHitch,
+          seleFeatures,
+          towingCapacity,
+        },
+        [
+          "ukladKierowniczy",
+          "frontMountedWinch",
+          "trailerHitch",
+          "seleFeatures",
+          "towingCapacity",
+        ]
+      ),
+    };
+
+    // Wykonanie aktualizacji w bazie
+    const updatedAtv = await prisma.atv.update({
+      where: { id },
+      data: updateData,
+    });
+
+    // Zwracamy zaktualizowany obiekt
+    res.status(200).json(updatedAtv);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Something went wrong", error });
+  }
+};
 
 // @desc delete atv
 // @route DELETE /vehicles

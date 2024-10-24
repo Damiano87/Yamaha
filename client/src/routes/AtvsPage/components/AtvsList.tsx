@@ -1,38 +1,13 @@
-
-
-// import { atv } from "../../../data";
-// import { useState } from "react";
-
 import { formatCurrencyPLN } from "@/utils/functions";
-// import { useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Atv } from "../../../utils/types"
+import { MdOutlineBrowserUpdated } from "react-icons/md";
 
 type AtvsListProps = {
   atvs: Atv[]
 }
 
 const AtvsList = ({atvs}: AtvsListProps) => {
-  // const [atvs] = useState(atv);
-//   const searchParams = useSearchParams();
-//   const params = new URLSearchParams(searchParams);
-//   const word = params.get("search");
-//   console.log(word);
-
-//   useEffect(() => {
-//     const searchVehicles = () => {
-//       if (word) {
-//         const filteredArray = atv.filter((vehicle) =>
-//           vehicle.name.includes(word)
-//         );
-//         setAtvs(filteredArray);
-//         console.log(atvs);
-//       } else {
-//         setAtvs(atv);
-//       }
-//     };
-//     searchVehicles();
-//   }, [word]);
 
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 px-5">
@@ -40,14 +15,18 @@ const AtvsList = ({atvs}: AtvsListProps) => {
         const { id, name, images, price, colorNames } = atv;
 
         return (
-          <Link
+          <article key={index} className="relative">
+            <Link to={`/update-atv/${id}`}>
+                <MdOutlineBrowserUpdated size={30} className="absolute top-2 right-2 text-gray-500"/>
+              </Link>
+            <Link
             to={`/atv/${id}?${new URLSearchParams({
               color: colorNames[0].name,
             })}`}
-            key={index}
             preventScrollReset={false}
           >
-            <article>
+            <div>
+              
               <div
                 className="inline-flex items-center gap-3 p-2"
                 onClick={(event) => event.stopPropagation()}
@@ -74,8 +53,9 @@ const AtvsList = ({atvs}: AtvsListProps) => {
                 {name}
               </p>
               <p>{formatCurrencyPLN(price)}</p>
-            </article>
+            </div>
           </Link>
+          </article>
         );
       })}
     </div>

@@ -20,11 +20,7 @@ const Dane = ({
   const [data, setData] = useState<string[][]>([]);
   
   useEffect(() => {
-    // const features = Object.values(daneTechniczne?.[clickedButton] ?? {})
-  
   const entries = Object.entries(daneTechniczne as daneTechProps);
-  
-  
   
       // create array of values from filtered object
 

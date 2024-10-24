@@ -32,9 +32,7 @@ const DropdownVehicles = ({closeMenu, endpoint, vehicle}: DropdownMotosProps) =>
       
        const controller = new AbortController();
        
-
-
-      const fetchMotocycles = async () => {
+      const fetchVehicles = async () => {
         setLoading(true);
         setError(null);
           try {
@@ -55,7 +53,7 @@ const DropdownVehicles = ({closeMenu, endpoint, vehicle}: DropdownMotosProps) =>
       }
 
 
-      fetchMotocycles()
+      fetchVehicles()
 
 
       return () => {
@@ -64,9 +62,14 @@ const DropdownVehicles = ({closeMenu, endpoint, vehicle}: DropdownMotosProps) =>
     }, [endpoint])
 
 
-  if (loading) return <PropagateLoader />
+  if (loading) return <div className="flex justify-center items-center h-52 w-96">
+    <PropagateLoader />
+  </div>
 
-  if (error) return <p>{error}</p>
+  if (error) return <div className="flex justify-center items-center h-52 w-96">
+    
+      <p>{error}</p>
+    </div>
 
 
   return (
@@ -81,7 +84,7 @@ const DropdownVehicles = ({closeMenu, endpoint, vehicle}: DropdownMotosProps) =>
                 key={id}
                 onClick={closeMenu}
               >
-                <article className="shadow-md hover:shadow-lg w-44 grid justify-center bg-white text-center p-8">
+                <article className="shadow-md hover:shadow-lg w-48 grid justify-center bg-white text-center p-8">
                   <img src={images[0]} width={110} height={110} alt={name} />
                   <p className="text-[0.875rem]">{vehicleName(name)}</p>
                 </article>

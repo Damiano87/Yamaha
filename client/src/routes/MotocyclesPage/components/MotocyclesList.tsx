@@ -1,37 +1,12 @@
-
-
-// import { motocycles } from "../../../data";
-// import { useEffect } from "react";
 import { formatCurrencyPLN } from "@/utils/functions";
 import { Motorcycle } from "../../../utils/types";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const MotocyclesList = ({
   motors,
-  // setMotors,
 }: {
   motors: Motorcycle[];
-  // setMotors: React.Dispatch<React.SetStateAction<Motorcycle[]>>;
 }) => {
-  const [searchParams] = useSearchParams();
-  // const params = new URLSearchParams(searchParams);
-  // const word = params.get("search");
-
-  // useEffect(() => {
-  //   const searchVehicles = () => {
-  //     if (word) {
-  //       const filteredArray = motocycles.filter((vehicle) =>
-  //         vehicle.name.includes(word),
-  //       );
-  //       setMotors(filteredArray);
-  //       console.log(motors);
-  //     } else {
-  //       setMotors(motocycles);
-  //     }
-  //   };
-  //   searchVehicles();
-  // }, [word, motors, setMotors]);
-
   return (
     <div className="relative z-[1] grid gap-5 px-5 md:grid-cols-2 lg:grid-cols-3">
       {motors.map((moto, index) => {

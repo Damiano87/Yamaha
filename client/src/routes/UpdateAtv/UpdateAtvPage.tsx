@@ -1,18 +1,24 @@
 import { GiGears } from "react-icons/gi";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import { createAtvSchema, type createAtv } from "@/schemas/createAtvSchema";
-import axios from '../../../api/apiRequest.ts';
-import UploadWidget from "@/components/uploadWidget.tsx";
+import { updateAtvSchema, type updateAtv } from "../../schemas/updateAtvSchema";
+import apiRequest from '../../api/apiRequest';
+// import UploadWidget from "@/components/uploadWidget.tsx";
 import { useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
+import AtvDisplay from "./components/AtvDisplay";
+import { useLoaderData, useParams, useNavigate } from "react-router-dom";
+import { Atv } from "@/utils/types";
 
-const AtvForm = () => {
+const AtvUpdatePage = () => {
     const [images, setImages] = useState([]);
-      const [selectedOption, setSelectedOption] = useState("option1");
+    const [selectedOption, setSelectedOption] = useState("option1");
+    const atv = useLoaderData() as Atv;
+    const {id} = useParams();
+    const navigate = useNavigate();
 
-    const {register, handleSubmit, reset, formState: {errors, isSubmitting}} = useForm<createAtv>({
-        resolver: zodResolver(createAtvSchema),
+    const {register, handleSubmit, reset, formState: {errors, isSubmitting}} = useForm<updateAtv>({
+        resolver: zodResolver(updateAtvSchema),
         mode: "onChange",
     })
     
@@ -22,27 +28,32 @@ const AtvForm = () => {
   };
 
 
-    const onSubmit = async (data: createAtv) => {
-        console.log(data)
+    const onSubmit = async (data: updateAtv) => {
+        
         
         try {
-            const response = await axios.post("/vehicles", {...data, images})
+            const response = await apiRequest.patch("/vehicles/atv", {...data, id})
 
-            console.log(response.data)
+            
             setImages([]);
-            toast.success('Successfully created!');
+            toast.success('Successfully updated!');
             reset();
+
+            const colorParams = new URLSearchParams({color: response.data.colorNames[0].name}).toString()
+        
+            navigate(`/atv/${id}?${colorParams}`, { replace: true });
         } catch (error) {
             console.log(error)
             toast.error('Something went wrong');
     };
 }
 
-
   return (
-    <div>
+    <section className="nice-gradient mt-[84px] py-14">
         <Toaster />
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="max-w-7xl mx-auto px-4">
+            <AtvDisplay atv={atv}/>
+            <form onSubmit={handleSubmit(onSubmit)}>
             <div className="max-w-[45rem]">
                 <div className="name input-box">
                    <label htmlFor="name" className="text-[1.2rem] text-white font-medium cursor-pointer">Nazwa produktu</label>
@@ -53,7 +64,7 @@ const AtvForm = () => {
 
             <div className="price input-box">
                    <label htmlFor="price" className="text-[1.2rem] text-white font-medium cursor-pointer">Cena</label>
-                   <input type="number" {...register("price", {valueAsNumber: true})}  id="price" name="price" className={`${errors.price && "border-red-500"} custom-input`}/>    
+                   <input type="number" {...register("price", {setValueAs: (value) => value === "" ? null : parseFloat(value)})}  id="price" name="price" className={`${errors.price && "border-red-500"} custom-input`}/>    
                     {errors.price && <p>{errors.price.message === "Expected number, received nan" ? "To pole jest wymagane" : errors.price.message}</p>}
 
             </div>
@@ -423,7 +434,7 @@ const AtvForm = () => {
                     </div>
                 </div>
             </div>
-            <div className="images-container flex justify-center items-center mt-10">
+            {/* <div className="images-container flex justify-center items-center mt-10">
                 <UploadWidget uwConfig={{
                     multiple: true,
                     cloudName: 'damiano',
@@ -433,7 +444,7 @@ const AtvForm = () => {
                 setState={setImages}
                 />
                 
-            </div>
+            </div> */}
             <div className="flex flex-col md:flex-row mx-auto justify-center gap-6 max-w-[1200px] mt-10">
                     {images.map((image: string, index: number) => {
                         return <div key={index} className="md:w-[250px] mx-auto">
@@ -441,10 +452,11 @@ const AtvForm = () => {
                         </div>
                     })}
                 </div>
-            <button type="submit" disabled={isSubmitting} className={`${isSubmitting ? "bg-slate-400 opacity-50" : "bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:scale-105 duration-300"} w-full mt-10 py-2 text-white text-[1.4rem] font-semibold tracking-wider`}>Create</button>
+            <button type="submit" disabled={isSubmitting} className={`${isSubmitting ? "bg-slate-400 opacity-50" : "bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:scale-105 duration-300"} w-full mt-10 py-2 text-white text-[1.4rem] font-semibold tracking-wider`}>Update</button>
         </form>
-    </div>
+        </div>
+    </section>
   )
 }
 
-export default AtvForm
+export default AtvUpdatePage
