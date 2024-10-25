@@ -10,7 +10,7 @@ import { logger } from "./middleware/logger.js";
 import errorHandler from "./middleware/errorHandler.js";
 import root from "./routes/root.js";
 import userRoutes from "./routes/userRoutes.js";
-import vehicleRoutes from "./routes/vehicleRoutes.js";
+import atvRoutes from "./routes/atvRoutes.js";
 import motoRoutes from "./routes/motoRoutes.js";
 
 const PORT = process.env.PORT || 3500;
@@ -36,7 +36,7 @@ app.use("/", express.static(path.join(__dirname, "/public")));
 // routes
 app.use("/", root);
 app.use("/users", userRoutes);
-app.use("/vehicles", vehicleRoutes);
+app.use("/vehicles", atvRoutes);
 app.use("/vehicles/moto", motoRoutes);
 
 // show 404 site if there is no resources

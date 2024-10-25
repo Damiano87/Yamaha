@@ -6,7 +6,7 @@ import apiRequest from '../../api/apiRequest';
 // import UploadWidget from "@/components/uploadWidget.tsx";
 import { useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
-import MotoDisplay from "./components/MotoDisplay"
+import VehicleDisplay from "../../components/VehicleDisplay"
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { Motorcycle } from "@/utils/types";
 
@@ -59,7 +59,7 @@ const UpdateMotoPage = () => {
     <section className="nice-gradient-2 mt-[84px] py-14">
         <Toaster />
         <div className="max-w-7xl mx-auto px-4">
-            <MotoDisplay moto={moto}/>
+            <VehicleDisplay vehicle={moto}/>
             <form onSubmit={handleSubmit(onSubmit)}>
             <div className="max-w-[45rem]">
                 <div className="name input-box">

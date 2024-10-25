@@ -2,23 +2,46 @@ import { formatCurrencyPLN } from "@/utils/functions";
 import { Motorcycle } from "../../../utils/types";
 import { Link } from "react-router-dom";
 import { MdOutlineBrowserUpdated } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+import DeleteModal from "@/components/DeleteModal";
+import { useState } from "react";
 
+type SelectedVehicle = {
+  id: number;
+  name: string;
+}
 
 const MotocyclesList = ({
   motors,
 }: {
   motors: Motorcycle[];
 }) => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [selectedVehicle, setSelectedVehicle] = useState<SelectedVehicle | null>(null);
+
+
   return (
-    <div className="relative z-[1] grid gap-5 px-5 md:grid-cols-2 lg:grid-cols-3">
+    <div className="relative z-[1] grid gap-5 px-5 md:grid-cols-2 lg:grid-cols-3 mb-14">
+      <DeleteModal vehicle={"moto"} show={showModal} setShowModal={setShowModal} selectedVehicle={selectedVehicle} setSelectedVehicle={setSelectedVehicle}/>
       {motors.map((moto, index) => {
         const { id, name, images, price, colorNames, license } = moto;
 
         return (
           <article key={index} className="relative">
-            <Link to={`/update-moto/${id}`} title="Update motocycle">
-                <MdOutlineBrowserUpdated size={30} className="absolute top-[1.2rem] right-11 text-gray-500"/>
+            <div className="absolute top-4 right-10 text-gray-500 flex gap-2 items-center">
+              <Link to={`/update-moto/${id}`} title="Update Motocycle">
+                <MdOutlineBrowserUpdated size={30}/>
             </Link>
+            <button 
+              title="Delete Motocycle"
+              onClick={() => {
+                setShowModal(true);
+                setSelectedVehicle({id, name});
+              }}
+              >
+              <MdDelete size={30}/>
+            </button>
+            </div>
             <Link
             to={`/motocycles/${id}?${new URLSearchParams({
               color: colorNames[0].name,

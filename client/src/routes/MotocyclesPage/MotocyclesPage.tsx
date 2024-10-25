@@ -17,8 +17,8 @@ const MotoPage = () => {
   
   return (
     <>
-      <section className="m-auto mt-20 flex h-[900px] max-w-[95rem] items-end bg-[url('images/yamahared.jpg')] bg-cover bg-center bg-no-repeat">
-        <div className="mx-auto mb-24 w-full max-w-7xl px-5 text-white">
+      <section className="m-auto  flex h-screen items-end bg-[url('images/yamahared.jpg')] bg-cover bg-no-repeat">
+        <div className="mx-auto mb-28 w-full max-w-7xl px-5 text-white">
           <h4 className="text-[1.2rem] font-semibold uppercase tracking-wider">
             r/world
           </h4>
