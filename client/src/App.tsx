@@ -10,6 +10,7 @@ import CreateVehiclePage from "./routes/CreateVehicle/CreateVehiclePage";
 import { getAllAtvsLoader, getSingleAtvLoader } from "./loaders/atvLoader";
 import { getAllMotosLoader, getSingleMotoLoader } from "./loaders/motoLoaders";
 import AtvUpdatePage from "./routes/UpdateAtv/UpdateAtvPage";
+import UpdateMotoPage from "./routes/UpdateMoto/UpdateMotoPage";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,11 @@ const router = createBrowserRouter([
         path: 'update-atv/:id',
         element: <AtvUpdatePage />,
         loader: getSingleAtvLoader
+      },
+      {
+        path: 'update-moto/:id',
+        element: <UpdateMotoPage />,
+        loader: getSingleMotoLoader
       },
     ],
   },

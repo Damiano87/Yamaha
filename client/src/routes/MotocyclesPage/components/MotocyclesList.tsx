@@ -1,6 +1,8 @@
 import { formatCurrencyPLN } from "@/utils/functions";
 import { Motorcycle } from "../../../utils/types";
 import { Link } from "react-router-dom";
+import { MdOutlineBrowserUpdated } from "react-icons/md";
+
 
 const MotocyclesList = ({
   motors,
@@ -13,13 +15,16 @@ const MotocyclesList = ({
         const { id, name, images, price, colorNames, license } = moto;
 
         return (
-          <Link
+          <article key={index} className="relative">
+            <Link to={`/update-moto/${id}`} title="Update motocycle">
+                <MdOutlineBrowserUpdated size={30} className="absolute top-[1.2rem] right-11 text-gray-500"/>
+            </Link>
+            <Link
             to={`/motocycles/${id}?${new URLSearchParams({
               color: colorNames[0].name,
             })}`}
-            key={index}
           >
-            <article>
+            <div>
               <div className="flex items-center justify-between px-5 py-3">
                 <div
                   className="inline-flex items-center gap-3 p-2"
@@ -48,8 +53,9 @@ const MotocyclesList = ({
                 {name}
               </p>
               <p>{formatCurrencyPLN(price)}</p>
-            </article>
+            </div>
           </Link>
+          </article>
         );
       })}
     </div>

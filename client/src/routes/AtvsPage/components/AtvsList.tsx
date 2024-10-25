@@ -18,7 +18,7 @@ const AtvsList = ({atvs}: AtvsListProps) => {
           <article key={index} className="relative">
             <Link to={`/update-atv/${id}`}>
                 <MdOutlineBrowserUpdated size={30} className="absolute top-2 right-2 text-gray-500"/>
-              </Link>
+            </Link>
             <Link
             to={`/atv/${id}?${new URLSearchParams({
               color: colorNames[0].name,

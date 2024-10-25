@@ -391,7 +391,6 @@ const createAtv = async (req, res) => {
 // @route PATCH /vehicles/:id
 // @access Private
 const updateAtv = async (req, res) => {
-  // const { id } = req.params;
   const {
     id,
     name,
@@ -1049,7 +1048,236 @@ const createMoto = async (req, res) => {
 // @desc update Moto
 // @route PATCH /vehicles
 // @access Private
-const updateMoto = async (req, res) => {};
+const updateMoto = async (req, res) => {
+  const {
+    id,
+    name,
+    price,
+    priceInfo,
+    desc,
+    descTitle,
+    secondaryDesc,
+    klauzula,
+    images,
+    color,
+    color2,
+    color3,
+    hex,
+    hex2,
+    hex3,
+    license,
+    maxPower,
+    version35kW,
+    mocMaksymalna,
+    maxMomentObrotowy,
+    engineType,
+    capacity,
+    diameterXtlok,
+    stopienSprezania,
+    ukladSmarowania,
+    typSprzegla,
+    ukladZaplonu,
+    ukladRozrusznika,
+    gearBox,
+    spalanie,
+    emisjaCO2,
+    ukladZasilania,
+    napedKoncowy,
+    rama,
+    katWyprzGlowkiRamy,
+    wyprzedzenie,
+    skokPrzedniegoZawieszenia,
+    skokTylnegoZawieszenia,
+    ukladPrzedZawieszenia,
+    ukladTylZawieszenia,
+    hamulecPrzedni,
+    hamulecTylny,
+    oponaPrzednia,
+    oponaTylna,
+    dlugoscCalk,
+    szerCalk,
+    wysokoscCalk,
+    wysSiodelka,
+    rozstawKol,
+    minPrzeswit,
+    masaZobciazeniem,
+    pojemnoscPaliwa,
+    pojemnoscOleju,
+  } = req.body;
+
+  try {
+    // Znalezienie pojazdu na podstawie ID
+    const moto = await prisma.moto.findUnique({ where: { id } });
+
+    if (!moto) {
+      return res.status(404).json({ message: "Motocycle not found" });
+    }
+
+    // Tworzymy obiekt aktualizacji na podstawie przekazanych danych
+    const updateData = {
+      ...(name && { name }),
+      ...(price && { price }),
+      ...(priceInfo && { priceInfo }),
+      ...(desc && { description: desc }),
+      ...(descTitle && { description2Title: descTitle }),
+      ...(secondaryDesc && { description2: secondaryDesc }),
+      ...(klauzula && { klauzula }),
+      ...(license && { license }),
+      ...(maxPower && { maxPower }),
+      version35kW,
+      ...(images && { images }),
+    };
+
+    // Update colorNames array
+    updateData.colorNames = moto.colorNames.map((existingColor, index) => {
+      if (index === 0) {
+        return {
+          name: color || existingColor.name,
+          color: hex || existingColor.color,
+        };
+      } else if (index === 1) {
+        return {
+          name: color2 || existingColor.name,
+          color: hex2 || existingColor.color,
+        };
+      } else if (index === 2) {
+        return {
+          name: color3 || existingColor.name,
+          color: hex3 || existingColor.color,
+        };
+      }
+      // If more colors return them with no change
+      return existingColor;
+    });
+
+    // update 'desc' fields in 'daneTechniczne' object
+    const updateDescFields = (currentData, newData, fieldNames) => {
+      if (!newData) return currentData;
+      const updatedData = { ...currentData };
+
+      fieldNames.forEach((field) => {
+        if (newData[field]) {
+          updatedData[field] = {
+            ...updatedData[field],
+            desc: newData[field],
+          };
+        }
+      });
+
+      return updatedData;
+    };
+
+    // Update daneTechniczne
+    updateData.daneTechniczne = {
+      silnik: updateDescFields(
+        moto.daneTechniczne?.silnik,
+        {
+          typSilnika: engineType,
+          pojemnosc: capacity,
+          srednicaXskokTloka: diameterXtlok,
+          stopienSprezania,
+          mocMaksymalna,
+          maxMomentObrotowy,
+          ukladSmarowania,
+          typSprzegla,
+          ukladZaplonu,
+          ukladRozrusznika,
+          skrzyniaBiegow: gearBox,
+          napedKoncowy,
+          spalanie,
+          emisjaCO2,
+          ukladZasilania,
+        },
+        [
+          "typSilnika",
+          "pojemnosc",
+          "srednicaXskokTloka",
+          "stopienSprezania",
+          "mocMaksymalna",
+          "maxMomentObrotowy",
+          "ukladSmarowania",
+          "typSprzegla",
+          "ukladZaplonu",
+          "ukladRozrusznika",
+          "skrzyniaBiegow",
+          "napedKoncowy",
+          "spalanie",
+          "emisjaCO2",
+          "ukladZasilania",
+        ]
+      ),
+
+      podwozie: updateDescFields(
+        moto.daneTechniczne?.podwozie,
+        {
+          rama,
+          katWyprzGlowkiRamy,
+          wyprzedzenie,
+          ukladPrzedZawieszenia,
+          ukladTylZawieszenia,
+          skokPrzedniegoZawieszenia,
+          skokTylnegoZawieszenia,
+          hamulecPrzedni,
+          hamulecTylny,
+          oponaPrzednia,
+          oponaTylna,
+        },
+        [
+          "rama",
+          "katWyprzGlowkiRamy",
+          "wyprzedzenie",
+          "ukladPrzedniegoZawieszenia",
+          "ukladTylZawieszenia",
+          "skokPrzedniegoZawieszenia",
+          "skokTylnegoZawieszenia",
+          "hamulecPrzedni",
+          "hamulecTylny",
+          "oponaPrzednia",
+          "oponaTylna",
+        ]
+      ),
+
+      wymiary: updateDescFields(
+        moto.daneTechniczne?.wymiary,
+        {
+          dlugoscCalkowita: dlugoscCalk,
+          szerokoscCalkowita: szerCalk,
+          wysokoscCalkowita: wysokoscCalk,
+          wysokoscSiodelka: wysSiodelka,
+          rozstawKol,
+          masaZObciazeniem: masaZobciazeniem,
+          minimalnyPrzeswit: minPrzeswit,
+          pojemnoscZbiornikaPaliwa: pojemnoscPaliwa,
+          pojemnoscZbiornikaOleju: pojemnoscOleju,
+        },
+        [
+          "dlugoscCalkowita",
+          "szerokoscCalkowita",
+          "wysokoscCalkowita",
+          "wysokoscSiodelka",
+          "rozstawKol",
+          "masaZObciazeniem",
+          "minimalnyPrzeswit",
+          "minPromienSkretu",
+          "pojemnoscZbiornikaPaliwa",
+          "pojemnoscZbiornikaOleju",
+        ]
+      ),
+    };
+
+    // Wykonanie aktualizacji w bazie
+    const updatedMoto = await prisma.moto.update({
+      where: { id },
+      data: updateData,
+    });
+
+    // Zwracamy zaktualizowany obiekt
+    res.status(200).json(updatedMoto);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Something went wrong", error });
+  }
+};
 
 // @desc delete Moto
 // @route DELETE /vehicles

@@ -7,8 +7,6 @@ type AtvDisplayProps = {
 
 
 const AtvDisplay = ({atv}: AtvDisplayProps) => {
-    // const { name, price, image, description } = atv;
-
   return (
     <div className="text-white my-8 md:flex justify-around">
         <div>

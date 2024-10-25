@@ -1,45 +1,53 @@
 import { GiGears } from "react-icons/gi";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import { createMotoSchema, type createMoto } from "@/schemas/createMotoSchema";
-import axios from '../../../api/apiRequest.ts';
-import UploadWidget from "@/components/uploadWidget.tsx";
+import { updateMotoSchema, type updateMoto } from "@/schemas/updateMotoSchema";
+import apiRequest from '../../api/apiRequest';
+// import UploadWidget from "@/components/uploadWidget.tsx";
 import { useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
+import MotoDisplay from "./components/MotoDisplay"
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { Motorcycle } from "@/utils/types";
 
 
-
-const MotoForm = () => {
+const UpdateMotoPage = () => {
     const [images, setImages] = useState([]);
-      const [selectedOption, setSelectedOption] = useState("option1");
-      const [selectedLicense, setSelectedLicense] = useState("A");
+    const [selectedOption, setSelectedOption] = useState("option1");
+    const [selectedLicense, setSelectedLicense] = useState("A");
+    const moto = useLoaderData() as Motorcycle;
+    const {id} = useParams();
+    const navigate = useNavigate();
 
-    const {register, handleSubmit, reset, formState: {errors, isSubmitting}} = useForm<createMoto>({
-        resolver: zodResolver(createMotoSchema),
+    const {register, handleSubmit, reset, formState: {errors, isSubmitting}} = useForm<updateMoto>({
+        resolver: zodResolver(updateMotoSchema),
         mode: "onChange",
     })
     
     // Funkcja obsługująca zmianę wyboru
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(event.target.value); // Zmienia stan na wybraną opcję
+    setSelectedOption(event.target.value);
   };
 
   // Funkcja obsługująca zmianę wyboru
   const handleLicenseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedLicense(event.target.value); // Zmienia stan na wybraną opcję
+    setSelectedLicense(event.target.value);
   };
 
 
-    const onSubmit = async (data: createMoto) => {
-        
+    const onSubmit = async (data: updateMoto) => {
         
         try {
-            const response = await axios.post("/vehicles/moto", {...data, images, license: selectedLicense})
+            const response = await apiRequest.patch("/vehicles/moto", {...data, id, license: selectedLicense})
 
             console.log(response.data)
             setImages([]);
             toast.success('Successfully created!');
             reset();
+
+            const colorParams = new URLSearchParams({color: response.data.colorNames[0].name}).toString()
+        
+            navigate(`/motocycles/${id}?${colorParams}`, { replace: true });
         } catch (error) {
             console.log(error)
             toast.error('Something went wrong');
@@ -48,9 +56,11 @@ const MotoForm = () => {
 
 
   return (
-    <div>
+    <section className="nice-gradient-2 mt-[84px] py-14">
         <Toaster />
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="max-w-7xl mx-auto px-4">
+            <MotoDisplay moto={moto}/>
+            <form onSubmit={handleSubmit(onSubmit)}>
             <div className="max-w-[45rem]">
                 <div className="name input-box">
                    <label htmlFor="name" className="text-[1.2rem] text-white font-medium cursor-pointer">Nazwa produktu</label>
@@ -61,7 +71,7 @@ const MotoForm = () => {
 
             <div className="price input-box">
                    <label htmlFor="price" className="text-[1.2rem] text-white font-medium cursor-pointer">Cena</label>
-                   <input type="number" {...register("price", {valueAsNumber: true})}  id="price" name="price" className={`${errors.price && "border-red-500"} custom-input`}/>    
+                   <input type="number" min={0} {...register("price", {setValueAs: (value) => value === "" ? null : parseFloat(value)})}  id="price" name="price" className={`${errors.price && "border-red-500"} custom-input`}/>    
                     {errors.price && <p>{errors.price.message === "Expected number, received nan" ? "To pole jest wymagane" : errors.price.message}</p>}
 
             </div>
@@ -102,7 +112,7 @@ const MotoForm = () => {
 
             <div className="maxPower input-box">
                    <label htmlFor="maxPower" className="text-[1.2rem] text-white font-medium cursor-pointer">Maksymalna moc</label>
-                   <input type="number" {...register("maxPower", {valueAsNumber: true})} id="maxPower" name="maxPower" className={`${errors.maxPower && "border-red-500"} custom-input`}/>
+                   <input type="number" {...register("maxPower", {setValueAs: (value) => value === "" ? null : parseFloat(value)})} id="maxPower" name="maxPower" className={`${errors.maxPower && "border-red-500"} custom-input`}/>
                    {errors.maxPower && <p>{errors.maxPower.message}</p>}
             </div>
 
@@ -511,7 +521,7 @@ const MotoForm = () => {
                     </div>
                 </div>
 
-            <div className="images-container flex justify-center items-center mt-10">
+            {/* <div className="images-container flex justify-center items-center mt-10">
                 <UploadWidget uwConfig={{
                     multiple: true,
                     cloudName: 'damiano',
@@ -521,7 +531,7 @@ const MotoForm = () => {
                 setState={setImages}
                 />
                 
-            </div>
+            </div> */}
             <div className="flex flex-col md:flex-row mx-auto justify-center gap-6 max-w-[1200px] mt-10">
                     {images.map((image: string, index: number) => {
                         return <div key={index} className="md:w-[250px] mx-auto">
@@ -529,10 +539,11 @@ const MotoForm = () => {
                         </div>
                     })}
                 </div>
-            <button type="submit" disabled={isSubmitting} className={`${isSubmitting ? "bg-slate-400 opacity-50" : "bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:scale-105 duration-300"} w-full mt-10 py-2 text-white text-[1.4rem] font-semibold tracking-wider`}>Create</button>
+            <button type="submit" disabled={isSubmitting} className={`${isSubmitting ? "bg-slate-400 opacity-50" : "bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:scale-105 duration-300"} w-full mt-10 py-2 text-white text-[1.4rem] font-semibold tracking-wider`}>Update</button>
         </form>
-    </div>
+        </div>
+    </section>
   )
 }
 
-export default MotoForm
+export default UpdateMotoPage
