@@ -2,7 +2,9 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { useState } from "react";
 
-const Search = () => {
+
+
+const Search = ({label}: {label: boolean}) => {
   const [searchValue, setSearchValue] = useState("");
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -24,21 +26,22 @@ const Search = () => {
   
 
   return (
-    <div className="flex justify-end px-5 my-14">
-      <form className="w-[17rem]">
-        <div className="inline-flex items-center border-2 relative">
-          <FaMagnifyingGlass size={20} className="absolute ml-2" />
-          <input
+        <div>
+        {label && <label htmlFor="search" className="font-semibold">Nazwa produktu</label>}
+        <div className={`relative ${label && "mt-2"}`}>
+          <FaMagnifyingGlass size={20} className="absolute top-1/2 left-2 -translate-y-1/2" />
+            <input
+            id="search"
             type="text"
-            className="placeholder:text-slate-400 text-[1rem] px-9 py-2"
+            className="placeholder:text-slate-400 rounded-md text-[1rem] px-9 py-2 border-2 w-full md:w-[17rem] border-slate-300"
             placeholder="Wyszukaj według nazwy"
             value={searchValue}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
             onKeyDown={handleKeyDown}
-          ></input>
+          />
+          </div>
         </div>
-      </form>
-    </div>
+        
   );
 };
 

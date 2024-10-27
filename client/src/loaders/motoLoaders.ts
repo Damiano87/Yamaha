@@ -1,9 +1,21 @@
 import axios from '../api/apiRequest';
 import { LoaderFunctionArgs } from 'react-router-dom';
 
-export const getAllMotosLoader = async () => {
+export const getAllMotosLoader = async ({request}: LoaderFunctionArgs) => {
+    const url = new URL(request.url);
+    const params = new URLSearchParams(url.search);
+    const search = params.get('search');
+    const sort = params.get('sort');
+    const LimitedPowerVersion = params.get('LimitedPowerVersion');
+
     try {
-        const response = await axios('/vehicles/moto')
+        const response = await axios('/vehicles/moto', 
+            {params: {
+                 search: search || undefined, 
+                 sort: sort || undefined,
+                 LimitedPowerVersion: LimitedPowerVersion || undefined
+                }}
+        )
         return response.data.data
     } catch (error) {
         console.log(error)

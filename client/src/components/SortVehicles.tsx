@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 
-const SortAtvs = () => {
+const SortVehicles = () => {
     const [currentValue, setCurrentValue] = useState("zalecane");
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -35,10 +35,10 @@ const SortAtvs = () => {
 
   return (
     <Select value={currentValue} onValueChange={setValue}>
-            <SelectTrigger className="relative w-[17rem] border border-slate-300 text-[1rem] pl-9 pr-3 py-2 rounded-none">
+            <SelectTrigger className="relative md:w-[17rem] outline-none h-full border-2 border-slate-300 text-[1rem] pl-9 pr-3 py-2 rounded-md">
               <SelectValue placeholder={currentValue} />
-              <IoFilter className="absolute left-3"/>
-              <IoMdArrowDropdown size={22} className="absolute right-3"/>
+              <IoFilter size={20} className="absolute left-3"/>
+              <IoMdArrowDropdown size={20} className="absolute right-3"/>
             </SelectTrigger>
             
             <SelectContent>
@@ -51,4 +51,4 @@ const SortAtvs = () => {
           </Select>
   )
 }
-export default SortAtvs
+export default SortVehicles

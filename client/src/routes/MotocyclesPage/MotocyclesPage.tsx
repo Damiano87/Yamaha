@@ -1,17 +1,13 @@
-
-
 // import MaxPower from "./components/MaxPower";
 import MotocyclesList from "./components/MotocyclesList";
-import { useState } from "react";
 import { IoMdInformationCircleOutline } from "react-icons/io";
-// import { motocycles } from "../../data";
 import Version35kW from "./components/Version35kW";
 import { useLoaderData } from "react-router-dom";
 import { Motorcycle } from "@/utils/types";
+import Search from "@/components/Search";
+import SortVehicles from "@/components/SortVehicles";
 
 const MotoPage = () => {
-  // const [motors, setMotors] = useState(motocycles);
-  const [is35kW, setIs35kW] = useState(false);
   const motors = useLoaderData() as Motorcycle[];
 
   
@@ -35,11 +31,16 @@ const MotoPage = () => {
         </div>
       </section>
       <section className="mx-auto -mt-10 max-w-7xl border-t-[6px] border-blue-800 bg-white">
-        <div className="m-10 flex gap-x-6">
+        <div className="flex justify-end m-10">
+          <SortVehicles />
+        </div>
+        <div className="mb-10 mx-10 flex gap-x-6">
           {/* <MaxPower motors={motors} setMotors={setMotors} /> */}
-          <Version35kW is35kW={is35kW} setIs35kW={setIs35kW} />
+          <Version35kW />
+          <Search label={true}/>
         </div>
         <MotocyclesList motors={motors}  />
+        {!motors?.length && <div className="flex justify-center h-[10rem]"><p className="text-[1.5rem]">Nie znaleziono żadnych pojazdów...</p></div>}
       </section>
     </>
   );

@@ -4,7 +4,40 @@ import prisma from "../lib/prisma.js";
 // @route GET /vehicles
 // @access Public
 const getAllMotos = async (req, res) => {
+  const { search, sort, LimitedPowerVersion } = req.query;
+
   const allMotos = await prisma.moto.findMany({
+    where: {
+      AND: [
+        search
+          ? {
+              name: {
+                contains: search,
+                mode: "insensitive",
+              },
+            }
+          : {},
+        LimitedPowerVersion === "true"
+          ? {
+              version35kW: true,
+            }
+          : {},
+      ],
+    },
+    orderBy: (() => {
+      switch (sort) {
+        case "newest":
+          return { createdAt: "desc" }; // od najnowszych do najstarszych
+        case "oldest":
+          return { createdAt: "asc" }; // od najstarszych do najnowszych
+        case "lowest":
+          return { price: "asc" }; // od najtańszych do najdroższych
+        case "highest":
+          return { price: "desc" }; // od najdroższych do najtańszych
+        default:
+          return undefined; // domyślne sortowanie
+      }
+    })(),
     omit: {
       priceInfo: true,
       description: true,
