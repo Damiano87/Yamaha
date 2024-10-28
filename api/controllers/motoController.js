@@ -4,7 +4,12 @@ import prisma from "../lib/prisma.js";
 // @route GET /vehicles
 // @access Public
 const getAllMotos = async (req, res) => {
-  const { search, sort, LimitedPowerVersion } = req.query;
+  const { search, sort, LimitedPowerVersion, firstParam, secondParam } =
+    req.query;
+
+  // Convert string to number
+  const minPower = firstParam ? Number(firstParam) : undefined;
+  const maxPower = secondParam ? Number(secondParam) : undefined;
 
   const allMotos = await prisma.moto.findMany({
     where: {
@@ -20,6 +25,14 @@ const getAllMotos = async (req, res) => {
         LimitedPowerVersion === "true"
           ? {
               version35kW: true,
+            }
+          : {},
+        minPower && maxPower
+          ? {
+              maxPower: {
+                gte: minPower,
+                lte: maxPower,
+              },
             }
           : {},
       ],
