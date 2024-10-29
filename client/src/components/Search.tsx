@@ -26,7 +26,7 @@ const Search = ({label}: {label: boolean}) => {
 
   return (
         <div>
-        {label && <label htmlFor="search" className="font-semibold">Nazwa produktu</label>}
+        {label && <label htmlFor="search" className="font-semibold text-[.8rem]">Nazwa produktu</label>}
         <div className={`relative ${label && "mt-2"}`}>
           <FaMagnifyingGlass size={20} className="absolute top-1/2 left-2 -translate-y-1/2" />
             <input

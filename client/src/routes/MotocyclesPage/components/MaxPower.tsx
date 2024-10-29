@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { useSearchParams } from "react-router-dom";
 import DualRangeSlider from "./DualRangeSlider";
@@ -9,6 +9,8 @@ const MaxPower = () => {
   const [isclicked, setIsClicked] = useState<boolean>(false);
   const [minVal, setMinVal] = useState<number>(11);
   const [maxVal, setMaxVal] = useState<number>(147);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const [searchParams] = useSearchParams();
   const motorcyclePowerParam = searchParams.get("motorcyclePower");
@@ -25,15 +27,33 @@ const MaxPower = () => {
         setMaxVal(Number(formattedText[1]));
       }
     }
-  }, [motorcyclePowerParam]); // Efekt uruchomi się tylko gdy zmieni się motorcyclePowerParam
+  }, [motorcyclePowerParam]);
+
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (dropdownRef.current && !dropdownRef.current.contains(target) && !buttonRef.current?.contains(target)) {
+        setIsClicked(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
 
   return (
     <div>
-      <p className="mb-2 font-semibold">Maksymalna moc silnika</p>
-      <div className="relative">
+      <label className="font-semibold text-[.8rem]">Maksymalna moc silnika</label>
+      <div className="relative mt-2">
         <button
           className="flex w-full items-center justify-between rounded-md border-2 border-slate-300 px-5 py-2"
           onClick={() => setIsClicked(!isclicked)}
+          ref={buttonRef}
         >
           <p>
             {motorcyclePowerParam 
@@ -46,7 +66,10 @@ const MaxPower = () => {
           />
         </button>
         {isclicked && (
-          <div className="absolute z-50 mt-3 w-full rounded-md bg-white px-2 pb-2 shadow-md">
+          <div 
+              className="absolute z-50 mt-3 w-full rounded-md bg-white px-2 pb-2 shadow-md"
+              ref={dropdownRef}
+              >
             <DualRangeSlider 
               minVal={minVal} 
               setMinVal={setMinVal} 
@@ -67,215 +90,3 @@ const MaxPower = () => {
 };
 
 export default MaxPower;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* <RangeSlider
-              values={values}
-              setValues={setValues}
-              setIsClicked={setIsClicked}
-              motors={motors}
-              setMotors={setMotors}
-            /> */}
-
-
-// type RangeSliderProps = {
-//   values: number[];
-//   setValues: React.Dispatch<React.SetStateAction<number[]>>;
-//   setIsClicked: React.Dispatch<React.SetStateAction<boolean>>;
-//   motors: Motorcycle[];
-//   setMotors: React.Dispatch<React.SetStateAction<Motorcycle[]>>;
-// };
-
-// const RangeSlider = ({
-//   values,
-//   setValues,
-//   setIsClicked,
-//   motors,
-//   setMotors,
-// }: RangeSliderProps) => {
-//   const STEP = 1;
-//   const MIN = 11;
-//   const MAX = 147;
-//   const [searchParams] = useSearchParams();
-//   const navigate = useNavigate();
-//   // const { replace } = useRouter();
-//   // const pathname = usePathname();
-
-//   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-//     const params = new URLSearchParams(searchParams);
-//     e.preventDefault();
-//     const formData = new FormData(e.currentTarget);
-//     const input1 = formData.get("input1") as string;
-//     const input2 = formData.get("input2") as string;
-//     const combinedInput = `${input1} to ${input2}`;
-
-//     // set query param
-//     if (combinedInput) {
-//       params.set("MotorcyclePower", combinedInput);
-//     } else {
-//       params.delete("MotorcyclePower");
-//     }
-//     navigate(`?${params.toString()}`);
-
-//     setIsClicked(false);
-
-//     // filter motocycles based on Power range
-//     const MotorcyclePowerParam = params?.get("MotorcyclePower");
-
-//     const firstParam = Number(MotorcyclePowerParam?.split(" to ")[0]);
-//     const secondParam = Number(MotorcyclePowerParam?.split(" to ")[1]);
-
-//     const filteredMotors = motocycles.filter(
-//       (motor) => motor.maxPower >= firstParam && motor.maxPower <= secondParam,
-//     );
-//     console.log(firstParam, secondParam);
-//     setMotors(filteredMotors);
-
-//     console.log(filteredMotors);
-//   };
-
-//   return (
-//     <div
-//       style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
-//     >
-//       <Range
-//         values={values}
-//         step={STEP}
-//         min={MIN}
-//         max={MAX}
-//         onChange={(values) => setValues(values)}
-//         renderTrack={({ props, children }) => (
-//           <div
-//             onMouseDown={props.onMouseDown}
-//             onTouchStart={props.onTouchStart}
-//             style={{
-//               ...props.style,
-//               height: "36px",
-//               display: "flex",
-//               width: "95%",
-//             }}
-//           >
-//             <div
-//               ref={props.ref}
-//               style={{
-//                 height: "5px",
-//                 width: "100%",
-//                 borderRadius: "4px",
-//                 background: getTrackBackground({
-//                   values,
-//                   colors: ["#ccc", "#548BF4", "#ccc"],
-//                   min: MIN,
-//                   max: MAX,
-//                 }),
-//                 alignSelf: "center",
-//               }}
-//             >
-//               {children}
-//             </div>
-//           </div>
-//         )}
-//         renderThumb={({ props }) => (
-//           <div
-//             {...props}
-//             style={{
-//               ...props.style,
-//               height: "18px",
-//               width: "18px",
-//               borderRadius: "50%",
-//               backgroundColor: "#548BF4",
-//               display: "flex",
-//               justifyContent: "center",
-//               alignItems: "center",
-//               boxShadow: "0px 2px 6px #AAA",
-//             }}
-//           ></div>
-//         )}
-//       />
-//       <form onSubmit={handleSubmit} className="mt-5 flex items-center gap-3">
-//         <output className="flex items-center">
-//           <div className="relative">
-//             <input
-//               type="text"
-//               name="input1"
-//               value={values[0]}
-//               onChange={(e) => setValues([Number(e.target.value), values[1]])}
-//               className="w-full rounded-md border-2 py-2 pl-3 pr-9"
-//             />
-//             <div className="absolute right-2 top-1/2 -translate-y-1/2">kW</div>
-//           </div>
-
-//           <span className="mx-2"> - </span>
-//           <div className="relative">
-//             <input
-//               type="text"
-//               name="input2"
-//               value={values[1]}
-//               onChange={(e) => setValues([values[0], Number(e.target.value)])}
-//               className="w-full rounded-md border-2 py-2 pl-3 pr-9"
-//             />
-//             <div className="absolute right-2 top-1/2 -translate-y-1/2">kW</div>
-//           </div>
-//         </output>
-//         <button
-//           type="submit"
-//           className="flex items-center justify-center rounded-full bg-slate-200 p-3"
-//         >
-//           <FaArrowRight />
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };

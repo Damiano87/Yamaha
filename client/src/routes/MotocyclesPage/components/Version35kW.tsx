@@ -21,7 +21,7 @@ const Version35kW = () => {
 
   return (
     <div>
-      <label htmlFor="35kW" className="font-semibold">Czy dostepna jest wersja 35kW?</label>
+      <label htmlFor="35kW" className="font-semibold text-[.8rem] mdCustom:text-[.765rem] lg:text-[.8rem]">Czy dostepna jest wersja 35kW?</label>
       <div className="flex mt-2 items-center justify-between rounded-md border-2 border-slate-300 px-5 py-2">
         <span>{isLimited ? "Włączone" : "Wyłączone"}</span>
 

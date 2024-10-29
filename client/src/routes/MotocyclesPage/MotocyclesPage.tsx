@@ -1,5 +1,5 @@
+import Hero from "./components/Hero";
 import MotocyclesList from "./components/MotocyclesList";
-import { IoMdInformationCircleOutline } from "react-icons/io";
 import Version35kW from "./components/Version35kW";
 import { useLoaderData, useNavigation } from "react-router-dom";
 import { Motorcycle } from "@/utils/types";
@@ -7,6 +7,9 @@ import Search from "@/components/Search";
 import SortVehicles from "@/components/SortVehicles";
 import MaxPower from "./components/MaxPower";
 import MotocyclesListSkeleton from "@/components/ListSkeleton";
+import License from "./components/License";
+import ResetFilters from "./components/ResetFilters";
+
 const MotoPage = () => {
   const motors = useLoaderData() as Motorcycle[];
   const navigation = useNavigation();
@@ -14,28 +17,14 @@ const MotoPage = () => {
   
   return (
     <>
-      <section className="m-auto  flex h-80 md:h-screen items-end bg-[url('images/yamahared.jpg')] bg-cover bg-no-repeat">
-        <div className="mx-auto mb-16 md:mb-28 w-full max-w-7xl px-5 text-white">
-          <h4 className="md:text-[1.2rem] font-semibold uppercase tracking-wider">
-            r/world
-          </h4>
-          <h1 className="text-[1.7rem] md:text-[2.5rem] font-bold uppercase tracking-wider">
-            supersport
-          </h1>
-          <div className="flex items-center gap-3">
-            <IoMdInformationCircleOutline />
-            <p className="text-[.7rem] md:text-[1rem]">
-              Profesjonalny zawodnik demonstrujący zaawansowane umiejętności w
-              zamkniętym obszarze.
-            </p>
-          </div>
-        </div>
-      </section>
+      <Hero />
       <section className="mx-auto -mt-10 max-w-7xl border-t-[6px] border-blue-800 bg-white">
-        <div className="flex justify-end mx-5 md:mx-10 my-10">
+        <div className="md:flex items-center space-y-5 md:space-y-0 justify-end gap-x-4 mx-5 md:mx-10 my-10">
+          <ResetFilters />
           <SortVehicles />
         </div>
-        <div className="mb-10 mx-5 md:mx-10 mdCustom:grid grid-cols-3 gap-x-6 space-y-8 md:space-y-0">
+        <div className="mb-10 mx-5 md:mx-10 mdCustom:grid grid-cols-4 gap-x-6 space-y-8 mdCustom:space-y-0">
+          <License />
           <MaxPower/>
           <Version35kW />
           <Search label={true}/>
