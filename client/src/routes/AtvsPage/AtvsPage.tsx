@@ -19,7 +19,7 @@ const AtvPage = () => {
             <SortVehicles />
           </div>
         </div>
-        <AtvsList atvs={atvs}/>
+        <AtvsList atvs={atvs} />
         {!atvs?.length && <div className="flex justify-center h-[10rem]"><p className="text-[1.5rem]">Nie znaleziono żadnych pojazdów...</p></div>}
       </section>
       <CompareAtvs />

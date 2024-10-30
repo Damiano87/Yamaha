@@ -7,13 +7,17 @@ import {
   IndexProvider,
 } from "../src/context/dropdowncontext.tsx";
 import { FooterProvider } from "../src/context/footerContext.tsx";
+import { CompareProvider } from "./context/compareContext.tsx";
+
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <DropdownProvider>
       <IndexProvider>
           <FooterProvider>
-            <App />
+            <CompareProvider>
+              <App />
+            </CompareProvider>
           </FooterProvider>
       </IndexProvider>
     </DropdownProvider>

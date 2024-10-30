@@ -5,7 +5,7 @@ export const useDropdownContext = () => {
   const context = useContext(DropdownContext);
   if (!context) {
     throw new Error(
-      "useThemeContext must be used within a ThemeContextProvider"
+      "useDropdownContext must be used within a DropdownContextProvider"
     );
   }
   return context;
@@ -15,7 +15,7 @@ export const useIndexContext = () => {
   const context = useContext(IndexContext);
   if (!context) {
     throw new Error(
-      "useThemeContext must be used within a ThemeContextProvider"
+      "useIndexContext must be used within a IndexContextProvider"
     );
   }
   return context;

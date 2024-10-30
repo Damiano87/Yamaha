@@ -2,19 +2,47 @@ import { formatCurrencyPLN } from "@/utils/functions";
 import { Link } from "react-router-dom";
 import { MdOutlineBrowserUpdated } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { useCompareContext } from "@/hooks/useCompareContext";
+
+type Vehicle = {
+  id: string,
+  name: string,
+  price: number,
+  images: string[],
+  colorNames: { name: string, color: string }[],
+  category: string,
+  createdAt: Date,
+  currency: number | null,
+}
+
 
 type AtvProps = {
-    id: string,
-    name: string,
-    images: string[],
-    price: number,
-    colorNames: { name: string, color: string }[],
+    vehicle: Vehicle,
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
     setSelectedVehicle: React.Dispatch<React.SetStateAction<{ id: string, name: string } | null>>
 }
 
 
-const Atv = ({id, name, images, price, colorNames, setShowModal, setSelectedVehicle}: AtvProps) => {
+const Atv = ({vehicle, setShowModal, setSelectedVehicle}: AtvProps) => {
+  const id = vehicle?.id;
+  const name = vehicle?.name;
+  const price = vehicle?.price;
+  const images = vehicle?.images;
+  const colorNames = vehicle?.colorNames;
+  const {selectedVehicles, setSelectedVehicles} = useCompareContext();
+
+   // Funkcja obsługująca zmianę checkboxa
+  const handleCheckboxChange = (vehicle: Vehicle) => {
+    if (selectedVehicles.find(v => v.id === vehicle.id)) {
+      // Jeśli pojazd jest już wybrany, usuń go z listy
+      setSelectedVehicles(selectedVehicles.filter(v => v.id !== vehicle.id));
+    } else if (selectedVehicles.length < 4) {
+      // Jeśli można jeszcze dodać pojazd (mniej niż 2 wybrane), dodaj go
+      setSelectedVehicles([...selectedVehicles, vehicle]);
+    }
+  };
+
+
   return (
     <article className="relative">
             <div className="absolute top-2 right-2 text-gray-500 flex gap-2 items-center">
@@ -46,6 +74,9 @@ const Atv = ({id, name, images, price, colorNames, setShowModal, setSelectedVehi
                 <input
                   type="checkbox"
                   id={`compare-${id}`}
+                  checked={selectedVehicles.some(v => v.id === id)}
+                  onChange={() => handleCheckboxChange(vehicle)}
+                  disabled={selectedVehicles.length >= 4 && !selectedVehicles.some(v => v.id === vehicle.id)}
                   className="w-4 h-4 cursor-pointer accent-black focus:ring-2 focus:ring-blue-500" 
                 />
                 <label htmlFor={`compare-${id}`} className="cursor-pointer">

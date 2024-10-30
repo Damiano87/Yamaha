@@ -80,11 +80,13 @@ export type Atv = {
   name: string;
   price: number;
   priceInfo: string;
-  currency: string | null;
+  currency: number | null;
+  category: string,
   description: string;
   colorNames: Color[];
   images: string[];
   daneTechniczne: daneTech;
+  createdAt: Date
 };
 
 // Motocycle types =============================================================

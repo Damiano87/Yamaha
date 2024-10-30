@@ -42,3 +42,26 @@
     @apply bg-gradient-to-l from-zinc-500 via-stone-600 to-zinc-900
   }
 }
+
+
+/* Cały scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Szerokość paska przewijania */
+}
+
+/* Tło paska przewijania */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+/* Uchwyt paska przewijania */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888; /* Kolor uchwytu */
+  border-radius: 10px; /* Zaokrąglenie */
+}
+
+/* Hover efekt na uchwycie */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Zmienia kolor po najechaniu */
+}

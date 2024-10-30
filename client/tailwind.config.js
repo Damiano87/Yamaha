@@ -18,8 +18,8 @@ export default {
       },
 	  screens: {
         'mdCustom': '880px',
-      }
-  	}
-  },
+      },
+  }
+},
   plugins: [require("tailwindcss-animate")],
 };
