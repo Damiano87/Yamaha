@@ -76,7 +76,7 @@ export type daneTech = {
 };
 
 export type Atv = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   priceInfo: string;

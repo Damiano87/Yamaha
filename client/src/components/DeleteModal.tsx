@@ -7,7 +7,7 @@ import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 
 type SelectedVehicle = {
-  id: number;
+  id: string;
   name: string;
 }
 

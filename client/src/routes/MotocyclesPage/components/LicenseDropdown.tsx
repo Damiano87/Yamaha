@@ -24,10 +24,8 @@ const LicenseDropdown = forwardRef<HTMLDivElement>((props, ref: ForwardedRef<HTM
 
     if (value) {
       newParams.set(key, 'true');
-      
     } else {
       newParams.delete(key);
-      // newParams.delete('all');
     }
     
     setSearchParams(newParams);
@@ -53,7 +51,6 @@ const LicenseDropdown = forwardRef<HTMLDivElement>((props, ref: ForwardedRef<HTM
 
     if (selectedParams.length === 3) {
       clearAllCheckboxes()
-
     } else {
       ['a', 'a1', 'a2'].forEach(key => {
         newParams.set(key, 'true');
@@ -179,44 +176,3 @@ const LicenseDropdown = forwardRef<HTMLDivElement>((props, ref: ForwardedRef<HTM
 });
 
 export default LicenseDropdown;
-
-
-
-
-
-
-// const handleSelectAll = (checked: boolean) => {
-//     setCheckboxes({
-//       all: checked,
-//       a: checked,
-//       a1: checked,
-//       a2: checked,
-//     });
-//   };
-
-//   const handleSingleCheck = (name: keyof typeof checkboxes, checked: boolean) => {
-//     const newCheckboxes = {
-//       ...checkboxes,
-//       [name]: checked,
-//     };
-    
-    
-//     const allOthersChecked = ['a', 'a1', 'a2'].every(key => newCheckboxes[key as keyof typeof checkboxes]);
-//     newCheckboxes.all = allOthersChecked;
-
-    
-//     if (!checked && name !== 'all') {
-//       newCheckboxes.all = false;
-//     }
-
-//     setCheckboxes(newCheckboxes);
-//   };
-
-//   const clearAllCheckboxes = () => {
-//   setCheckboxes({
-//     all: false,
-//     a: false,
-//     a1: false,
-//     a2: false,
-//   });
-// };

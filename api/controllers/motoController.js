@@ -4,8 +4,24 @@ import prisma from "../lib/prisma.js";
 // @route GET /vehicles
 // @access Public
 const getAllMotos = async (req, res) => {
-  const { search, sort, LimitedPowerVersion, firstParam, secondParam } =
-    req.query;
+  const {
+    search,
+    sort,
+    LimitedPowerVersion,
+    firstParam,
+    secondParam,
+    A,
+    A1,
+    A2,
+  } = req.query;
+
+  // Convert to category names if "true"
+  const Acat = A === "true" ? "A" : undefined;
+  const A1cat = A1 === "true" ? "A1" : undefined;
+  const A2cat = A2 === "true" ? "A2" : undefined;
+
+  // Filter out undefined values
+  const selectedLicenses = [Acat, A1cat, A2cat].filter(Boolean);
 
   // Convert string to number
   const minPower = firstParam ? Number(firstParam) : undefined;
@@ -32,6 +48,13 @@ const getAllMotos = async (req, res) => {
               maxPower: {
                 gte: minPower,
                 lte: maxPower,
+              },
+            }
+          : {},
+        selectedLicenses.length > 0
+          ? {
+              license: {
+                in: selectedLicenses,
               },
             }
           : {},
