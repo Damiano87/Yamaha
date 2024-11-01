@@ -4,6 +4,7 @@ import Overlay from "@/components/Overlay";
 import ScrollComponent from "@/components/ScrollComponent";
 import { Outlet } from "react-router-dom";
 import ScrollToTop from "@/components/ScrollToTop";
+import CompareVehicles from "../components/CompareVehicles";
 
 const Layout = () => {
   return (
@@ -14,6 +15,7 @@ const Layout = () => {
         <Outlet />
       </div>
       <Footer />
+      <CompareVehicles />
       <ScrollComponent />
       <Overlay />
     </div>

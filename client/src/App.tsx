@@ -11,6 +11,8 @@ import { getAllAtvsLoader, getSingleAtvLoader } from "./loaders/atvLoader";
 import { getAllMotosLoader, getSingleMotoLoader } from "./loaders/motoLoaders";
 import AtvUpdatePage from "./routes/UpdateAtv/UpdateAtvPage";
 import UpdateMotoPage from "./routes/UpdateMoto/UpdateMotoPage";
+import ComparePage from "./routes/ComparePage/ComparePage";
+
 
 const router = createBrowserRouter([
   {
@@ -24,7 +26,7 @@ const router = createBrowserRouter([
       {
         path: 'atv',
         element: <AtvPage />,
-        loader: getAllAtvsLoader
+        loader: getAllAtvsLoader,
       },
       {
         path: 'atv/:id',
@@ -34,7 +36,7 @@ const router = createBrowserRouter([
       {
         path: 'motocycles',
         element: <MotocyclesPage />,
-        loader: getAllMotosLoader
+        loader: getAllMotosLoader,
       },
       {
         path: 'motocycles/:id',
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
         element: <UpdateMotoPage />,
         loader: getSingleMotoLoader
       },
+      {
+        path: 'atv/compare',
+        element: <ComparePage />
+      },
+      {
+        path: 'motocycles/compare',
+        element: <ComparePage />
+      }
     ],
   },
 ]);

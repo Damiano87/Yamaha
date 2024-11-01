@@ -18,12 +18,13 @@ type Vehicle = {
 
 type AtvProps = {
     vehicle: Vehicle,
+    kind: string,
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
     setSelectedVehicle: React.Dispatch<React.SetStateAction<{ id: string, name: string } | null>>
 }
 
 
-const Atv = ({vehicle, setShowModal, setSelectedVehicle}: AtvProps) => {
+const Vehicle = ({vehicle, kind, setShowModal, setSelectedVehicle}: AtvProps) => {
   const id = vehicle?.id;
   const name = vehicle?.name;
   const price = vehicle?.price;
@@ -46,11 +47,11 @@ const Atv = ({vehicle, setShowModal, setSelectedVehicle}: AtvProps) => {
   return (
     <article className="relative">
             <div className="absolute top-2 right-2 text-gray-500 flex gap-2 items-center">
-              <Link to={`/update-atv/${id}`} title="Update Atv">
+              <Link to={`/update-${kind}/${id}`} title={`Update ${kind}`}>
                 <MdOutlineBrowserUpdated size={30}/>
             </Link>
             <button 
-              title="Delete Atv"
+              title={`Delete ${kind}`}
               onClick={() => {
                 setShowModal(true);
                 setSelectedVehicle({id, name});
@@ -60,7 +61,7 @@ const Atv = ({vehicle, setShowModal, setSelectedVehicle}: AtvProps) => {
             </button>
             </div>
             <Link
-            to={`/atv/${id}?${new URLSearchParams({
+            to={`/${kind === 'moto' ? 'motocycles' : 'atv'}/${id}?${new URLSearchParams({
               color: colorNames[0].name,
             })}`}
             preventScrollReset={false}
@@ -101,4 +102,4 @@ const Atv = ({vehicle, setShowModal, setSelectedVehicle}: AtvProps) => {
           </article>
   )
 }
-export default Atv
+export default Vehicle

@@ -147,7 +147,7 @@ export type TechMoto = {
 };
 
 export type Motorcycle = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   license: string;
@@ -164,4 +164,7 @@ export type Motorcycle = {
   silnikNames: string[];
   podwozieNames: string[];
   wymiaryNames: string[];
+  category: string,
+  currency: number | null,
+  createdAt: Date,
 };

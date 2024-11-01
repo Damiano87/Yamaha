@@ -4,7 +4,6 @@ import Search from "@/components/Search";
 import { Atv } from "@/utils/types";
 import { useLoaderData } from "react-router-dom";
 import Hero from "./components/Hero";
-import CompareAtvs from "./components/CompareAtvs";
 
 const AtvPage = () => {
   const atvs = useLoaderData() as Atv[];
@@ -22,7 +21,6 @@ const AtvPage = () => {
         <AtvsList atvs={atvs} />
         {!atvs?.length && <div className="flex justify-center h-[10rem]"><p className="text-[1.5rem]">Nie znaleziono żadnych pojazdów...</p></div>}
       </section>
-      <CompareAtvs />
     </>
   );
 };

@@ -1,7 +1,7 @@
 import { type Atv } from "../../../utils/types"
 import DeleteModal from "@/components/DeleteModal";
 import { useState } from "react";
-import AtvVehicle from "./Atv";
+import Vehicle from "../../../components/Vehicle";
 import CompareModal from "@/components/CompareModal";
 
 type AtvsListProps = {
@@ -24,7 +24,7 @@ const AtvsList = ({atvs}: AtvsListProps) => {
       <CompareModal vehicles={atvs}/>
       {atvs?.map((atv, index) => {
         return (
-          <AtvVehicle key={index} vehicle={atv} setShowModal={setShowModal} setSelectedVehicle={setSelectedVehicle}/>
+          <Vehicle key={index} vehicle={atv} kind={"atv"} setShowModal={setShowModal} setSelectedVehicle={setSelectedVehicle}/>
         );
       })}
     </div>

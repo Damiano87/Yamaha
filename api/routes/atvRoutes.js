@@ -4,12 +4,12 @@ import vehicleController from "../controllers/atvController.js";
 const router = express.Router();
 
 router
-  .route("/atv")
+  .route("/")
   .get(vehicleController.getAllAtvs)
   .post(vehicleController.createAtv)
   .patch(vehicleController.updateAtv)
   .delete(vehicleController.deleteAtv);
 
-router.route("/atv/:id").get(vehicleController.getSingleAtv);
+router.route("/:id").get(vehicleController.getSingleAtv);
 
 export default router;

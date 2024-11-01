@@ -36,7 +36,7 @@ app.use("/", express.static(path.join(__dirname, "/public")));
 // routes
 app.use("/", root);
 app.use("/users", userRoutes);
-app.use("/vehicles", atvRoutes);
+app.use("/vehicles/atv", atvRoutes);
 app.use("/vehicles/moto", motoRoutes);
 
 // show 404 site if there is no resources
