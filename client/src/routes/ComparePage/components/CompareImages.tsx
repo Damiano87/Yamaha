@@ -13,7 +13,7 @@ const CompareImages = ({products}: {products: Motorcycle[] | Atv[]}) => {
                 {products[0] ? (
                     <VehicleCard vehicle={products[0]} className="col-start-2"/>
                 ) : (
-                    <AddModel />
+                    <AddModel className="col-start-2"/>
                 )}
                 {products[1] ? (
                     <VehicleCard vehicle={products[1]} />
@@ -70,10 +70,10 @@ const VehicleCard = ({vehicle, className}: VehicleCardProps) => {
 }
 
 
-const AddModel = () => {
+const AddModel = (className?: {className?: string}) => {
     return (
         <div 
-            className="border-2 border-dashed group flex items-center text-slate-700 justify-center rounded-md gap-3"  
+            className={cn("border-2 border-dashed group flex items-center text-slate-700 justify-center rounded-md gap-3", className)}  
             >
             <div className="flex flex-col gap-3">
                 <div className="mx-auto w-fit p-3 bg-slate-200 rounded-full hover:bg-slate-300 transition-colors duration-300 ease-in-out cursor-pointer">

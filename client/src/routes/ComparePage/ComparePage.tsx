@@ -14,12 +14,12 @@ const ComparePage = () => {
 
 
     
-    console.log(products)
+    
     if (isLoading) return <div>Ładowanie...</div>;
     if (error) return <div>Wystąpił błąd: {error}</div>;
   return (
     <>
-      <UpperPanel />
+      <UpperPanel products={products}/>
       <CompareImages products={products} />
     </>
   )

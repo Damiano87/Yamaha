@@ -1,13 +1,13 @@
 import { useCompareContext } from "@/hooks/useCompareContext";
-import { GoPlus } from "react-icons/go";
-import { IoIosClose } from "react-icons/io";
 import { IoMdInformationCircle } from "react-icons/io";
-import { formatCurrencyPLN } from "@/utils/functions";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import VehicleCard from "@/routes/ComparePage/components/VehicleCard";
+import AddModel from "@/routes/ComparePage/components/AddModel";
+import { Motorcycle, Atv } from "@/utils/types";
 
 const CompareVehicles = () => {
-    const {selectedVehicles, setSelectedVehicles} = useCompareContext();
+    const {selectedVehicles, setSelectedVehicles, setIsOpen} = useCompareContext();
     const location = useLocation();
     
     // Clean selectedVehicles when location changes
@@ -15,30 +15,39 @@ const CompareVehicles = () => {
         setSelectedVehicles([]);
     }, [location.pathname, setSelectedVehicles]);
 
+    // remove vehicle from comparison component
+    const removeVehicle = (vehicle: Motorcycle | Atv) => {
+        setSelectedVehicles((prev) => prev.filter((item) => item.id !== vehicle.id))
+    }
+
+    // Add model
+    const addModel = () => {
+    setIsOpen(true);
+    }
 
   return (
     <div className={`${selectedVehicles?.length ? "translate-y-0" : "translate-y-full" } fixed duration-500 transform px-5 lg:px-0 pt-5 lg:pt-0 flex items-center left-0 bottom-0 w-full lg:h-[120px] bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]`}>
-        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
-            <div className="grid lg:grid-cols-4 gap-4 grow">
+        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 px-1 md:px-5 xl:px-0"> 
+                <div className="grid lg:grid-cols-4 gap-4 grow">
                 {selectedVehicles[0] ? (
-                    <VehicleCard vehicle={selectedVehicles[0]} />
+                    <VehicleCard vehicle={selectedVehicles[0]} onRemove={removeVehicle} className="py-2"/>
                 ) : (
-                    <AddModel />
+                    <AddModel onOpen={addModel} text="Dodaj model"/>
                 )}
                 {selectedVehicles[1] ? (
-                    <VehicleCard vehicle={selectedVehicles[1]} />
+                    <VehicleCard vehicle={selectedVehicles[1]} onRemove={removeVehicle} className="py-2"/>
                 ) : (
-                    <AddModel />
+                    <AddModel onOpen={addModel} text="Dodaj model"/>
                 )}
                 {selectedVehicles[2] ? (
-                    <VehicleCard vehicle={selectedVehicles[2]} />
+                    <VehicleCard vehicle={selectedVehicles[2]} onRemove={removeVehicle} className="py-2"/>
                 ) : (
-                    <AddModel />
+                    <AddModel onOpen={addModel} text="Dodaj model"/>
                 )}
                 {selectedVehicles[3] ? (
-                    <VehicleCard vehicle={selectedVehicles[3]} />
+                    <VehicleCard vehicle={selectedVehicles[3]} onRemove={removeVehicle} className="py-2"/>
                 ) : (
-                    <AddModel />
+                    <AddModel onOpen={addModel} text="Dodaj model"/>
                 )}
             </div>
             <CompareButtons />
@@ -47,68 +56,6 @@ const CompareVehicles = () => {
   )
 }
 export default CompareVehicles
-
-
-
-type VehicleProps = {
-  id: string,
-  images: string[];
-  name: string;
-  price: number;
-  colorNames: { name: string, color: string }[]
-  category: string,
-  createdAt: Date,
-  currency: number | null,
-}
-
-
-const VehicleCard = ({vehicle}: {vehicle: VehicleProps}) => {
-    const {setSelectedVehicles} = useCompareContext();
-    
-    // transform name to short version if it's too long
-    const transformName = (name: string) => {
-        const firstLetter = name.charAt(0).toUpperCase();
-        const slicedName = firstLetter + name.slice(1, 11).trimEnd() + "...";
-        
-        return name.length > 11 ? slicedName : firstLetter + name.slice(1)
-    }
-
-
-    // remove vehicle from comparison component
-    const removeVehicle = () => {
-        setSelectedVehicles((prev) => prev.filter((item) => item.id !== vehicle.id))
-    }
-
-    return (
-        <div className="flex items-center gap-4 border-2 bg-white rounded-md py-3 px-1">
-            <img src={vehicle?.images[0]} alt={vehicle?.name} className="w-[70px] aspect-video object-cover"/>
-            <div className="w-full">
-                <div className="flex items-center justify-between  gap-1">
-                    <h3 className="text-[.8rem] font-semibold">{transformName(vehicle?.name)}</h3>
-                    <button onClick={removeVehicle}>
-                         <IoIosClose size={30}/>
-                    </button>
-                </div>
-                <p className="text-[.8rem] text-slate-600">{formatCurrencyPLN(vehicle?.price)}</p>
-            </div>
-        </div>
-    )
-}
-
-
-const AddModel = () => {
-    const {setIsOpen} = useCompareContext();
-
-    return (
-        <button 
-            className="hidden border-2 border-dashed group lg:flex items-center text-slate-700 justify-center rounded-md gap-3  py-6"
-            onClick={(() => setIsOpen(true))}
-            >
-            <span>Dodaj model</span>
-            <GoPlus size={20} className="group-hover:text-black"/>
-        </button>
-    )
-}
 
 
 const CompareButtons = () => {
