@@ -14,6 +14,7 @@ const AddModel = ({onOpen, text, className}: AddModelProps) => {
 
     return (
         <button 
+            type="button"
             className={cn("hidden w-full border-2 border-dashed group lg:flex items-center text-slate-700 justify-center rounded-md gap-3", className)}
             onClick={onOpen}
             >

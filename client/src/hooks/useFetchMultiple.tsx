@@ -17,7 +17,10 @@ export const useFetchMultiple = (param: string | null, pathname: string) => {
           const pathName = pathname.split('/').filter(Boolean)[0]
           const path = pathName === 'motocycles' ? 'moto' : pathName;
 
-           if (!productIds) return;
+           if (!productIds) {
+            setProducts([]);
+            return;
+           };
            
             try {
                 setIsLoading(true);

@@ -6,7 +6,7 @@ import { Motorcycle } from "@/utils/types";
 import Search from "@/components/Search";
 import SortVehicles from "@/components/SortVehicles";
 import MaxPower from "./components/MaxPower";
-import MotocyclesListSkeleton from "@/components/ListSkeleton";
+import MotocyclesListSkeleton from "@/components/skeletons/ListSkeleton";
 import License from "./components/License";
 import ResetFilters from "./components/ResetFilters";
 
