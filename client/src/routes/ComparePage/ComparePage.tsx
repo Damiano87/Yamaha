@@ -5,13 +5,17 @@ import UpperPanel from "./components/UpperPanel";
 import { Motorcycle, Atv } from "@/utils/types";
 import { useState, useEffect } from "react";
 import Modal from "./components/Modal";
+import TechDataToCompare from "./components/TechDataToCompare";
 
 const ComparePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const param = searchParams.get("products")
   const [isOpen, setIsOpen] = useState(false);
+  const [vehicles, setVehicles] = useState<Motorcycle[] | Atv[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isFirstOpen, setIsFirstOpen] = useState<boolean>(true);
+
   const { products, isLoading, error } = useFetchMultiple(param, location.pathname)
     
  // handle remove model function
@@ -57,15 +61,18 @@ const ComparePage = () => {
     };
   }, []);
 
-    
+  const techData = products?.map(product => product.daneTechniczne)
+
+  
     if (error) return <div className="h-screen flex items-center justify-center">
-      <h1 className="text-[2rem] font-semibold">Wystąpił błąd: {error}</h1>
+      <h1 className="text-[2rem] font-semibold">{error}</h1>
     </div>;
   return (
     <>
-      <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
+      {isModalOpen && <Modal vehicles={vehicles} setVehicles={setVehicles} isFirstOpen={isFirstOpen} setIsFirstOpen={setIsFirstOpen} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>}
       <UpperPanel products={products} removeModel={removeModel} addVehicle={addVehicle} isOpen={isOpen} setIsOpen={setIsOpen}/>
       <CompareImages products={products} removeModel={removeModel} addVehicle={addVehicle} isLoading={isLoading}/>
+      <TechDataToCompare techData={techData}/>
     </>
   )
 }

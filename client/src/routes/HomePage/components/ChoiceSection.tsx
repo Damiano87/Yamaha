@@ -1,6 +1,6 @@
-import motocycles from "../../../images/Yamaha-Motorcycle-Transparent-Image.png";
-import atvs from "../../../images/atv-transparent.png";
-import { Link } from "react-router-dom";
+import Atv from "./Atv";
+import Motorcycle from "./Motorcycle";
+
 
 const ChoiceSection = () => {
   return (
@@ -10,26 +10,8 @@ const ChoiceSection = () => {
 
   
       <div className="md:inline-flex gap-32 lg:gap-52">
-        <Link
-          to={"/motocycles"}
-          className="p-3"
-        >
-          <div className="flex hover:scale-105 duration-300 flex-col justify-between h-[220px] aspect-square">
-            <img src={motocycles}  alt="motocycle" className="w-full h-full object-contain"/>
-            <h4 className="uppercase font-semibold tracking-wider text-white">
-              motocykle
-            </h4>
-          </div>
-        </Link>
-        <Link
-          to={"/atv"}
-          className="p-3"
-        >
-          <div className="flex hover:scale-105 duration-300 flex-col justify-between h-[220px] aspect-square">
-            <img src={atvs}  alt="atv vehicle" className="w-full h-full object-contain" />
-            <h4 className="uppercase font-semibold tracking-wider text-white">atv</h4>
-          </div>
-        </Link>
+        <Motorcycle />
+        <Atv />
       </div>
       
     </section>

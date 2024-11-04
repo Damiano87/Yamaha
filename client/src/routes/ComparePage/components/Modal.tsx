@@ -8,11 +8,16 @@ import { AxiosError } from "axios";
 
 
 type ModalProps = {
+    vehicles: Motorcycle[] | Atv[],
+    setVehicles: React.Dispatch<React.SetStateAction<Motorcycle[] | Atv[]>>,
     isModalOpen: boolean,
-    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    isFirstOpen: boolean,
+    setIsFirstOpen: React.Dispatch<React.SetStateAction<boolean>>,
 }
-const Modal = ({isModalOpen, setIsModalOpen}: ModalProps) => {
-    const [vehicles, setVehicles] = useState<Motorcycle[] | Atv[]>([])
+
+
+const Modal = ({vehicles, setVehicles, isFirstOpen, setIsFirstOpen, isModalOpen, setIsModalOpen}: ModalProps) => {
     const [error, setError] = useState<string | null>(null);
     const [isOpenDropdown, setOpenDropdown] = useState(false);
     const [chosenModel, setChosenModel] = useState<Motorcycle | Atv | null>(null);
@@ -27,18 +32,21 @@ const Modal = ({isModalOpen, setIsModalOpen}: ModalProps) => {
             const path = pathName === 'motocycles' ? 'moto' : 'atv';
             
 
-            try {
-                const response = await apiRequest.get<Motorcycle[] | Atv[]>(`/vehicles/${path}`);
-                setVehicles(response?.data.data) 
+            if (isFirstOpen) {
+                try {
+                const response = await apiRequest.get(`/vehicles/${path}`);
+                setVehicles(response?.data.data)
+                setIsFirstOpen(false);
             } catch (err) {
                     const error = err as AxiosError<{ message: string }>;
                     const errorMessage = error?.response?.data?.message || 'Wystąpił błąd podczas pobierania danych';
                     setError(errorMessage);
             }
+            }
         }
 
         fetchVehicles();
-    }, [location.pathname])
+    }, [location.pathname, isFirstOpen, setIsFirstOpen, setVehicles])
 
 
     // Close modal
@@ -51,7 +59,8 @@ const Modal = ({isModalOpen, setIsModalOpen}: ModalProps) => {
     // Add vehicle to compare
     
 const addVehicleToCompare = () => {
-    const currentProducts = searchParams.get('products') || '';
+    const params = new URLSearchParams(searchParams)
+    const currentProducts = params.get('products') || '';
     const productsArray = currentProducts.split(' ');
     
     // Sprawdź czy produkt już nie istnieje
@@ -59,11 +68,13 @@ const addVehicleToCompare = () => {
         // Dodaj nowy produkt i przefiltruj puste wartości
         const newProducts = [...productsArray, chosenModel?.id]
             .filter(Boolean)
-            .join('+');
-            
-            
-        setSearchParams({ products: newProducts });
+            .join(' ');
+        
+        
+        params.set('products', newProducts);
+        setSearchParams(params);
     }
+    handlecloseModal()
 };
 
   return <div className={`z-30 fixed inset-0 bg-black/50 flex items-center justify-center
@@ -85,7 +96,6 @@ const addVehicleToCompare = () => {
                         </button>
                     </div>
                         
-                    
                         {error ? <div>
                             <p>Wystąpił błąd: {error}</p>
                         </div>

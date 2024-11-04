@@ -16,23 +16,23 @@ type CompareImagesProps = {
 
 const CompareImages = ({removeModel, addVehicle, products, isLoading}: CompareImagesProps) => {
   return (
-    <section className="h-screen w-full max-w-7xl mx-auto">
-        <h1 className="text-[3rem] font-semibold uppercase mt-36 tracking-wider">porównanie</h1>
+    <section className="w-full max-w-7xl mx-auto px-5 md:px-14 lg:px-5">
+        <h1 className="text-[1.8rem] md:text-[3rem] font-semibold uppercase mt-36 tracking-wider">porównanie</h1>
         <h2 className="font-medium tracking-wide">Wybierz do czterech modeli i znajdź swój idealny pojazd</h2>
         {isLoading ? 
-        <div className="grid md:grid-cols-5 gap-4 grow mt-14 h-[20rem]">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 grow mt-14 lg:h-[20rem]">
             {Array.from({ length: 4 }).map((_, index) => {
-                return <Skeleton key={index} className={`${index === 0 && "col-start-2"} bg-neutral-300`}/>
+                return <Skeleton key={index} className={`${index === 0 && "lg:col-start-2"} bg-neutral-300 h-[218px] lg:h-full w-full`}/>
             }
-        )}  
+        )}
         </div>
          : 
-         <div className="grid md:grid-cols-5 gap-4 grow mt-14 h-[20rem]">
+         <div className="grid sm:grid-cols-4 lg:grid-cols-5 gap-4 grow mt-14 lg:h-[20rem]">
             
                 {products[0] ? (
-                    <VehicleCard vehicle={products[0]} removeModel={removeModel} className="col-start-2"/>
+                    <VehicleCard vehicle={products[0]} removeModel={removeModel} className="lg:col-start-2"/>
                 ) : (
-                    <AddModel vehicle={products[0]} addVehicle={addVehicle} className="col-start-2"/>
+                    <AddModel vehicle={products[0]} addVehicle={addVehicle} className="lg:col-start-2"/>
                 )}
                 {products[1] ? (
                     <VehicleCard vehicle={products[1]} removeModel={removeModel} />
@@ -84,7 +84,7 @@ const VehicleCard = ({vehicle, removeModel, className}: VehicleCardProps) => {
     return (
         <div className={cn("relative flex flex-col justify-between", className)}>
             <button 
-                className="absolute top-2 right-2 rounded-full p-2 bg-slate-200 hover:bg-slate-300 duration-300"
+                className="absolute top-2 right-2 rounded-full p-[2px] lg:p-2 bg-slate-200 hover:bg-slate-300 duration-300"
                 onClick={() => removeModel(vehicle)}
                 >
                     <IoIosClose size={30}/>
@@ -110,7 +110,7 @@ type AddModelProps = {
 const AddModel = ({className, addVehicle}: AddModelProps) => {
     return (
         <div 
-            className={cn("border-2 border-dashed group flex items-center text-slate-700 justify-center rounded-md gap-3", className)}  
+            className={cn("border-2 border-dashed group flex items-center text-slate-700 justify-center h-[218px] lg:h-auto rounded-md gap-3", className)}  
             >
             <div className="flex flex-col gap-3">
                 <button 
