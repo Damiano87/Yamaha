@@ -16,7 +16,7 @@ type CompareImagesProps = {
 
 const CompareImages = ({removeModel, addVehicle, products, isLoading}: CompareImagesProps) => {
   return (
-    <section className="w-full max-w-7xl mx-auto px-5 md:px-14 lg:px-5">
+    <section className="w-full max-w-7xl mx-auto px-5 md:px-14 lg:px-5 mb-14">
         <h1 className="text-[1.8rem] md:text-[3rem] font-semibold uppercase mt-36 tracking-wider">porównanie</h1>
         <h2 className="font-medium tracking-wide">Wybierz do czterech modeli i znajdź swój idealny pojazd</h2>
         {isLoading ? 

@@ -9,21 +9,21 @@ export type DaneTechniczneKeys =
 
 export interface Silnik {
   typSilnika?: Properties;
-  pojemność?: Properties;
-  średnicaXskokTłoka?: Properties;
-  stopieńSprężania?: Properties;
-  układSmarowania?: Properties;
-  układPaliwowy?: Properties;
-  układZapłonu?: Properties;
-  układRozrusznika?: Properties;
-  skrzyniaBiegów?: Properties;
-  napęd?: Properties;
-  napędKońcowy?: Properties;
+  pojemnosc?: Properties;
+  srednicaXskokTloka?: Properties;
+  stopienSprezania?: Properties;
+  ukladSmarowania?: Properties;
+  ukladPaliwowy?: Properties;
+  ukladZaplonu?: Properties;
+  ukladRozrusznika?: Properties;
+  skrzyniaBiegow?: Properties;
+  naped?: Properties;
+  napedKoncowy?: Properties;
 }
 
 export interface Podwozie {
-  układPrzedniegoZawieszenia?: Properties;
-  układTylnegoZawieszenia?: Properties;
+  ukladPrzedniegoZawieszenia?: Properties;
+  ukladTylnegoZawieszenia?: Properties;
   hamulecPrzedni?: Properties;
   hamulecTylny?: Properties;
   ogumieniePrzednie?: Properties;
@@ -67,6 +67,7 @@ interface Color {
   color: string;
 }
 
+
 export type daneTech = {
   silnik?: Silnik;
   podwozie?: Podwozie;
@@ -92,21 +93,23 @@ export type Atv = {
 // Motocycle types =============================================================
 
 export interface SilnikMoto {
-  typSilnika: string;
-  pojemność: string;
-  średnicaXskokTłoka: string;
-  stopieńSprężania: string;
-  mocMaksymalna: string;
-  maksMomentObrotowy: string;
-  układSmarowania: string;
-  typSprzęgła: string;
-  układZapłonu: string;
-  układRozrusznika: string;
-  skrzyniaBiegów: string;
-  napędKońcowy: string;
-  spalanie: string;
-  emisjaCO2: string;
-  układZasilania: string;
+  typSilnika?: Properties;
+  pojemnosc?: Properties;
+  srednicaXskokTloka?: Properties;
+  stopienSprezania?: Properties;
+  mocMaksymalna?: Properties;
+  maksMomentObrotowy?: Properties;
+  ukladSmarowania?: Properties;
+  typSprzegla?: Properties;
+  ukladZaplonu?: Properties;
+  ukladRozrusznika?: Properties;
+  ukladPaliwowy?: Properties;
+  skrzyniaBiegow?: Properties;
+  naped?: Properties;
+  napedKoncowy?: Properties;
+  spalanie?: Properties;
+  emisjaCO2?: Properties;
+  ukladZasilania?: Properties;
 }
 
 export interface PodwozieMoto {
@@ -168,3 +171,26 @@ export type Motorcycle = {
   currency: number | null,
   createdAt: Date,
 };
+
+
+// combined types =============================================================
+export type CombinedEngineType = {
+  typSilnika?: Properties;
+  pojemnosc?: Properties;
+  srednicaXskokTloka?: Properties;
+  stopienSprezania?: Properties;
+  ukladSmarowania?: Properties;
+  ukladPaliwowy?: Properties;
+  ukladZaplonu?: Properties;
+  ukladRozrusznika?: Properties;
+  skrzyniaBiegow?: Properties; 
+  naped?: Properties;
+  napedKoncowy?: Properties;
+  // moto
+  mocMaksymalna?: Properties;
+  maksMomentObrotowy?: Properties;
+  spalanie?: Properties;
+  emisjaCO2?: Properties;
+  ukladZasilania?: Properties;
+  typSprzegla?: Properties;
+}

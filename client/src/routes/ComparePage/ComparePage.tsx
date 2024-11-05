@@ -62,7 +62,7 @@ const ComparePage = () => {
   }, []);
 
   const techData = products?.map(product => product.daneTechniczne)
-
+  
   
     if (error) return <div className="h-screen flex items-center justify-center">
       <h1 className="text-[2rem] font-semibold">{error}</h1>
@@ -72,7 +72,7 @@ const ComparePage = () => {
       {isModalOpen && <Modal vehicles={vehicles} setVehicles={setVehicles} isFirstOpen={isFirstOpen} setIsFirstOpen={setIsFirstOpen} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>}
       <UpperPanel products={products} removeModel={removeModel} addVehicle={addVehicle} isOpen={isOpen} setIsOpen={setIsOpen}/>
       <CompareImages products={products} removeModel={removeModel} addVehicle={addVehicle} isLoading={isLoading}/>
-      <TechDataToCompare techData={techData}/>
+      {products?.length ? <TechDataToCompare techData={techData}/> : null}
     </>
   )
 }
