@@ -6,6 +6,7 @@ import { Motorcycle, Atv } from "@/utils/types";
 import { useState, useEffect } from "react";
 import Modal from "./components/Modal";
 import TechDataToCompare from "./components/TechDataToCompare";
+import Links from "./components/Links";
 
 const ComparePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -68,12 +69,13 @@ const ComparePage = () => {
       <h1 className="text-[2rem] font-semibold">{error}</h1>
     </div>;
   return (
-    <>
+    <div className="bg-neutral-100 py-14">
       {isModalOpen && <Modal vehicles={vehicles} setVehicles={setVehicles} isFirstOpen={isFirstOpen} setIsFirstOpen={setIsFirstOpen} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>}
       <UpperPanel products={products} removeModel={removeModel} addVehicle={addVehicle} isOpen={isOpen} setIsOpen={setIsOpen}/>
       <CompareImages products={products} removeModel={removeModel} addVehicle={addVehicle} isLoading={isLoading}/>
       {products?.length ? <TechDataToCompare techData={techData}/> : null}
-    </>
+      <Links products={products}/>
+    </div>
   )
 }
 export default ComparePage

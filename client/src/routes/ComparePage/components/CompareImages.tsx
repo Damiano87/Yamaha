@@ -17,7 +17,7 @@ type CompareImagesProps = {
 const CompareImages = ({removeModel, addVehicle, products, isLoading}: CompareImagesProps) => {
   return (
     <section className="w-full max-w-7xl mx-auto px-5 md:px-14 lg:px-5 mb-14">
-        <h1 className="text-[1.8rem] md:text-[3rem] font-semibold uppercase mt-36 tracking-wider">porównanie</h1>
+        <h1 className="text-[1.8rem] md:text-[3rem] font-semibold uppercase tracking-wider">porównanie</h1>
         <h2 className="font-medium tracking-wide">Wybierz do czterech modeli i znajdź swój idealny pojazd</h2>
         {isLoading ? 
         <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 grow mt-14 lg:h-[20rem]">
@@ -89,7 +89,7 @@ const VehicleCard = ({vehicle, removeModel, className}: VehicleCardProps) => {
                 >
                     <IoIosClose size={30}/>
             </button>
-            <div className="border-2 grow flex items-center">
+            <div className="border-2 border-slate-300 grow flex items-center bg-white">
                 <img src={vehicle?.images[0]} alt={vehicle?.name} className="object-cover"/>
             </div>
             
@@ -110,12 +110,12 @@ type AddModelProps = {
 const AddModel = ({className, addVehicle}: AddModelProps) => {
     return (
         <div 
-            className={cn("border-2 border-dashed group flex items-center text-slate-700 justify-center h-[218px] lg:h-auto rounded-md gap-3", className)}  
+            className={cn("border-2 border-slate-300 border-dashed group flex items-center text-slate-700 justify-center h-[218px] lg:h-auto rounded-md gap-3", className)}  
             >
             <div className="flex flex-col gap-3">
                 <button 
                     type="button" 
-                    className="mx-auto w-fit p-3 bg-slate-200 rounded-full hover:bg-slate-300 transition-colors duration-300 ease-in-out"
+                    className="mx-auto w-fit p-3 bg-slate-300 rounded-full hover:bg-slate-400 transition-colors duration-300 ease-in-out"
                     onClick={addVehicle}
                     >
                     <GoPlus size={25} />

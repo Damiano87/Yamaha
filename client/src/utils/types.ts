@@ -31,21 +31,21 @@ export interface Podwozie {
 }
 
 export interface Wymiary {
-  długośćCałkowita?: Properties;
-  szerokośćCałkowita?: Properties;
-  wysokośćCałkowita?: Properties;
-  wysokośćSiodełka?: Properties;
+  dlugoscCalkowita?: Properties;
+  szerokoscCalkowita?: Properties;
+  wysokoscCalkowita?: Properties;
+  wysokoscSiodelka?: Properties;
   rozstawOsi?: Properties;
-  minimalnyPrześwit?: Properties;
-  minPromieńSkrętu?: Properties;
-  pojemnośćZbiornikaPaliwa?: Properties;
-  pojemnośćZbiornikaOleju?: Properties;
-  masaZobciążeniem?: Properties;
+  minimalnyPrzeswit?: Properties;
+  minPromienSkretu?: Properties;
+  pojemnoscZbiornikaPaliwa?: Properties;
+  pojemnoscZbiornikaOleju?: Properties;
+  masaZobciazeniem?: Properties;
 }
 
-export interface ObciążenieMaksymalne {
-  bagażnikPrzedni?: Properties;
-  bagażnikTylny?: Properties;
+export interface obciazenieMaksymalne {
+  bagaznikPrzedni?: Properties;
+  bagaznikTylny?: Properties;
 }
 
 export interface InformacjeDodatkowe {
@@ -72,7 +72,7 @@ export type daneTech = {
   silnik?: Silnik;
   podwozie?: Podwozie;
   wymiary?: Wymiary;
-  obciazenieMaksymalne?: ObciążenieMaksymalne;
+  obciazenieMaksymalne?: obciazenieMaksymalne;
   informacjeDodatkowe?: InformacjeDodatkowe;
 };
 
@@ -113,28 +113,28 @@ export interface SilnikMoto {
 }
 
 export interface PodwozieMoto {
-  rama: string;
-  kątwyprzGłówkiRamy: string;
-  wyprzedzenie: string;
-  układPrzedniegoZawieszenia: string;
-  układTylnegoZawieszenia: string;
-  skokPrzedniegoZawieszenia: string;
-  skokTylnegoZawieszenia: string;
-  hamulecPrzedni: string;
-  hamulecTylny: string;
-  oponaPrzednia: string;
-  oponaTylna: string;
+  rama?: Properties;
+  katwyprzGlowkiRamy?: Properties;
+  wyprzedzenie?: Properties;
+  ukladPrzedniegoZawieszenia?: Properties;
+  ukladTylnegoZawieszenia?: Properties;
+  skokPrzedniegoZawieszenia?: Properties;
+  skokTylnegoZawieszenia?: Properties;
+  hamulecPrzedni?: Properties;
+  hamulecTylny?: Properties;
+  oponaPrzednia?: Properties;
+  oponaTylna?: Properties;
 }
 
 export interface WymiaryMoto {
-  dłCałkowita: string;
-  szerCałkowita: string;
-  wysCałkowita: string;
-  wysSiodełka?: string;
-  rozstawKół: string;
-  minPrześwit: string;
-  masazObciążeniem: string;
-  pojZbiornikaPaliwa: string;
+  dlCalkowita?: string;
+  szerCalkowita?: string;
+  wysCalkowita?: string;
+  wysSiodelka?: string;
+  rozstawKol?: string;
+  minPrzeswit?: string;
+  masazObciazeniem?: string;
+  pojZbiornikaPaliwa?: string;
   pojZbiornikaOleju?: string;
 }
 
@@ -147,6 +147,8 @@ export type TechMoto = {
   silnik?: SilnikMoto;
   podwozie?: PodwozieMoto;
   wymiary?: WymiaryMoto;
+  obciazenieMaksymalne?: obciazenieMaksymalne;
+  informacjeDodatkowe?: InformacjeDodatkowe
 };
 
 export type Motorcycle = {

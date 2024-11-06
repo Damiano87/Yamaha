@@ -3,21 +3,11 @@ import { Link } from "react-router-dom";
 import { MdOutlineBrowserUpdated } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { useCompareContext } from "@/hooks/useCompareContext";
-
-type Vehicle = {
-  id: string,
-  name: string,
-  price: number,
-  images: string[],
-  colorNames: { name: string, color: string }[],
-  category: string,
-  createdAt: Date,
-  currency: number | null,
-}
+import { Atv, Motorcycle } from "@/utils/types";
 
 
 type AtvProps = {
-    vehicle: Vehicle,
+    vehicle: Motorcycle | Atv,
     kind: string,
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
     setSelectedVehicle: React.Dispatch<React.SetStateAction<{ id: string, name: string } | null>>
@@ -33,7 +23,7 @@ const Vehicle = ({vehicle, kind, setShowModal, setSelectedVehicle}: AtvProps) =>
   const {selectedVehicles, setSelectedVehicles} = useCompareContext();
 
    // Funkcja obsługująca zmianę checkboxa
-  const handleCheckboxChange = (vehicle: Vehicle) => {
+  const handleCheckboxChange = (vehicle: Motorcycle | Atv) => {
     if (selectedVehicles.find(v => v.id === vehicle.id)) {
       // Jeśli pojazd jest już wybrany, usuń go z listy
       setSelectedVehicles(selectedVehicles.filter(v => v.id !== vehicle.id));

@@ -92,7 +92,7 @@ const CompareButtons = () => {
                 >
                 <span className="uppercase">porównaj ({selectedVehicles.length})</span>
                 {selectedVehicles.length < 2 && <div className="absolute hidden lg:group-hover:block right-0 bottom-12 text-white bg-black w-80 text-sm py-2 rounded-md after:content-[''] after:bg-inherit after:rotate-45 after:absolute after:top-5 after:right-3 after:h-5 after:w-5">
-                    <p>Musisz wybrać co najmniej 2 produkty</p>
+                    <p className="z-10 relative">Musisz wybrać co najmniej 2 produkty</p>
                 </div>}
             </button>
         </div>
