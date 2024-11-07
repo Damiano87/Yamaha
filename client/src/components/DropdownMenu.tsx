@@ -63,12 +63,29 @@ const DropdownMenu = ({ buttonRef }: DropdownProps) => {
     };
   });
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 868) {
+        setMoto(false);
+        setAtvMenu(false);
+        setShowMenu(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, [setShowMenu]);
+
   return (
     <div
       ref={dropdownRef}
       className={`${
         showMenu ? "pt-3 overflow-auto" : "h-0 overflow-hidden"
-      } flex absolute left-11 bg-white uppercase font-semibold duration-300`}
+      } flex absolute top-[4.5rem] left-11 bg-white uppercase font-semibold duration-300`}
     >
       <div className="w-[20rem] border-r-2">
         <div

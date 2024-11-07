@@ -12,9 +12,13 @@ import { getAllMotosLoader, getSingleMotoLoader } from "./loaders/motoLoaders";
 import AtvUpdatePage from "./routes/UpdateAtv/UpdateAtvPage";
 import UpdateMotoPage from "./routes/UpdateMoto/UpdateMotoPage";
 import ComparePage from "./routes/ComparePage/ComparePage";
-
+import Register from "./routes/Register/Register";
 
 const router = createBrowserRouter([
+  {
+    path: "/register",
+    element: <Register />,
+  },
   {
     path: "/",
     element: <Layout />,

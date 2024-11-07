@@ -7,7 +7,7 @@
   }
 }
 
-
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
 .bg-custom-gradient {
     background-image: linear-gradient(to bottom right, #3B82F6 0%, #3B82F6 30%, #000000 90%, #3B82F6 70%, #3B82F6 100%);

@@ -37,7 +37,6 @@ const DropdownVehicles = ({closeMenu, endpoint, vehicle}: DropdownMotosProps) =>
         setError(null);
           try {
               const response = await apiRequest.get<ApiResponse>(endpoint, { signal: controller.signal })
-              console.log(response.data);
               setVehicles(response.data.data)
           } catch (error) {
             if (axios.isCancel(error)) {
@@ -74,7 +73,7 @@ const DropdownVehicles = ({closeMenu, endpoint, vehicle}: DropdownMotosProps) =>
 
   return (
     <div className="grid grid-cols-3 gap-2 bg-slate-50 p-4">
-          {vehicles.map((item) => {
+          {vehicles?.map((item) => {
             const { id, name, images, colorNames } = item;
             return (
               <Link

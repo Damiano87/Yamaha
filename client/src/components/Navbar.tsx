@@ -6,6 +6,8 @@ import DropdownMenu from "../components/DropdownMenu";
 import Sidebar from "./Sidebar";
 import { X } from "lucide-react";
 import { Link } from "react-router-dom";
+import RegisterButton from "@/routes/Register/RegisterButton";
+
 
 const Navbar = () => {
   const { showMenu, setShowMenu } = useDropdownContext();
@@ -23,7 +25,8 @@ const Navbar = () => {
       ref={navRef}
       className="fixed top-0 left-0 bg-white w-full px-2 py-3 z-10 shadow-bottom-only"
     >
-      <div className="flex lg:block justify-between items-center max-w-7xl mx-auto relative">
+      {/* logo and nasze modele buttons */}
+      <div className="relative flex justify-between items-center max-w-7xl mx-auto">
         <div className="flex items-center">
           <Link to={'/'}>
             <img src={logo} width={60} height={60} alt="yamaha logo" />
@@ -36,7 +39,14 @@ const Navbar = () => {
           >
             nasze modele
           </h4>
+          
         </div>
+
+
+        <div className="flex items-center gap-3">
+          {/* register button  */}
+        <RegisterButton />
+        {/* hamburger button */}
         <button
           type="button"
           className="p-2 hover:bg-slate-200 rounded-full lg:hidden"
@@ -44,6 +54,7 @@ const Navbar = () => {
         >
           {sidebarOpen ? <X /> : <GiHamburgerMenu className="text-[1.4rem]" />}
         </button>
+        </div>
         <DropdownMenu buttonRef={buttonRef} />
         <Sidebar
           sidebarOpen={sidebarOpen}

@@ -8,7 +8,7 @@ import {
 } from "../src/context/dropdowncontext.tsx";
 import { FooterProvider } from "../src/context/footerContext.tsx";
 import { CompareProvider } from "./context/compareContext.tsx";
-
+import { AuthProvider } from "./context/authContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -16,7 +16,9 @@ createRoot(document.getElementById("root")!).render(
       <IndexProvider>
           <FooterProvider>
             <CompareProvider>
-              <App />
+              <AuthProvider>
+                <App />
+              </AuthProvider>
             </CompareProvider>
           </FooterProvider>
       </IndexProvider>
