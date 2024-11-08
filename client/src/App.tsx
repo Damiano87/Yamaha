@@ -13,11 +13,23 @@ import AtvUpdatePage from "./routes/UpdateAtv/UpdateAtvPage";
 import UpdateMotoPage from "./routes/UpdateMoto/UpdateMotoPage";
 import ComparePage from "./routes/ComparePage/ComparePage";
 import Register from "./routes/Register/Register";
+import Login from "./routes/Login/Login";
+import Unauthorized from "./routes/Unauthorized/Unauthorized";
+import RequireAuth from "./components/RequireAuth";
+
 
 const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: '/unauthorized',
+    element: <Unauthorized />
   },
   {
     path: "/",
@@ -52,18 +64,33 @@ const router = createBrowserRouter([
         element: <EditUserPage />
       },
       {
-        path: 'add-vehicle',
-        element: <CreateVehiclePage />
+        element: <RequireAuth allowedRoles={['Admin']}/>,
+        children: [
+          {
+            path: 'add-vehicle',
+            element: <CreateVehiclePage />
+          },
+        ]
       },
       {
-        path: 'update-atv/:id',
-        element: <AtvUpdatePage />,
-        loader: getSingleAtvLoader
+        element: <RequireAuth allowedRoles={['Admin']}/>,
+        children: [
+          {
+            path: 'update-atv/:id',
+            element: <AtvUpdatePage />,
+            loader: getSingleAtvLoader
+          },
+        ]
       },
       {
-        path: 'update-moto/:id',
-        element: <UpdateMotoPage />,
-        loader: getSingleMotoLoader
+        element: <RequireAuth allowedRoles={['Admin']}/>,
+         children: [
+          {
+            path: 'update-moto/:id',
+            element: <UpdateMotoPage />,
+            loader: getSingleMotoLoader
+          },
+        ]
       },
       {
         path: 'atv/compare',

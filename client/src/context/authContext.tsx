@@ -1,32 +1,26 @@
 import { createContext, useState } from "react";
 
-
 // dropdown context
 type AuthContextProviderProps = {
   children: React.ReactNode;
 };
 
 
-// type Auth = {
-//     username: string | null,
-//     email: string | null,
-//     roles: string[] | null,
-//     accesToken: string | null
-// }
+type AuthContextType = {
+    token: string | null,
+    setToken: React.Dispatch<React.SetStateAction<string | null>>
+}
 
-
-// type AuthContextType = {
-//     auth: Auth | null,
-//     setAuth: React.Dispatch<React.SetStateAction<Auth | null>>
-// }
-
-const AuthContext = createContext({});
+const AuthContext = createContext<AuthContextType>({
+    token: '',
+    setToken: () => {},
+});
 
 export const AuthProvider = ({ children }: AuthContextProviderProps) => {
-    const [auth, setAuth] = useState({});
+    const [token, setToken] = useState<string | null>(null);
 
     return (
-        <AuthContext.Provider value={{ auth, setAuth }}>
+        <AuthContext.Provider value={{ token, setToken }}>
             {children}
         </AuthContext.Provider>
     )

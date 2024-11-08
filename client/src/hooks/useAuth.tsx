@@ -1,9 +1,31 @@
-import { useContext, useDebugValue } from "react";
-import AuthContext from "../context/authContext";
+import { useToken } from "./useToken"
+import {jwtDecode, JwtPayload} from "jwt-decode";
 
-export const useAuth = () => {
-    const { auth } = useContext(AuthContext);
-    useDebugValue(auth, auth => auth?.user ? "Logged In" : "Logged Out")
-    return useContext(AuthContext);
+
+
+interface MyJwtPayload extends JwtPayload {
+  UserInfo: {
+    username: string;
+    roles: string[];
+    isActive: boolean;
+  };
 }
 
+
+export const useAuth = () => {
+    const {token} = useToken();
+    let isAdmin = false;
+    const myToken = token;
+
+    if (myToken) {
+        const {username, roles, isActive} = jwtDecode<MyJwtPayload>(myToken).UserInfo;
+
+        isAdmin = roles.includes('Admin');
+
+
+        return {username, roles, isActive, isAdmin}
+    }
+    
+
+    return {username: '', roles: [], isActive: true, isAdmin}
+}

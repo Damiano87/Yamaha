@@ -4,6 +4,7 @@ import { MdOutlineBrowserUpdated } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { useCompareContext } from "@/hooks/useCompareContext";
 import { Atv, Motorcycle } from "@/utils/types";
+import { useAuth } from "@/hooks/useAuth";
 
 
 type AtvProps = {
@@ -21,7 +22,8 @@ const Vehicle = ({vehicle, kind, setShowModal, setSelectedVehicle}: AtvProps) =>
   const images = vehicle?.images;
   const colorNames = vehicle?.colorNames;
   const {selectedVehicles, setSelectedVehicles} = useCompareContext();
-
+  const { isAdmin } = useAuth();
+  
    // Funkcja obsługująca zmianę checkboxa
   const handleCheckboxChange = (vehicle: Motorcycle | Atv) => {
     if (selectedVehicles.find(v => v.id === vehicle.id)) {
@@ -36,7 +38,7 @@ const Vehicle = ({vehicle, kind, setShowModal, setSelectedVehicle}: AtvProps) =>
 
   return (
     <article className="relative">
-            <div className="absolute top-2 right-2 text-gray-500 flex gap-2 items-center">
+            {isAdmin && <div className="absolute top-2 right-2 text-gray-500 flex gap-2 items-center">
               <Link to={`/update-${kind}/${id}`} title={`Update ${kind}`}>
                 <MdOutlineBrowserUpdated size={30}/>
             </Link>
@@ -49,7 +51,7 @@ const Vehicle = ({vehicle, kind, setShowModal, setSelectedVehicle}: AtvProps) =>
               >
               <MdDelete size={30}/>
             </button>
-            </div>
+            </div>}
             <Link
             to={`/${kind === 'moto' ? 'motocycles' : 'atv'}/${id}?${new URLSearchParams({
               color: colorNames[0].name,

@@ -56,6 +56,7 @@ const register = async (req, res) => {
         UserInfo: {
           username: newUser.username,
           roles: newUser.roles,
+          isActive: newUser.isActive,
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
@@ -87,29 +88,36 @@ const register = async (req, res) => {
 // @route POST /auth
 // @access Public
 const login = async (req, res) => {
-  const { username, password } = req.body;
+  const { user, pwd } = req.body;
 
-  if (!username || !password) {
+  if (!user || !pwd) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   const foundUser = await prisma.user.findUnique({
-    where: { username },
+    where: { username: user },
   });
 
-  if (!foundUser || !foundUser.isActive) {
+  if (!foundUser) {
+    return res
+      .status(401)
+      .json({ message: `Nie znaleziono użytkownika ${user}` });
+  }
+
+  if (!foundUser.isActive) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
-  const match = await bcrypt.compare(password, foundUser.password);
+  const match = await bcrypt.compare(pwd, foundUser.password);
 
-  if (!match) return res.status(401).json({ message: "Unauthorized" });
+  if (!match) return res.status(401).json({ message: "Błędne hasło" });
 
   const accessToken = jwt.sign(
     {
       UserInfo: {
         username: foundUser.username,
         roles: foundUser.roles,
+        isActive: foundUser.isActive,
       },
     },
     process.env.ACCESS_TOKEN_SECRET,
@@ -177,6 +185,7 @@ const refresh = (req, res) => {
 // @access Public - just to clear cookie if exists
 const logout = (req, res) => {
   const cookies = req.cookies;
+  console.log(cookies);
   if (!cookies?.jwt) return res.sendStatus(204); //No content
   res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
   res.json({ message: "Cookie cleared" });
