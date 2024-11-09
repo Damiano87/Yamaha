@@ -21,13 +21,13 @@ console.log(process.env.NODE_ENV);
 
 const app = express();
 
+app.use(cookieParser());
+
 app.use(logger);
 
 app.use(cors(corsOptions));
 
 app.use(express.json());
-
-app.use(cookieParser());
 
 // Serve static files from the "public" directory
 const __filename = fileURLToPath(import.meta.url);

@@ -16,6 +16,8 @@ const RequireAuth = ({ allowedRoles }: {allowedRoles: string[]}) => {
     const { token } = useToken();
     const location = useLocation();
 
+    
+    console.log("To jest log z requireAuth", token)
 
     if (!token) {
         return <Navigate to="/login" state={{ from: location }} replace />;

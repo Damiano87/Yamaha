@@ -20,8 +20,8 @@ const RegisterButton = () => {
         <div className="absolute hidden group-hover:block right-0 bg-white px-1 py-1 rounded-md shadow-md">
             <button 
                 className="flex items-center justify-between gap-4 px-3 py-1 hover:bg-slate-100"
-                onClick={() => {
-                    logout();
+                onClick={ async () => {
+                    await logout();
                     navigate('/', { replace: true })
                 }}
                 >

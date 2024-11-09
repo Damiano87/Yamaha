@@ -46,14 +46,14 @@ const Login = () => {
             
             const accessToken = response?.data?.accessToken;
             // const roles = response?.data?.roles;
-            setToken( accessToken );
+            setToken(accessToken);
             setUser('');
             setPwd('');
             setTimeout(() => {
                    navigate('/');
             }, 2000)
-            console.log(token)
-            console.log(username, roles, isActive)
+            // console.log(token)
+            // console.log(username, roles, isActive)
         } catch (err) {
            if (err instanceof AxiosError) {
             setErrMsg(err?.response?.data.message)

@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import useRefreshToken from "@/hooks/useRefreshToken";
+import { createContext, useEffect, useState } from "react";
 
 // dropdown context
 type AuthContextProviderProps = {
@@ -18,7 +19,20 @@ const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider = ({ children }: AuthContextProviderProps) => {
     const [token, setToken] = useState<string | null>(null);
+    const refresh = useRefreshToken();
 
+
+    useEffect(() => {
+
+        const getToken = async () => {
+            await refresh();
+        }
+
+            getToken();
+            console.log("To jest log z authContext", token);
+        
+
+    }, [token, refresh])
     return (
         <AuthContext.Provider value={{ token, setToken }}>
             {children}

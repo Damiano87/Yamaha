@@ -12,10 +12,9 @@ const useLogout = () => {
         setToken(null);
 
         try {
-            const response = await apiRequest.post('/auth/logout', {
+            await apiRequest.post('/auth/logout', {}, {
                 withCredentials: true
             });
-            console.log(response)
         } catch (err) {
             console.error(err);
         }
