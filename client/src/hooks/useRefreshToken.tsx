@@ -12,7 +12,6 @@ const useRefreshToken = () => {
         });
 
         setToken(response?.data?.accessToken);
-        console.log("Token pobrany")
         return response?.data?.accessToken;
         } catch (error) {
             console.error('Nie udało się odświeżyć access tokena', error);

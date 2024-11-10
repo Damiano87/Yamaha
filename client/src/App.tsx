@@ -16,7 +16,8 @@ import Register from "./routes/Register/Register";
 import Login from "./routes/Login/Login";
 import Unauthorized from "./routes/Unauthorized/Unauthorized";
 import RequireAuth from "./components/RequireAuth";
-
+import PersistLogin from "./routes/Login/PersistLogin";
+import Missing from "./routes/Missing/Missing";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
   {
     path: '/unauthorized',
     element: <Unauthorized />
+  },
+  // catch all
+  {
+    path: "*",
+    element: <Missing />
   },
   {
     path: "/",
@@ -63,7 +69,11 @@ const router = createBrowserRouter([
         path: 'edit-user',
         element: <EditUserPage />
       },
+      // Protected routes ===============================================
       {
+        element: <PersistLogin />,
+        children: [
+          {
         element: <RequireAuth allowedRoles={['Admin']}/>,
         children: [
           {
@@ -92,6 +102,11 @@ const router = createBrowserRouter([
           },
         ]
       },
+        ]
+      },
+
+      // =================================================================
+
       {
         path: 'atv/compare',
         element: <ComparePage />

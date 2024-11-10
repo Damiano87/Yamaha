@@ -6,14 +6,16 @@ const Unauthorized = () => {
     const goBack = () => navigate(-1);
 
     return (
-        <section>
-            <h1>Unauthorized</h1>
-            <br />
+        <div className="flex items-center justify-center h-screen bg-gray-300">
+            <section className="bg-black text-white p-8 space-y-5">
+            <h1 className="bg-white text-red-700 w-fit px-4 font-bold tracking-wider">Unauthorized</h1>
+            
             <p>You do not have access to the requested page.</p>
-            <div className="flexGrow">
-                <button onClick={goBack}>Go Back</button>
-            </div>
+            
+            <button onClick={goBack} className="bg-white text-black w-fit px-4 font-semibold">Go Back</button>
+            
         </section>
+        </div>
     )
 }
 
