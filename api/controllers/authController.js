@@ -57,6 +57,7 @@ const register = async (req, res) => {
           username: newUser.username,
           roles: newUser.roles,
           isActive: newUser.isActive,
+          id: newUser.id,
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
@@ -118,6 +119,7 @@ const login = async (req, res) => {
         username: foundUser.username,
         roles: foundUser.roles,
         isActive: foundUser.isActive,
+        id: foundUser.id,
       },
     },
     process.env.ACCESS_TOKEN_SECRET,
@@ -169,6 +171,7 @@ const refresh = (req, res) => {
           UserInfo: {
             username: foundUser.username,
             roles: foundUser.roles,
+            id: foundUser.id,
           },
         },
         process.env.ACCESS_TOKEN_SECRET,

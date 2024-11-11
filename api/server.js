@@ -13,6 +13,7 @@ import userRoutes from "./routes/userRoutes.js";
 import atvRoutes from "./routes/atvRoutes.js";
 import motoRoutes from "./routes/motoRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import wishlistRoutes from "./routes/wishlistRoutes.js";
 
 const PORT = process.env.PORT || 3500;
 
@@ -40,6 +41,7 @@ app.use("/users", userRoutes);
 app.use("/vehicles/atv", atvRoutes);
 app.use("/vehicles/moto", motoRoutes);
 app.use("/auth", authRoutes);
+app.use("/wishlist", wishlistRoutes);
 
 // show 404 site if there is no resources
 app.all("*", (req, res) => {

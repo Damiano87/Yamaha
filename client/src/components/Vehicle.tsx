@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { useCompareContext } from "@/hooks/useCompareContext";
 import { Atv, Motorcycle } from "@/utils/types";
 import { useAuth } from "@/hooks/useAuth";
+import AddToWishlist from "./AddToWishlist";
 
 
 type AtvProps = {
@@ -58,24 +59,23 @@ const Vehicle = ({vehicle, kind, setShowModal, setSelectedVehicle}: AtvProps) =>
             })}`}
             preventScrollReset={false}
           >
-            <div>
+            <div className="relative">
               
-              <div
-                className="inline-flex items-center gap-3 p-2"
-                onClick={(event) => event.stopPropagation()}
-              >
-                <input
-                  type="checkbox"
-                  id={`compare-${id}`}
-                  checked={selectedVehicles.some(v => v.id === id)}
-                  onChange={() => handleCheckboxChange(vehicle)}
-                  disabled={selectedVehicles.length >= 4 && !selectedVehicles.some(v => v.id === vehicle.id)}
-                  className="w-4 h-4 cursor-pointer accent-black focus:ring-2 focus:ring-blue-500" 
-                />
-                <label htmlFor={`compare-${id}`} className="cursor-pointer">
-                  Porównaj
-                </label>
-              </div>
+              <label
+                  htmlFor={`compare-${id}`}
+                  className="inline-flex items-center gap-3 p-2 cursor-pointer"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <input
+                    type="checkbox"
+                    id={`compare-${id}`}
+                    checked={selectedVehicles.some(v => v.id === id)}
+                    onChange={() => handleCheckboxChange(vehicle)}
+                    disabled={selectedVehicles.length >= 4 && !selectedVehicles.some(v => v.id === vehicle.id)}
+                    className="w-4 h-4 cursor-pointer accent-black focus:ring-2 focus:ring-blue-500" 
+                  />
+                  <span>Porównaj</span>
+            </label>
               <div className="relative aspect-[16/9]">
                 <img
                   src={images[0]}
@@ -89,6 +89,7 @@ const Vehicle = ({vehicle, kind, setShowModal, setSelectedVehicle}: AtvProps) =>
                 {name}
               </p>
               <p>{formatCurrencyPLN(price)}</p>
+              <AddToWishlist />
             </div>
           </Link>
           </article>
