@@ -18,6 +18,7 @@ import Unauthorized from "./routes/Unauthorized/Unauthorized";
 import RequireAuth from "./components/RequireAuth";
 import PersistLogin from "./routes/Login/PersistLogin";
 import Missing from "./routes/Missing/Missing";
+import Dashboard from "./routes/Dashboard/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,7 @@ const router = createBrowserRouter([
         path: 'edit-user',
         element: <EditUserPage />
       },
+
       // Protected routes ===============================================
       {
         element: <PersistLogin />,
@@ -99,6 +101,15 @@ const router = createBrowserRouter([
             path: 'update-moto/:id',
             element: <UpdateMotoPage />,
             loader: getSingleMotoLoader
+          },
+        ]
+      },
+      {
+        element: <RequireAuth allowedRoles={['Admin', 'Manager', 'User']}/>,
+         children: [
+          {
+            path: 'dashboard',
+            element: <Dashboard />
           },
         ]
       },

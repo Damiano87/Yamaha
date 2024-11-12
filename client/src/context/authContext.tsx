@@ -18,20 +18,6 @@ const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider = ({ children }: AuthContextProviderProps) => {
     const [token, setToken] = useState<string | null>(null);
-    // const refresh = useRefreshToken();
-
-
-    // useEffect(() => {
-
-    //     const getToken = async () => {
-    //         await refresh();
-    //     }
-
-    //         getToken();
-    //         console.log("To jest log z authContext", token);
-        
-
-    // }, [token, refresh])
 
     useEffect(() => {
         console.log("To jest log z authContext", token)

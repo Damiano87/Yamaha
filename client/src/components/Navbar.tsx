@@ -7,6 +7,7 @@ import Sidebar from "./Sidebar";
 import { X } from "lucide-react";
 import { Link } from "react-router-dom";
 import RegisterButton from "@/routes/Register/RegisterButton";
+import WishNumber from "./WishNumber";
 
 
 const Navbar = () => {
@@ -44,8 +45,11 @@ const Navbar = () => {
 
 
         <div className="flex items-center gap-3">
+          {/* wish number */}
+          <WishNumber />
           {/* register button  */}
-        <RegisterButton />
+          <RegisterButton />
+        
         {/* hamburger button */}
         <button
           type="button"

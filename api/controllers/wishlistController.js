@@ -54,9 +54,9 @@ const addItem = async (req, res) => {
     });
   }
 
-  if (!["Atv", "Moto"].includes(vehicleType)) {
+  if (!["atv", "moto"].includes(vehicleType)) {
     return res.status(400).json({
-      message: "Invalid vehicle type. Must be either 'Atv' or 'Moto'",
+      message: "Invalid vehicle type. Must be either 'atv' or 'moto'",
     });
   }
 

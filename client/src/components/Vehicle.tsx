@@ -13,10 +13,11 @@ type AtvProps = {
     kind: string,
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
     setSelectedVehicle: React.Dispatch<React.SetStateAction<{ id: string, name: string } | null>>
+    setIsOpenLoginModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 
-const Vehicle = ({vehicle, kind, setShowModal, setSelectedVehicle}: AtvProps) => {
+const Vehicle = ({vehicle, kind, setShowModal, setSelectedVehicle, setIsOpenLoginModal}: AtvProps) => {
   const id = vehicle?.id;
   const name = vehicle?.name;
   const price = vehicle?.price;
@@ -36,23 +37,24 @@ const Vehicle = ({vehicle, kind, setShowModal, setSelectedVehicle}: AtvProps) =>
     }
   };
 
-
+  
   return (
-    <article className="relative">
-            {isAdmin && <div className="absolute top-2 right-2 text-gray-500 flex gap-2 items-center">
-              <Link to={`/update-${kind}/${id}`} title={`Update ${kind}`}>
-                <MdOutlineBrowserUpdated size={30}/>
-            </Link>
-            <button 
-              title={`Delete ${kind}`}
-              onClick={() => {
-                setShowModal(true);
-                setSelectedVehicle({id, name});
-              }}
-              >
-              <MdDelete size={30}/>
-            </button>
-            </div>}
+    <article className="relative">     
+              {isAdmin && 
+              <div className="absolute z-[5] top-2 right-2 text-gray-500 flex gap-2 items-center">
+                  <Link to={`/update-${kind}/${id}`} title={`Update ${kind}`}>
+                    <MdOutlineBrowserUpdated size={30}/>
+                </Link>
+                <button 
+                  title={`Delete ${kind}`}
+                  onClick={() => {
+                    setShowModal(true);
+                    setSelectedVehicle({id, name});
+                  }}
+                  >
+                  <MdDelete size={30}/>
+                </button>
+              </div>}
             <Link
             to={`/${kind === 'moto' ? 'motocycles' : 'atv'}/${id}?${new URLSearchParams({
               color: colorNames[0].name,
@@ -89,7 +91,7 @@ const Vehicle = ({vehicle, kind, setShowModal, setSelectedVehicle}: AtvProps) =>
                 {name}
               </p>
               <p>{formatCurrencyPLN(price)}</p>
-              <AddToWishlist />
+              <AddToWishlist vehicleId={id} vehicleType={kind} setIsOpenLoginModal={setIsOpenLoginModal}/>
             </div>
           </Link>
           </article>

@@ -1,20 +1,18 @@
 import { useRef, useState, useEffect, FormEvent } from 'react';
 import { useToken } from '@/hooks/useToken';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import apiRequest from '../../api/apiRequest';
-import { useAuth } from '@/hooks/useAuth';
-
 
 const LOGIN_URL = '/auth/login';
 
 const Login = () => {
-    const { token, setToken } = useToken();
-    const {username, roles, isActive} = useAuth()
+    const { setToken } = useToken();
+    
     
     const navigate = useNavigate();
-    // const location = useLocation();
-    // const from = location.state?.from?.pathname || "/";
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const userRef = useRef<HTMLInputElement>(null);
     const errRef = useRef<HTMLParagraphElement>(null);
@@ -50,7 +48,7 @@ const Login = () => {
             setUser('');
             setPwd('');
             setTimeout(() => {
-                   navigate('/');
+                   navigate(from, { replace: true });
             }, 2000)
             // console.log(token)
             // console.log(username, roles, isActive)

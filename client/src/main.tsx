@@ -9,6 +9,8 @@ import {
 import { FooterProvider } from "../src/context/footerContext.tsx";
 import { CompareProvider } from "./context/compareContext.tsx";
 import { AuthProvider } from "./context/authContext.tsx";
+import { WishListProvider } from "./context/wishListContext.tsx";
+
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -17,7 +19,9 @@ createRoot(document.getElementById("root")!).render(
           <FooterProvider>
             <CompareProvider>
               <AuthProvider>
-                <App />
+                <WishListProvider>
+                  <App />
+                </WishListProvider>
               </AuthProvider>
             </CompareProvider>
           </FooterProvider>
