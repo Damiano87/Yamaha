@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 
 // dropdown context
 type AuthContextProviderProps = {
@@ -19,9 +19,9 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider = ({ children }: AuthContextProviderProps) => {
     const [token, setToken] = useState<string | null>(null);
 
-    useEffect(() => {
-        console.log("To jest log z authContext", token)
-    }, [token])
+    // useEffect(() => {
+    //     console.log("To jest log z authContext", token)
+    // }, [token])
 
     return (
         <AuthContext.Provider value={{ token, setToken }}>

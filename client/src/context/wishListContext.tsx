@@ -1,4 +1,6 @@
 import { createContext, useState } from "react";
+import { Vehicle } from "@/routes/Dashboard/components/DashboardWishList";
+import { Motorcycle, Atv } from "@/utils/types";
 
 // dropdown context
 type WishListContextProviderProps = {
@@ -6,20 +8,23 @@ type WishListContextProviderProps = {
 };
 
 
-type WishlistItem = {
+export type WishlistItem = {
   userId: string,
   vehicleId: string,
   vehicleType: string,
   id: string,
-  atv: string | null,
-  moto: string | null,
+  name: string,
+  price: number,
+  atv: Atv | null,
+  images: string[],
+  moto: Motorcycle | null,
   addedAt: Date
 }
 
 
 type WishListContextType = {
-    wishList: WishlistItem[],
-    setWishList: React.Dispatch<React.SetStateAction<WishlistItem[]>>
+    wishList: WishlistItem[] | Vehicle[],
+    setWishList: React.Dispatch<React.SetStateAction<WishlistItem[] | Vehicle[]>>
 }
 
 
@@ -29,7 +34,7 @@ const WishListContext = createContext<WishListContextType>({
 });
 
 export const WishListProvider = ({ children }: WishListContextProviderProps) => {
-    const [wishList, setWishList] = useState<WishlistItem[]>([]);
+    const [wishList, setWishList] = useState<WishlistItem[] | Vehicle[]>([]);
 
     return (
         <WishListContext.Provider value={{ wishList, setWishList }}>

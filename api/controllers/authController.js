@@ -171,6 +171,7 @@ const refresh = (req, res) => {
           UserInfo: {
             username: foundUser.username,
             roles: foundUser.roles,
+            isActive: foundUser.isActive,
             id: foundUser.id,
           },
         },

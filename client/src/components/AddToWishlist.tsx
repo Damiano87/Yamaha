@@ -15,7 +15,7 @@ const AddToWishlist = ({vehicleId, vehicleType, setIsOpenLoginModal}: WishlistPr
     const {wishList, setWishList} = useWishList();
     const axiosPrivate =  useAxiosPrivate();
 
-
+  // get all items from wish list
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
