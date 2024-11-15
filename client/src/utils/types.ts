@@ -86,6 +86,7 @@ export type Atv = {
   description: string;
   colorNames: Color[];
   images: string[];
+  vehicleType: string,
   daneTechniczne: daneTech;
   createdAt: Date
 };
@@ -170,6 +171,7 @@ export type Motorcycle = {
   podwozieNames: string[];
   wymiaryNames: string[];
   category: string,
+  vehicleType: string,
   currency: number | null,
   createdAt: Date,
 };

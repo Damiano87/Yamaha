@@ -186,17 +186,15 @@ type PropertiesMoto {
   desc  Json
 }
 
-// Wspólny model dla listy życzeń ================================================
+// Wishlist model ==============================================================
 model VehicleWishList {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @db.ObjectId
-
-  // Relacje do pojazdów (tylko jeden z nich może być wypełniony)
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String @db.ObjectId
   atv         Atv?   @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
   moto        Moto?  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
   vehicleId   String @db.ObjectId
-  vehicleType String // "ATV" lub "MOTO"
+  vehicleType String // "Atv" lub "Moto"
 
   addedAt DateTime @default(now())
 

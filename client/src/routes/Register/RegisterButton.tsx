@@ -13,8 +13,8 @@ const RegisterButton = () => {
     const navigate = useNavigate();
 
   if (username) {
-    return <div className=" relative group">
-        <div className="w-14 aspect-square rounded-full bg-orange-800 hover:bg-orange-900 cursor-pointer flex items-center justify-center">
+    return <div className="relative group">
+        <div className="w-10 aspect-square rounded-full bg-orange-800 hover:bg-orange-900 cursor-pointer flex items-center justify-center">
             <span className="text-white text-[1.4rem]">{username.charAt(0).toUpperCase()}</span>
         </div>
         <div className="absolute hidden group-hover:block right-0 bg-white px-1 py-1 rounded-md shadow-md">
