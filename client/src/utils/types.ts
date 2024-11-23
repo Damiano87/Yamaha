@@ -78,6 +78,7 @@ export type daneTech = {
 
 export type Atv = {
   id: string;
+  vehicleId: string,
   name: string;
   price: number;
   priceInfo: string;
@@ -154,6 +155,7 @@ export type TechMoto = {
 
 export type Motorcycle = {
   id: string;
+  vehicleId: string,
   name: string;
   price: number;
   license: string;

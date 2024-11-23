@@ -1,12 +1,27 @@
 import { useWishList } from "@/hooks/useWishList";
+import { useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
-
-
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 
 const WishNumber = () => {
-  const {wishList} = useWishList();
+  const {wishList, setWishList} = useWishList();
+  const axiosPrivate = useAxiosPrivate();
+
+  // get all items from wish list
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        const response = await axiosPrivate.get('/wishlist')
+        setWishList(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+      fetchWishlist()
+    
+  }, [axiosPrivate, setWishList])
 
 
   if (!wishList?.length) return null
@@ -21,4 +36,5 @@ const WishNumber = () => {
     </div>
   )
 }
+
 export default WishNumber

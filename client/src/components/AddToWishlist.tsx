@@ -3,6 +3,7 @@ import { AxiosError } from "axios";
 import { useEffect  } from "react";
 import { FaHeart } from "react-icons/fa";
 import {useWishList} from '../hooks/useWishList';
+import { WishlistItem } from "@/context/wishListContext";
 
 type WishlistProps = {
   vehicleId: string,
@@ -41,7 +42,7 @@ const AddToWishlist = ({vehicleId, vehicleType, setIsOpenLoginModal}: WishlistPr
             }
         })
 
-          setWishList(prevWishList => prevWishList.filter(item => item.vehicleId !== vehicleId));
+          setWishList(prevWishList => prevWishList.filter((item): item is WishlistItem => item.vehicleId !== vehicleId));
         } catch (error) {
           console.log(error)
         }

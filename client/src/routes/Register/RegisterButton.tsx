@@ -1,14 +1,17 @@
 import { FaUser } from "react-icons/fa";
 import { CiLogin } from "react-icons/ci";
 import { FaPencil } from "react-icons/fa6";
+import { MdOutlineDashboard } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import useLogout from "@/hooks/useLogout";
+import { useWishList } from "@/hooks/useWishList";
 
 
 
 const RegisterButton = () => {
-    const {username} = useAuth();
+    const { username } = useAuth();
+    const { setWishList } = useWishList();
     const logout = useLogout();
     const navigate = useNavigate();
 
@@ -18,10 +21,19 @@ const RegisterButton = () => {
             <span className="text-white text-[1.4rem]">{username.charAt(0).toUpperCase()}</span>
         </div>
         <div className="absolute hidden group-hover:block right-0 bg-white px-1 py-1 rounded-md shadow-md">
+
+            <Link to={'/dashboard'}
+                className="w-full flex items-center justify-between gap-4 px-3 py-1 hover:bg-slate-100"
+            >
+                <span className="text-nowrap">Dashboard</span>
+                <MdOutlineDashboard size={25}/>
+            </Link>
+
             <button 
-                className="flex items-center justify-between gap-4 px-3 py-1 hover:bg-slate-100"
+                className="w-full flex items-center justify-between gap-4 px-3 py-1 hover:bg-slate-100"
                 onClick={ async () => {
                     await logout();
+                    setWishList([]);
                     navigate('/', { replace: true })
                 }}
                 >
