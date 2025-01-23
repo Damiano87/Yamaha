@@ -10,7 +10,9 @@ import { FooterProvider } from "../src/context/footerContext.tsx";
 import { CompareProvider } from "./context/compareContext.tsx";
 import { AuthProvider } from "./context/authContext.tsx";
 import { WishListProvider } from "./context/wishListContext.tsx";
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
+if (process.env.NODE_ENV === 'production') disableReactDevTools();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
