@@ -5,7 +5,6 @@ import AtvPage from "./routes/AtvsPage/AtvsPage";
 import AtvSinglePage from "./routes/AtvSinglePage/AtvSinglePage";
 import MotocyclesPage from "./routes/MotocyclesPage/MotocyclesPage";
 import MotoSinglePage from "./routes/MotoSinglePage/MotoSinglePage";
-import EditUserPage from './routes/EditUserPage/EditUserPage';
 import CreateVehiclePage from "./routes/CreateVehicle/CreateVehiclePage";
 import { getAllAtvsLoader, getSingleAtvLoader } from "./loaders/atvLoader";
 import { getAllMotosLoader, getSingleMotoLoader } from "./loaders/motoLoaders";
@@ -66,11 +65,6 @@ const router = createBrowserRouter([
         element: <MotoSinglePage />,
         loader: getSingleMotoLoader
       },
-      {
-        path: 'edit-user',
-        element: <EditUserPage />
-      },
-
       // Protected routes ===============================================
       {
         element: <PersistLogin />,
