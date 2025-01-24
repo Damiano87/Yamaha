@@ -12,12 +12,17 @@ type daneTechProps = {
   daneTechniczne: daneTech;
 };
 
+type DataItem = {
+  title: string;
+  desc: string;
+};
+
 
 const Dane = ({
   daneTechniczne,
   page
 }: daneProps) => {
-  const [data, setData] = useState<string[][]>([]);
+  const [data, setData] = useState<DataItem[][]>([]);
   
   useEffect(() => {
   const entries = Object.entries(daneTechniczne as daneTechProps);
@@ -35,7 +40,7 @@ const Dane = ({
       for (let i = 0; i < arr.length; i++) {
       finalArray.push(arr[i].map((item) => item[1]).filter(Boolean))
       }
-      setData(finalArray)
+      setData(finalArray as DataItem[][])
   }, [page, daneTechniczne])
     
   return (
