@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import Modal from "./components/Modal";
 import TechDataToCompare from "./components/TechDataToCompare";
 import Links from "./components/Links";
+import { Helmet } from "react-helmet-async";
 
 const ComparePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,6 +17,9 @@ const ComparePage = () => {
   const [vehicles, setVehicles] = useState<Motorcycle[] | Atv[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isFirstOpen, setIsFirstOpen] = useState<boolean>(true);
+
+  // get vehicle type from url
+  const vehicleType = location.pathname.split("/").filter(Boolean)[0] === "motocycles" ? "motocykle" : "atv";
 
   const { products, isLoading, error } = useFetchMultiple(param, location.pathname)
     
@@ -42,8 +46,6 @@ const ComparePage = () => {
     setIsModalOpen(true);
   }
 
-
-
   // handle scroll function
   useEffect(() => {
     const handleScroll = () => {
@@ -64,12 +66,19 @@ const ComparePage = () => {
 
   const techData = products?.map(product => product.daneTechniczne)
   
-  
+
     if (error) return <div className="h-screen flex items-center justify-center">
-      <h1 className="text-[2rem] font-semibold">{error}</h1>
-    </div>;
+                        <h1 className="text-[2rem] font-semibold">{error}</h1>
+                      </div>
   return (
     <div className="bg-neutral-100 py-14">
+      <Helmet>
+              <title>Porównaj {vehicleType}</title>
+              <meta 
+                name="description" 
+                content={`Porównaj ${vehicleType}`} 
+              />
+      </Helmet>
       {isModalOpen && <Modal vehicles={vehicles} setVehicles={setVehicles} isFirstOpen={isFirstOpen} setIsFirstOpen={setIsFirstOpen} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>}
       <UpperPanel products={products} removeModel={removeModel} addVehicle={addVehicle} isOpen={isOpen} setIsOpen={setIsOpen}/>
       <CompareImages products={products} removeModel={removeModel} addVehicle={addVehicle} isLoading={isLoading}/>

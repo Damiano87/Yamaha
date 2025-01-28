@@ -9,6 +9,7 @@ import MaxPower from "./components/MaxPower";
 import MotocyclesListSkeleton from "@/components/skeletons/ListSkeleton";
 import License from "./components/License";
 import ResetFilters from "./components/ResetFilters";
+import { Helmet } from "react-helmet-async";
 
 const MotoPage = () => {
   const motors = useLoaderData() as Motorcycle[];
@@ -17,6 +18,13 @@ const MotoPage = () => {
   
   return (
     <>
+    <Helmet>
+        <title>Motocykle - Yamaha Motors</title>
+        <meta 
+        name="description" 
+        content="Motocykle - Yamaha Motors" 
+        />
+    </Helmet>
       <Hero />
       <section className="mx-auto -mt-10 max-w-7xl border-t-[6px] border-blue-800 bg-white">
         <div className="md:flex items-center space-y-5 md:space-y-0 justify-end gap-x-4 mx-5 md:mx-10 my-10">

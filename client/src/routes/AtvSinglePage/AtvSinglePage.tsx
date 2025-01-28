@@ -8,6 +8,7 @@ import TechData from "../../components/TechData";
 import { useSearchParams, useLoaderData } from "react-router-dom";
 import { Atv } from "@/utils/types";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const SingleAtvProduct = () => {
   const foundAtv = useLoaderData() as Atv;
@@ -29,6 +30,13 @@ const SingleAtvProduct = () => {
 
     return (
       <main>
+        <Helmet>
+        <title>{name.charAt(0).toUpperCase() + name.slice(1)}</title>
+        <meta 
+          name="description" 
+          content={`Szczegóły produktu ${name}. ${description}`} 
+        />
+      </Helmet>
         <section 
           className="flex items-end h-80 md:h-screen px-10 bg-cover bg-black/65 bg-blend-darken bg-no-repeat bg-center"
           style={{ backgroundImage: `url(${images[3]})` }}
