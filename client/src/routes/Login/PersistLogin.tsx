@@ -27,7 +27,7 @@ const PersistLogin = () => {
             setIsLoading(false);
         }
 
-    })
+    }, [token, refresh])
 
     useEffect(() => {
         console.log(`isLoading: ${isLoading}`);

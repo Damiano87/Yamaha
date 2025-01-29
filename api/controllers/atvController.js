@@ -145,6 +145,13 @@ const createAtv = async (req, res) => {
     colorNames.push({ name: color3, color: hex3 });
   }
 
+  // Helper function to filter out fields without desc
+  const filterByDesc = (obj) => {
+    return Object.fromEntries(
+      Object.entries(obj).filter(([_, value]) => value?.desc)
+    );
+  };
+
   // Create the atv
   const newAtv = await prisma.atv.create({
     data: {
@@ -156,252 +163,105 @@ const createAtv = async (req, res) => {
       colorNames,
       images,
       daneTechniczne: {
-        // engine data
-        ...((engineType ||
-          capacity ||
-          diameterXtlok ||
-          stopienSprezania ||
-          ukladSmarowania ||
-          ukladPaliwowy ||
-          ukladZaplonu ||
-          ukladRozrusznika ||
-          gearBox ||
-          naped ||
-          napedKoncowy) && {
-          silnik: {
-            ...(engineType && {
-              typSilnika: { title: "Typ silnika", desc: engineType },
-            }),
-
-            ...(capacity && {
-              pojemnosc: { title: "Pojemność", desc: capacity },
-            }),
-
-            ...(diameterXtlok && {
-              srednicaXskokTloka: {
-                title: "Średnica x skoku tłoka",
-                desc: diameterXtlok,
-              },
-            }),
-
-            ...(stopienSprezania && {
-              stopienSprezania: {
-                title: "Stopień sprężania",
-                desc: stopienSprezania,
-              },
-            }),
-
-            ...(ukladSmarowania && {
-              ukladSmarowania: {
-                title: "Układ smarowania",
-                desc: ukladSmarowania,
-              },
-            }),
-
-            ...(ukladPaliwowy && {
-              ukladPaliwowy: { title: "Układ paliwowy", desc: ukladPaliwowy },
-            }),
-
-            ...(ukladZaplonu && {
-              ukladZaplonu: { title: "Układ zapłonu", desc: ukladZaplonu },
-            }),
-
-            ...(ukladRozrusznika && {
-              ukladRozrusznika: {
-                title: "Układ rozrusznika",
-                desc: ukladRozrusznika,
-              },
-            }),
-
-            ...(gearBox && {
-              skrzyniaBiegow: { title: "Skrzynia biegów", desc: gearBox },
-            }),
-
-            ...(naped && { naped: { title: "Napęd", desc: naped } }),
-            ...(napedKoncowy && {
-              napedKoncowy: { title: "Napęd końcowy", desc: napedKoncowy },
-            }),
-          },
-        }),
-        // suspension data
-        ...((ukladPrzedZawieszenia ||
-          ukladTylZawieszenia ||
-          hamulecPrzedni ||
-          hamulecTylny ||
-          ogumieniePrzednie ||
-          ogumienieTylne) && {
-          podwozie: {
-            ...(ukladPrzedZawieszenia && {
-              ukladPrzedniegoZawieszenia: {
-                title: "Układ przedniego zawieszenia",
-                desc: ukladPrzedZawieszenia,
-              },
-            }),
-
-            ...(ukladTylZawieszenia && {
-              ukladTylnegoZawieszenia: {
-                title: "Układ tylnego zawieszenia",
-                desc: ukladTylZawieszenia,
-              },
-            }),
-
-            ...(hamulecPrzedni && {
-              hamulecPrzedni: {
-                title: "Hamulec przedni",
-                desc: hamulecPrzedni,
-              },
-            }),
-
-            ...(hamulecTylny && {
-              hamulecTylny: { title: "Hamulec tylny", desc: hamulecTylny },
-            }),
-
-            ...(ogumieniePrzednie && {
-              ogumieniePrzednie: {
-                title: "Ogumienie przednie",
-                desc: ogumieniePrzednie,
-              },
-            }),
-
-            ...(ogumienieTylne && {
-              ogumienieTylne: {
-                title: "Ogumienie tylne",
-                desc: ogumienieTylne,
-              },
-            }),
-          },
-        }),
-        // dimensions data
-        ...((dlugoscCalk ||
-          szerCalk ||
-          wysokoscCalk ||
-          wysSiodelka ||
-          rozstawOsi ||
-          minPrzeswit ||
-          minPromien ||
-          masaZobciazeniem ||
-          pojemnoscPaliwa ||
-          pojemnoscOleju) && {
-          wymiary: {
-            ...(dlugoscCalk && {
-              dlugoscCalkowita: {
-                title: "Długość całkowita",
-                desc: dlugoscCalk,
-              },
-            }),
-
-            ...(szerCalk && {
-              szerokoscCalkowita: {
-                title: "Szerokość całkowita",
-                desc: szerCalk,
-              },
-            }),
-
-            ...(wysokoscCalk && {
-              wysokoscCalkowita: {
-                title: "Wysokość całkowita",
-                desc: wysokoscCalk,
-              },
-            }),
-
-            ...(wysSiodelka && {
-              wysokoscSiodelka: {
-                title: "Wysokość siodełka",
-                desc: wysSiodelka,
-              },
-            }),
-
-            ...(rozstawOsi && {
-              rozstawOsi: { title: "Rozstaw osi", desc: rozstawOsi },
-            }),
-
-            ...(minPrzeswit && {
-              minimalnyPrzeswit: {
-                title: "Min. prześwit",
-                desc: minPrzeswit,
-              },
-            }),
-
-            ...(minPromien && {
-              minPromienSkretu: {
-                title: "Min. promień skrętu",
-                desc: minPromien,
-              },
-            }),
-
-            ...(masaZobciazeniem && {
-              masaZobciazeniem: {
-                title: "Masa z obciążeniem",
-                desc: masaZobciazeniem,
-              },
-            }),
-
-            ...(pojemnoscPaliwa && {
-              pojemnoscZbiornikaPaliwa: {
-                title: "Pojemność zbiornika paliwa",
-                desc: pojemnoscPaliwa,
-              },
-            }),
-
-            ...(pojemnoscOleju && {
-              pojemnoscZbiornikaOleju: {
-                title: "Pojemność zbiornika oleju",
-                desc: pojemnoscOleju,
-              },
-            }),
-          },
-        }),
-        // max load data
-        ...((bagaznikPrzedni || bagaznikTylny) && {
-          obciazenieMaksymalne: {
-            ...(bagaznikPrzedni && {
-              bagaznikPrzedni: {
-                title: "Bagażnik przedni",
-                desc: bagaznikPrzedni,
-              },
-            }),
-            ...(bagaznikTylny && {
-              bagaznikTylny: { title: "Bagażnik tylny", desc: bagaznikTylny },
-            }),
-          },
-        }),
-        // additional info data
-        ...((ukladKier ||
-          frontMountedWinch ||
-          trailerHitch ||
-          seleFeatures ||
-          towingCapacity) && {
-          informacjeDodatkowe: {
-            ...(ukladKier && {
-              ukladKierowniczy: {
-                title: "Układ kierowniczy",
-                desc: ukladKier,
-              },
-            }),
-
-            ...(frontMountedWinch && {
-              frontMountedWinch: {
-                title: "Wciągarka",
-                desc: frontMountedWinch,
-              },
-            }),
-
-            ...(trailerHitch && {
-              trailerHitch: { title: "Tylny hak", desc: trailerHitch },
-            }),
-
-            ...(seleFeatures && {
-              seleFeatures: { title: "Sele features", desc: seleFeatures },
-            }),
-
-            ...(towingCapacity && {
-              towingCapacity: {
-                title: "Zdolność holownicza",
-                desc: towingCapacity,
-              },
-            }),
-          },
-        }),
+        ...{
+          silnik: filterByDesc({
+            typSilnika: { title: "Typ silnika", desc: engineType },
+            pojemnosc: { title: "Pojemność", desc: capacity },
+            srednicaXskokTloka: {
+              title: "Średnica x skoku tłoka",
+              desc: diameterXtlok,
+            },
+            stopienSprezania: {
+              title: "Stopień sprężania",
+              desc: stopienSprezania,
+            },
+            ukladSmarowania: {
+              title: "Układ smarowania",
+              desc: ukladSmarowania,
+            },
+            ukladPaliwowy: { title: "Układ paliwowy", desc: ukladPaliwowy },
+            ukladZaplonu: { title: "Układ zapłonu", desc: ukladZaplonu },
+            ukladRozrusznika: {
+              title: "Układ rozrusznika",
+              desc: ukladRozrusznika,
+            },
+            skrzyniaBiegow: { title: "Skrzynia biegów", desc: gearBox },
+            naped: { title: "Napęd", desc: naped },
+            napedKoncowy: { title: "Napęd końcowy", desc: napedKoncowy },
+          }),
+        },
+        ...{
+          podwozie: filterByDesc({
+            ukladPrzedniegoZawieszenia: {
+              title: "Układ przedniego zawieszenia",
+              desc: ukladPrzedZawieszenia,
+            },
+            ukladTylnegoZawieszenia: {
+              title: "Układ tylnego zawieszenia",
+              desc: ukladTylZawieszenia,
+            },
+            hamulecPrzedni: { title: "Hamulec przedni", desc: hamulecPrzedni },
+            hamulecTylny: { title: "Hamulec tylny", desc: hamulecTylny },
+            ogumieniePrzednie: {
+              title: "Ogumienie przednie",
+              desc: ogumieniePrzednie,
+            },
+            ogumienieTylne: { title: "Ogumienie tylne", desc: ogumienieTylne },
+          }),
+        },
+        ...{
+          wymiary: filterByDesc({
+            dlugoscCalkowita: { title: "Długość całkowita", desc: dlugoscCalk },
+            szerokoscCalkowita: {
+              title: "Szerokość całkowita",
+              desc: szerCalk,
+            },
+            wysokoscCalkowita: {
+              title: "Wysokość całkowita",
+              desc: wysokoscCalk,
+            },
+            wysokoscSiodelka: { title: "Wysokość siodełka", desc: wysSiodelka },
+            rozstawOsi: { title: "Rozstaw osi", desc: rozstawOsi },
+            minimalnyPrzeswit: { title: "Min. prześwit", desc: minPrzeswit },
+            minPromienSkretu: {
+              title: "Min. promień skrętu",
+              desc: minPromien,
+            },
+            masaZobciazeniem: {
+              title: "Masa z obciążeniem",
+              desc: masaZobciazeniem,
+            },
+            pojemnoscZbiornikaPaliwa: {
+              title: "Pojemność zbiornika paliwa",
+              desc: pojemnoscPaliwa,
+            },
+            pojemnoscZbiornikaOleju: {
+              title: "Pojemność zbiornika oleju",
+              desc: pojemnoscOleju,
+            },
+          }),
+        },
+        ...{
+          obciazenieMaksymalne: filterByDesc({
+            bagaznikPrzedni: {
+              title: "Bagażnik przedni",
+              desc: bagaznikPrzedni,
+            },
+            bagaznikTylny: { title: "Bagażnik tylny", desc: bagaznikTylny },
+          }),
+        },
+        ...{
+          informacjeDodatkowe: filterByDesc({
+            ukladKierowniczy: { title: "Układ kierowniczy", desc: ukladKier },
+            frontMountedWinch: { title: "Wciągarka", desc: frontMountedWinch },
+            trailerHitch: { title: "Tylny hak", desc: trailerHitch },
+            seleFeatures: { title: "Sele features", desc: seleFeatures },
+            towingCapacity: {
+              title: "Zdolność holownicza",
+              desc: towingCapacity,
+            },
+          }),
+        },
       },
     },
   });

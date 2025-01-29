@@ -19,14 +19,14 @@ const MotoForm = () => {
         mode: "onChange",
     })
     
-    // Funkcja obsługująca zmianę wyboru
+    
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(event.target.value); // Zmienia stan na wybraną opcję
+    setSelectedOption(event.target.value);
   };
 
-  // Funkcja obsługująca zmianę wyboru
+  
   const handleLicenseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedLicense(event.target.value); // Zmienia stan na wybraną opcję
+    setSelectedLicense(event.target.value);
   };
 
 
@@ -157,7 +157,7 @@ const MotoForm = () => {
                         id="option1"
                         type="radio"
                         value="option1"
-                        checked={selectedOption === "option1"} // Sprawdzamy, czy to wybrana opcja
+                        checked={selectedOption === "option1"}
                         onChange={handleOptionChange}
                         className="mr-3 cursor-pointer accent-orange-300"
                     />
@@ -168,7 +168,7 @@ const MotoForm = () => {
                         id="option2"
                         type="radio"
                         value="option2"
-                        checked={selectedOption === "option2"} // Sprawdzamy, czy to wybrana opcja
+                        checked={selectedOption === "option2"}
                         onChange={handleOptionChange}
                         className="mr-3 cursor-pointer accent-orange-300"
                     />
@@ -179,7 +179,7 @@ const MotoForm = () => {
                         id="option3"
                         type="radio"
                         value="option3"
-                        checked={selectedOption === "option3"} // Sprawdzamy, czy to wybrana opcja
+                        checked={selectedOption === "option3"}
                         onChange={handleOptionChange}
                         className="mr-3 cursor-pointer accent-orange-300"
                     />
@@ -266,7 +266,7 @@ const MotoForm = () => {
             </div>
 
 
-            {/* Dane techniczne */}
+            {/* tech data */}
             <h2 className="text-white text-[2rem] font-bold my-14">Dane techniczne pojazdu</h2>
 
             <div className="tech-data-container md:grid grid-cols-2 gap-14">
