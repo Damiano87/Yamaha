@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 import { Motorcycle, Atv } from "@/utils/types";
 
 
-// dropdown context
+// compare context
 type CompareContextProviderProps = {
   children: React.ReactNode;
 };

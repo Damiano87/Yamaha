@@ -27,7 +27,7 @@ model Atv {
   category        String
   name            String            @unique
   price           Int
-  currency        String? // Kod waluty, np. 'PLN', 'USD'
+  currency        String?
   priceInfo       String?
   description     String
   colorNames      Color[]
@@ -110,7 +110,7 @@ model Moto {
   name              String            @unique
   price             Int
   category          String
-  currency          String? // Kod waluty, np. 'PLN', 'USD'
+  currency          String?
   priceInfo         String?
   license           String
   description2Title String
@@ -194,7 +194,7 @@ model VehicleWishList {
   atv         Atv?   @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
   moto        Moto?  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
   vehicleId   String @db.ObjectId
-  vehicleType String // "Atv" lub "Moto"
+  vehicleType String // "Atv" or "Moto"
 
   addedAt DateTime @default(now())
 

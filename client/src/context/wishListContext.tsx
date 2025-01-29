@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 import { Vehicle } from "@/routes/Dashboard/components/DashboardWishList";
 import { Motorcycle, Atv } from "@/utils/types";
 
-// dropdown context
+// wishlist context
 type WishListContextProviderProps = {
   children: React.ReactNode;
 };

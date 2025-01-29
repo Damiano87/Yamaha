@@ -1,5 +1,3 @@
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = ["https://yamahashop.onrender.com"];
 
 export default allowedOrigins;
-
-// https://yamahashop.onrender.com

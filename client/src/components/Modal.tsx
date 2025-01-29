@@ -1,5 +1,3 @@
-
-
 import {
   Carousel,
   CarouselContent,
@@ -10,9 +8,7 @@ import {
 import { type CarouselApi } from "@/components/ui/carousel";
 import { useState, useEffect, useRef } from "react";
 import { useIndexContext } from "../hooks/useDropdownContext";
-
 import { X } from "lucide-react";
-
 import { EmblaCarouselType } from "embla-carousel";
 
 

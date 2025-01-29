@@ -5,6 +5,7 @@ import { FaCheck } from "react-icons/fa6";
 import apiRequest from "@/api/apiRequest";
 import { Link, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
+import { Helmet } from "react-helmet-async";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -61,7 +62,6 @@ const Register = () => {
     // submit form for register
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // if button enabled with JS hack
         const v1 = USER_REGEX.test(user);
         const v2 = PWD_REGEX.test(pwd);
         if (!v1 || !v2) {
@@ -76,9 +76,7 @@ const Register = () => {
                     withCredentials: true
                 }
             );
-            // TODO: remove console.logs before deployment
             console.log(JSON.stringify(response?.data));
-            //console.log(JSON.stringify(response))
             setSuccess(true);
             //clear state and controlled inputs
             setUser('');
@@ -102,6 +100,13 @@ const Register = () => {
 
     return (
         <div className="flex justify-center items-center h-screen bg-gray-200">
+            <Helmet>
+                <title>Register</title>
+                <meta 
+                    name="description" 
+                    content="Register page for creating a new account"
+                />
+            </Helmet>
             {success ? (
                 <section className="w-full max-w-[420px] min-h-[400px] flex flex-col justify-start p-4 bg-black text-white">
                     <h1>Success!</h1>

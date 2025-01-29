@@ -3,7 +3,6 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import { updateMotoSchema, type updateMoto } from "@/schemas/updateMotoSchema";
 import apiRequest from '../../api/apiRequest';
-// import UploadWidget from "@/components/uploadWidget.tsx";
 import { useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import VehicleDisplay from "../../components/VehicleDisplay"
@@ -24,12 +23,12 @@ const UpdateMotoPage = () => {
         mode: "onChange",
     })
     
-    // Funkcja obsługująca zmianę wyboru
+    // handle option change
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
   };
 
-  // Funkcja obsługująca zmianę wyboru
+  // handle license change
   const handleLicenseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedLicense(event.target.value);
   };

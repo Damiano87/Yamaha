@@ -18,15 +18,15 @@ const getAllAtvs = async (req, res) => {
     orderBy: (() => {
       switch (sort) {
         case "newest":
-          return { createdAt: "desc" }; // od najnowszych do najstarszych
+          return { createdAt: "desc" };
         case "oldest":
-          return { createdAt: "asc" }; // od najstarszych do najnowszych
+          return { createdAt: "asc" };
         case "lowest":
-          return { price: "asc" }; // od najtańszych do najdroższych
+          return { price: "asc" };
         case "highest":
-          return { price: "desc" }; // od najdroższych do najtańszych
+          return { price: "desc" };
         default:
-          return undefined; // domyślne sortowanie
+          return undefined;
       }
     })(),
     omit: {
@@ -156,7 +156,7 @@ const createAtv = async (req, res) => {
       colorNames,
       images,
       daneTechniczne: {
-        // dane silnika
+        // engine data
         ...((engineType ||
           capacity ||
           diameterXtlok ||
@@ -223,7 +223,7 @@ const createAtv = async (req, res) => {
             }),
           },
         }),
-        // dane podwozia
+        // suspension data
         ...((ukladPrzedZawieszenia ||
           ukladTylZawieszenia ||
           hamulecPrzedni ||
@@ -271,7 +271,7 @@ const createAtv = async (req, res) => {
             }),
           },
         }),
-        // dane wymiarów
+        // dimensions data
         ...((dlugoscCalk ||
           szerCalk ||
           wysokoscCalk ||
@@ -351,7 +351,7 @@ const createAtv = async (req, res) => {
             }),
           },
         }),
-        // dane obciążenia maksymalnego
+        // max load data
         ...((bagaznikPrzedni || bagaznikTylny) && {
           obciazenieMaksymalne: {
             ...(bagaznikPrzedni && {
@@ -365,7 +365,7 @@ const createAtv = async (req, res) => {
             }),
           },
         }),
-        // dane informacji dodatkowych
+        // additional info data
         ...((ukladKier ||
           frontMountedWinch ||
           trailerHitch ||
@@ -465,14 +465,14 @@ const updateAtv = async (req, res) => {
   } = req.body;
 
   try {
-    // Znalezienie pojazdu na podstawie ID
+    // find atv by id
     const atv = await prisma.atv.findUnique({ where: { id } });
 
     if (!atv) {
       return res.status(404).json({ message: "ATV not found" });
     }
 
-    // Tworzymy obiekt aktualizacji na podstawie przekazanych danych
+    // create update data object
     const updateData = {
       ...(name && { name }),
       ...(price && { price }),
@@ -628,13 +628,13 @@ const updateAtv = async (req, res) => {
       ),
     };
 
-    // Wykonanie aktualizacji w bazie
+    // update atv with new data
     const updatedAtv = await prisma.atv.update({
       where: { id },
       data: updateData,
     });
 
-    // Zwracamy zaktualizowany obiekt
+    // return updated atv
     res.status(200).json(updatedAtv);
   } catch (error) {
     console.error(error);

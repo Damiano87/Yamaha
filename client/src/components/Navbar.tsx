@@ -1,13 +1,12 @@
 import logo from "../images/logo.webp";
 import { useRef, useState } from "react";
 import { useDropdownContext } from "../hooks/useDropdownContext";
-import { GiHamburgerMenu } from "react-icons/gi";
 import DropdownMenu from "../components/DropdownMenu";
 import Sidebar from "./Sidebar";
-import { X } from "lucide-react";
 import { Link } from "react-router-dom";
 import RegisterButton from "@/routes/Register/RegisterButton";
 import WishNumber from "./WishNumber";
+import Hamburger from "./Hamburger";
 
 
 const Navbar = () => {
@@ -51,13 +50,7 @@ const Navbar = () => {
           <RegisterButton />
         
         {/* hamburger button */}
-        <button
-          type="button"
-          className="p-2 hover:bg-slate-200 rounded-full lg:hidden"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-        >
-          {sidebarOpen ? <X /> : <GiHamburgerMenu className="text-[1.4rem]" />}
-        </button>
+        <Hamburger sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         </div>
         <DropdownMenu buttonRef={buttonRef} />
         <Sidebar

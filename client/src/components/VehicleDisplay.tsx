@@ -7,7 +7,6 @@ type AtvDisplayProps = {
 
 
 const VehicleDisplay = ({vehicle}: AtvDisplayProps) => {
-
   return (
     <div className="text-white my-8 md:flex justify-between max-w-[45rem]">
         <div>

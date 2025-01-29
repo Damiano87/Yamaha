@@ -26,7 +26,7 @@ const License = () => {
     };
   }, []);
 
-  // Funkcja licząca checkboxy ustawione na true
+  // count true checkboxes
   const countTrueCheckboxes = () => {
       const checkboxes = Array.from(searchParams.entries()).filter(([key]) => ['a', 'a1', 'a2'].includes(key)).map(item => item[0])
 

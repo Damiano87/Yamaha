@@ -16,17 +16,15 @@ const AtvForm = () => {
         mode: "onChange",
     })
     
-    // Funkcja obsługująca zmianę wyboru
+    // change this to handle the option change for the radio buttons
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(event.target.value); // Zmienia stan na wybraną opcję
+    setSelectedOption(event.target.value);
   };
 
 
     const onSubmit = async (data: createAtv) => {
-        console.log(data)
-        
         try {
-            const response = await axios.post("/vehicles", {...data, images})
+            const response = await axios.post("/vehicles/atv", {...data, images})
 
             console.log(response.data)
             setImages([]);

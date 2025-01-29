@@ -57,6 +57,7 @@ app.all("*", (req, res) => {
 
 app.use(errorHandler);
 
+// check database connection and start server
 const checkDatabaseConnection = async () => {
   try {
     await prisma.$connect();

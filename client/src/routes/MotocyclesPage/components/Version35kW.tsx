@@ -32,13 +32,3 @@ const Version35kW = () => {
 };
 
 export default Version35kW;
-
-
-
-// const [is35kW, setIs35kW] = useState(() => {
-  //   return searchParams.get("LimitedPowerVersion") === "true";
-  // });
-
-
-  // const newValue = !is35kW;
-    // setIs35kW(newValue);

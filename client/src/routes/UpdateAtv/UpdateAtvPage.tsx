@@ -3,7 +3,6 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import { updateAtvSchema, type updateAtv } from "../../schemas/updateAtvSchema";
 import apiRequest from '../../api/apiRequest';
-// import UploadWidget from "@/components/uploadWidget.tsx";
 import { useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import VehicleDisplay from "../../components/VehicleDisplay";
@@ -22,9 +21,9 @@ const AtvUpdatePage = () => {
         mode: "onChange",
     })
     
-    // Funkcja obsługująca zmianę wyboru
+    // handle option change
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(event.target.value); // Zmienia stan na wybraną opcję
+    setSelectedOption(event.target.value);
   };
 
 
@@ -34,7 +33,6 @@ const AtvUpdatePage = () => {
         try {
             const response = await apiRequest.patch("/vehicles/atv", {...data, id})
 
-            
             setImages([]);
             toast.success('Successfully updated!');
             reset();

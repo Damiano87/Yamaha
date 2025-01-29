@@ -63,9 +63,9 @@ const addVehicleToCompare = () => {
     const currentProducts = params.get('products') || '';
     const productsArray = currentProducts.split(' ');
     
-    // Sprawdź czy produkt już nie istnieje
+    // check if product is already in array
     if (!productsArray.includes(chosenModel?.id.toString() || '')) {
-        // Dodaj nowy produkt i przefiltruj puste wartości
+        // add new product to array
         const newProducts = [...productsArray, chosenModel?.id]
             .filter(Boolean)
             .join(' ');
@@ -161,20 +161,6 @@ const ChosenVehicle = ({vehicle}: {vehicle: Motorcycle | Atv}) => {
                 <h3 className="capitalize font-medium">{vehicle?.name}</h3>
            </div>
 }
-
-
-
-// Add vehicle to compare
-    // const addVehicleToCompare = () => {
-    //     if (chosenModel) {
-    //         const isInCompare = selectedVehicles.find(vehicle => vehicle.id === chosenModel.id);
-    //         if (!isInCompare) {
-    //             setSelectedVehicles([...selectedVehicles, chosenModel]);
-    //         }
-    //         setIsOpen(false);
-    //         setChosenModel(null);
-    //     }
-    // }
             
         
         

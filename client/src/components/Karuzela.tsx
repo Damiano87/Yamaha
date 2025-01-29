@@ -24,7 +24,6 @@ const Karuzela = ({ images, name }: CarouselProps) => {
   const { current, setCurrent } = useIndexContext();
   const [showModal, setShowModal] = useState<boolean>(false);
   const location = useLocation(); 
-  // const [currentPath, setCurrentPath] = useState(location.pathname);
 
 
   // scroll to specific image in carousel

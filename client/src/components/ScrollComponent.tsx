@@ -13,7 +13,7 @@ const ScrollComponent = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      const triggerPosition = 400; // Wysokość okna, na której element ma się pojawić
+      const triggerPosition = 400; // Height at which the button becomes visible
 
       const distanceFromBottom =
         document.documentElement.scrollHeight -

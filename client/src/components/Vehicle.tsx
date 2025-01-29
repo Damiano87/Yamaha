@@ -26,13 +26,13 @@ const Vehicle = ({vehicle, kind, setShowModal, setSelectedVehicle, setIsOpenLogi
   const {selectedVehicles, setSelectedVehicles} = useCompareContext();
   const { isAdmin } = useAuth();
   
-   // Funkcja obsługująca zmianę checkboxa
+   // handle checkbox change
   const handleCheckboxChange = (vehicle: Motorcycle | Atv) => {
     if (selectedVehicles.find(v => v.id === vehicle.id)) {
-      // Jeśli pojazd jest już wybrany, usuń go z listy
+      // if vehicle is already selected, remove it from selected vehicles
       setSelectedVehicles(selectedVehicles.filter(v => v.id !== vehicle.id));
     } else if (selectedVehicles.length < 4) {
-      // Jeśli można jeszcze dodać pojazd (mniej niż 2 wybrane), dodaj go
+      // if vehicle is not selected and there are less than 4 vehicles selected, add it to selected vehicles
       setSelectedVehicles([...selectedVehicles, vehicle]);
     }
   };

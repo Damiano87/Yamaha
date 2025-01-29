@@ -26,19 +26,19 @@ const FormForSlider = ({minVal, maxVal, setMinVal, setMaxVal}: DualRangeSliderPr
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
-        // Sprawdzanie czy wartości są liczbami
+        // check if values are numbers
         const minNumber = Number(localMinVal);
         const maxNumber = Number(localMaxVal) < 12 ? 12 : Number(localMaxVal);
         
-        // Walidacja i korekta wartości
+        // validate values
         const validatedMinVal = isNaN(minNumber) || minNumber > 146 ? 11 : Math.max(11, minNumber);
         const validatedMaxVal = isNaN(maxNumber) || minNumber >= maxNumber ? 147 : Math.min(147, maxNumber);
         
-        // Aktualizacja głównych wartości po walidacji
+        // update state
         setMinVal(validatedMinVal);
         setMaxVal(validatedMaxVal);
         
-        // Aktualizacja lokalnych wartości
+        // update local state
         setLocalMinVal(validatedMinVal.toString());
         setLocalMaxVal(validatedMaxVal.toString());
 

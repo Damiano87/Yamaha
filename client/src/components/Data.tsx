@@ -58,7 +58,7 @@ const Dane = ({
                 </td>
                 <td className="p-3">{obj?.desc as string}</td>
               </tr>
-            );
+            )
           })}
         </tbody>
       </table>

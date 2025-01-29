@@ -1,4 +1,3 @@
-import { formatCurrencyPLN } from "@/utils/functions";
 import { useLoaderData, useSearchParams } from "react-router-dom";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import Karuzela from "@/components/Karuzela";
@@ -9,6 +8,8 @@ import MyrideApp from "./components/MyRideApp";
 import { useEffect, useRef, useState } from "react";
 import { Motorcycle } from "@/utils/types";
 import TechData from "../../components/TechData";
+import { Helmet } from "react-helmet-async";
+import Hero from "./components/Hero";
 
 const SingleMotoPage = () => {
     const moto = useLoaderData() as Motorcycle;
@@ -31,20 +32,14 @@ const SingleMotoPage = () => {
 
     return (
       <main>
-        <section className="flex items-end h-80 md:h-screen px-10 bg-black/35 bg-blend-darken bg-center bg-cover" style={{ backgroundImage: `url(${images[3]})` }}>
-          <div className="text-white h-fit w-full max-w-7xl mx-auto mb-24">
-            <h2 className="text-[.8rem] md:text-[1rem] lg:text-[1.3rem] uppercase font-semibold">
-              the beauty of work.
-            </h2>
-            <h1 className="text-[1.5rem] md:text-[2rem] lg:text-[3rem] uppercase font-bold tracking-wider">
-              {name}
-            </h1>
-            <p className="font-semibold mt-5">Od</p>
-            <p className="text-[1.2rem] font-semibold">
-              {formatCurrencyPLN(price)}
-            </p>
-          </div>
-        </section>
+        <Helmet>
+        <title>{name.charAt(0).toUpperCase() + name.slice(1)}</title>
+        <meta 
+          name="description" 
+          content={`Szczegóły produktu ${name}. ${description}`} 
+        />
+      </Helmet>
+        <Hero name={name} price={price} images={images}/>
         <section
           className="lg:flex gap-8  max-w-7xl mx-auto p-10 -mt-10 bg-white border-t-[8px]"
           style={{ borderColor: foundColor?.color }}
@@ -68,9 +63,6 @@ const SingleMotoPage = () => {
             description2={description2}
             description2Title={description2Title}
           />
-          {/* <TechDataMoto
-            daneTechniczne={daneTechniczne}
-          /> */}
           <TechData daneTechniczne={daneTechniczne}/>
         </section>
         <section className="my-24 max-w-7xl mx-auto p-5">

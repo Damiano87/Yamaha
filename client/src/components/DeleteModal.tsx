@@ -35,6 +35,7 @@ const DeleteModal = ({vehicle, show, setShowModal, selectedVehicle, setSelectedV
         setError(null);
     }
 
+    // delete vehicle
     const handleDeleteVehicle = async () => {
         setLoading(true);
         setError(null);
@@ -48,11 +49,9 @@ const DeleteModal = ({vehicle, show, setShowModal, selectedVehicle, setSelectedV
             navigate(`/${vehicle}`);
         } catch (err) {
             if (err instanceof AxiosError) {
-            // Pobieramy message z API
             const errorMessage = err.response?.data?.message || err.response?.data || "Wystąpił błąd podczas usuwania pojazdu.";
             setError(errorMessage);
         } else {
-            // Dla innych typów błędów
             setError("Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.");
         }
         console.error(err);

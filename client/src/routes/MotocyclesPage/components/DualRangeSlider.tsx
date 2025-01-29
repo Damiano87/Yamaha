@@ -11,16 +11,16 @@ export type DualRangeSliderProps = {
 const DualRangeSlider = ({minVal, maxVal, setMinVal, setMaxVal}: DualRangeSliderProps) => {
   
   
-  // Obliczanie szerokości wypełnienia między suwakami
+  // calculate the percentage for the fill width
   const getPercent = useCallback(
     (value: number) => Math.round(((value - 11) / (147 - 11)) * 100),
     []
   );
 
-  // Szerokość wypełnienia
+  // fill width state
   const [fillWidth, setFillWidth] = useState(getPercent(maxVal) - getPercent(minVal));
 
-  // Aktualizacja wypełnienia po zmianie wartości
+  // update fill width when minVal or maxVal changes
   useEffect(() => {
     const newFillWidth = getPercent(maxVal) - getPercent(minVal);
     setFillWidth(newFillWidth);
@@ -29,10 +29,10 @@ const DualRangeSlider = ({minVal, maxVal, setMinVal, setMaxVal}: DualRangeSlider
   return (
     <div className="w-full max-w-xl mx-auto py-3">
       <div className="relative h-2">
-        {/* Tło suwaka */}
+        {/* background line */}
         <div className="absolute w-full h-1 bg-gray-200 rounded top-1/2 transform -translate-y-1/2"></div>
         
-        {/* Wypełnienie między suwakami */}
+        {/* fill line */}
         <div
           className="absolute h-1 bg-orange-500 rounded top-1/2 transform -translate-y-1/2"
           style={{
@@ -41,7 +41,7 @@ const DualRangeSlider = ({minVal, maxVal, setMinVal, setMaxVal}: DualRangeSlider
           }}
         ></div>
         
-        {/* Lewy suwak */}
+        {/* left slider */}
         <input
           type="range"
           min={11}
@@ -55,7 +55,7 @@ const DualRangeSlider = ({minVal, maxVal, setMinVal, setMaxVal}: DualRangeSlider
           className="absolute w-full h-1 appearance-none pointer-events-none bg-transparent [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-orange-500 [&::-webkit-slider-thumb]:cursor-pointer hover:[&::-webkit-slider-thumb]:bg-orange-600"
         />
         
-        {/* Prawy suwak */}
+        {/* right slider */}
         <input
           type="range"
           min={11}
@@ -70,7 +70,7 @@ const DualRangeSlider = ({minVal, maxVal, setMinVal, setMaxVal}: DualRangeSlider
         />
       </div>
       
-      {/* Wyświetlanie wartości */}
+      {/* values displayed below the slider */}
       <div className="flex justify-between mt-4">
         <span className="px-2 py-1 bg-gray-100 rounded">
           Min: {minVal}

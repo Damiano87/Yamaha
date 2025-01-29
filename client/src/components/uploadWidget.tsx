@@ -1,5 +1,3 @@
-
-
 import { createContext, useEffect, useState } from "react";
 
 // Create a context to manage the script loading state
@@ -40,7 +38,6 @@ function UploadWidget({ uwConfig, setState }) {
         (error, result) => {
           if (!error && result && result.event === "success") {
             console.log("Done! Here is the image info: ", result.info);
-            // setPublicId(result.info.public_id);
             setState((prev: string) => [...prev, result.info.secure_url]
             )
         }}

@@ -97,7 +97,6 @@ const DashboardWishList = () => {
         return <WishListSkeleton />;
     }
 
-    console.log(wishList)
     return (
         <div>
             <h2 className='text-[2rem] font-semibold mb-3'>Lista życzeń</h2>

@@ -15,7 +15,7 @@ const MaxPower = () => {
   const [searchParams] = useSearchParams();
   const motorcyclePowerParam = searchParams.get("motorcyclePower");
 
-  // Używamy useEffect do aktualizacji stanu na podstawie parametrów URL
+  // update state when param changes
   useEffect(() => {
     if (!motorcyclePowerParam) {
       setMinVal(11);

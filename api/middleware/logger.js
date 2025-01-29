@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import { v4 } from "uuid";
 import fs from "fs";
 import fsPromises from "fs";
 import path from "path";
@@ -34,5 +33,3 @@ const logger = (req, res, next) => {
 };
 
 export { logEvents, logger };
-
-// \t${uuid()}

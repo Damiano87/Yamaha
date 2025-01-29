@@ -31,8 +31,6 @@ const MotoForm = () => {
 
 
     const onSubmit = async (data: createMoto) => {
-        
-        
         try {
             const response = await axios.post("/vehicles/moto", {...data, images, license: selectedLicense})
 

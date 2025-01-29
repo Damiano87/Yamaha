@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Dane from "@/components/Dane";
+import Data from "@/components/Data";
 
 type daneTechProps = {
   daneTechniczne: daneTech | TechMoto;
@@ -21,13 +21,12 @@ type daneTechProps = {
 const TechData = ({
   daneTechniczne
 }: daneTechProps) => {
-  const [clickedButton, setClickedButton] =
-    useState<DaneTechniczneKeys>("silnik");
+  const [clickedButton, setClickedButton] = useState<DaneTechniczneKeys>("silnik");
   const [page, setPage] = useState(0);
   const [tabs, setTabs] = useState<DaneTechniczneKeys[]>(["silnik"]);
 
     useEffect(() => {
-      // filter out null values from object
+    // filter out null values from object
     const entries = Object.entries(daneTechniczne);
     const filteredNull = entries.filter((item) => item[1] !== null)
     
@@ -99,7 +98,7 @@ const TechData = ({
           </Select>
 
           <div>
-            <Dane
+            <Data
               daneTechniczne={daneTechniczne}
               clickedButton={clickedButton}
               page={page}

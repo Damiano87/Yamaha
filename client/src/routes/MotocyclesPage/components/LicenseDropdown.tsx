@@ -8,7 +8,7 @@ const LicenseDropdown = forwardRef<HTMLDivElement>((props, ref: ForwardedRef<HTM
   
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Odczytywanie stanu z URL
+  // read checkbox state from URL search params
   const getCheckboxState = (key: string) => searchParams.get(key) === 'true';
 
   const checkboxes = {
@@ -18,7 +18,7 @@ const LicenseDropdown = forwardRef<HTMLDivElement>((props, ref: ForwardedRef<HTM
   };
   
 
-  // Aktualizacja pojedynczego checkboxa
+  // update URL search params when checkbox state changes
   const handleChange = (key: string, value: boolean) => {
     const newParams = new URLSearchParams(searchParams);
 
@@ -32,7 +32,7 @@ const LicenseDropdown = forwardRef<HTMLDivElement>((props, ref: ForwardedRef<HTM
   };
 
 
-  // Funkcja do usuwania wszystkich checkboxów
+  // delete all params from URL search params
   const clearAllCheckboxes = () => {
     const params = ['a', 'a1', 'a2'];
     params.forEach(param => searchParams.delete(param))
@@ -41,7 +41,7 @@ const LicenseDropdown = forwardRef<HTMLDivElement>((props, ref: ForwardedRef<HTM
   };
 
 
-  // Funkcja do zaznaczania wszystkich checkboxów
+  // check all checkboxes
   const selectAllCheckboxes = () => {
     const paramNames = ['a', 'a1', 'a2'];
     const selectedParams = paramNames.filter(name => searchParams.has(name));
@@ -62,7 +62,7 @@ const LicenseDropdown = forwardRef<HTMLDivElement>((props, ref: ForwardedRef<HTM
     
   };
 
-  // Funkcja sprawdzająca czy wszystkie checkboxy są zaznaczone
+  // check if all checkboxes are selected
   const getAllCheckboxes = () => {
     return ['a', 'a1', 'a2'].every(key => getCheckboxState(key) === true)
   }
@@ -82,7 +82,7 @@ const LicenseDropdown = forwardRef<HTMLDivElement>((props, ref: ForwardedRef<HTM
       {...props} 
       className="absolute z-50 mt-3 w-full rounded-md bg-white px-2  shadow-md"
     >
-      {/* Checkbox "Zaznacz wszystko" */}
+      {/* Checkbox "Check all" */}
       <label className={`${label} border-b-2 hover:bg-transparent`}>
         <div className="relative">
           <input

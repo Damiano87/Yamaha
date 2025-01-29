@@ -4,8 +4,6 @@ import { IoIosClose } from "react-icons/io";
 import { Motorcycle, Atv } from "@/utils/types";
 
 
-
-
 export type VehicleCardProps = {
   vehicle: Motorcycle | Atv;
   onRemove?: (vehicle: Motorcycle | Atv ) => void;

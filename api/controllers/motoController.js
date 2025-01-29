@@ -63,15 +63,15 @@ const getAllMotos = async (req, res) => {
     orderBy: (() => {
       switch (sort) {
         case "newest":
-          return { createdAt: "desc" }; // od najnowszych do najstarszych
+          return { createdAt: "desc" };
         case "oldest":
-          return { createdAt: "asc" }; // od najstarszych do najnowszych
+          return { createdAt: "asc" };
         case "lowest":
-          return { price: "asc" }; // od najtańszych do najdroższych
+          return { price: "asc" };
         case "highest":
-          return { price: "desc" }; // od najdroższych do najtańszych
+          return { price: "desc" };
         default:
-          return undefined; // domyślne sortowanie
+          return undefined;
       }
     })(),
     omit: {
@@ -197,6 +197,14 @@ const createMoto = async (req, res) => {
     colorNames.push({ name: color3, color: hex3 });
   }
 
+  // Helper function to filter out fields without desc
+  const filterByDesc = (obj) => {
+    return Object.fromEntries(
+      Object.entries(obj).filter(([_, value]) => value?.desc)
+    );
+  };
+
+  // Create new motocycle
   const newMoto = await prisma.moto.create({
     data: {
       name,
@@ -212,273 +220,99 @@ const createMoto = async (req, res) => {
       version35kW,
       colorNames,
       images,
-
       daneTechniczne: {
-        // dane silnika
-        ...((engineType ||
-          capacity ||
-          diameterXtlok ||
-          stopienSprezania ||
-          ukladSmarowania ||
-          ukladZaplonu ||
-          ukladRozrusznika ||
-          gearBox ||
-          mocMaksymalna ||
-          maxMomentObrotowy ||
-          typSprzegla ||
-          spalanie ||
-          emisjaCO2 ||
-          ukladZasilania ||
-          napedKoncowy) && {
-          silnik: {
-            ...(engineType && {
-              typSilnika: { title: "Typ silnika", desc: engineType },
-            }),
-
-            ...(capacity && {
-              pojemnosc: { title: "Pojemność", desc: capacity },
-            }),
-
-            ...(diameterXtlok && {
-              srednicaXskokTloka: {
-                title: "Średnica x skoku tłoka",
-                desc: diameterXtlok,
-              },
-            }),
-
-            ...(stopienSprezania && {
-              stopienSprezania: {
-                title: "Stopień sprężania",
-                desc: stopienSprezania,
-              },
-            }),
-
-            ...(ukladSmarowania && {
-              ukladSmarowania: {
-                title: "Układ smarowania",
-                desc: ukladSmarowania,
-              },
-            }),
-
-            ...(ukladZaplonu && {
-              ukladZaplonu: { title: "Układ zapłonu", desc: ukladZaplonu },
-            }),
-
-            ...(ukladRozrusznika && {
-              ukladRozrusznika: {
-                title: "Układ rozrusznika",
-                desc: ukladRozrusznika,
-              },
-            }),
-
-            ...(gearBox && {
-              skrzyniaBiegow: { title: "Skrzynia biegów", desc: gearBox },
-            }),
-
-            ...(mocMaksymalna && {
-              mocMaksymalna: { title: "Moc maksymalna", desc: mocMaksymalna },
-            }),
-
-            ...(maxMomentObrotowy && {
-              maxMomentObrotowy: {
-                title: "Maks. moment obrotowy",
-                desc: maxMomentObrotowy,
-              },
-            }),
-
-            ...(typSprzegla && {
-              typSprzegla: {
-                title: "Typ sprzęgła",
-                desc: typSprzegla,
-              },
-            }),
-
-            ...(spalanie && {
-              spalanie: {
-                title: "Spalanie",
-                desc: spalanie,
-              },
-            }),
-
-            ...(emisjaCO2 && {
-              emisjaCO2: {
-                title: "Emisja CO2",
-                desc: emisjaCO2,
-              },
-            }),
-
-            ...(ukladZasilania && {
-              ukladZasilania: {
-                title: "Układ zasilania",
-                desc: ukladZasilania,
-              },
-            }),
-
-            ...(napedKoncowy && {
-              napedKoncowy: { title: "Napęd końcowy", desc: napedKoncowy },
-            }),
-          },
-        }),
-        // dane podwozia
-        ...((ukladPrzedZawieszenia ||
-          ukladTylZawieszenia ||
-          skokPrzedniegoZawieszenia ||
-          skokTylnegoZawieszenia ||
-          rama ||
-          katWyprzGlowkiRamy ||
-          wyprzedzenie ||
-          hamulecPrzedni ||
-          hamulecTylny ||
-          oponaPrzednia ||
-          oponaTylna) && {
-          podwozie: {
-            ...(ukladPrzedZawieszenia && {
-              ukladPrzedniegoZawieszenia: {
-                title: "Układ przedniego zawieszenia",
-                desc: ukladPrzedZawieszenia,
-              },
-            }),
-
-            ...(ukladTylZawieszenia && {
-              ukladTylnegoZawieszenia: {
-                title: "Układ tylnego zawieszenia",
-                desc: ukladTylZawieszenia,
-              },
-            }),
-
-            ...(skokPrzedniegoZawieszenia && {
-              skokPrzedniegoZawieszenia: {
-                title: "Skok przedniego zawieszenia",
-                desc: skokPrzedniegoZawieszenia,
-              },
-            }),
-
-            ...(skokTylnegoZawieszenia && {
-              skokTylnegoZawieszenia: {
-                title: "Skok tylnego zawieszenia",
-                desc: skokTylnegoZawieszenia,
-              },
-            }),
-
-            ...(rama && {
-              rama: {
-                title: "Rama",
-                desc: rama,
-              },
-            }),
-
-            ...(katWyprzGlowkiRamy && {
-              katWyprzGlowkiRamy: {
-                title: "Kąt wyprzedenia główki ramy",
-                desc: katWyprzGlowkiRamy,
-              },
-            }),
-
-            ...(wyprzedzenie && {
-              wyprzedzenie: {
-                title: "Wyprzedzenie",
-                desc: wyprzedzenie,
-              },
-            }),
-
-            ...(hamulecPrzedni && {
-              hamulecPrzedni: {
-                title: "Hamulec przedni",
-                desc: hamulecPrzedni,
-              },
-            }),
-
-            ...(hamulecTylny && {
-              hamulecTylny: { title: "Hamulec tylny", desc: hamulecTylny },
-            }),
-
-            ...(oponaPrzednia && {
-              oponaPrzednia: {
-                title: "Opona przednia",
-                desc: oponaPrzednia,
-              },
-            }),
-
-            ...(oponaTylna && {
-              oponaTylna: {
-                title: "Opona tylna",
-                desc: oponaTylna,
-              },
-            }),
-          },
-        }),
-        // dane wymiarów
-        ...((dlugoscCalk ||
-          szerCalk ||
-          wysokoscCalk ||
-          wysSiodelka ||
-          rozstawKol ||
-          minPrzeswit ||
-          masaZobciazeniem ||
-          pojemnoscPaliwa ||
-          pojemnoscOleju) && {
-          wymiary: {
-            ...(dlugoscCalk && {
-              dlugoscCalkowita: {
-                title: "Długość całkowita",
-                desc: dlugoscCalk,
-              },
-            }),
-
-            ...(szerCalk && {
-              szerokoscCalkowita: {
-                title: "Szerokość całkowita",
-                desc: szerCalk,
-              },
-            }),
-
-            ...(wysokoscCalk && {
-              wysokoscCalkowita: {
-                title: "Wysokość całkowita",
-                desc: wysokoscCalk,
-              },
-            }),
-
-            ...(wysSiodelka && {
-              wysokoscSiodelka: {
-                title: "Wysokość siodełka",
-                desc: wysSiodelka,
-              },
-            }),
-
-            ...(rozstawKol && {
-              rozstawKol: { title: "Rozstaw kół", desc: rozstawKol },
-            }),
-
-            ...(minPrzeswit && {
-              minimalnyPrzeswit: {
-                title: "Min. prześwit",
-                desc: minPrzeswit,
-              },
-            }),
-
-            ...(masaZobciazeniem && {
-              masaZobciazeniem: {
-                title: "Masa z obciążeniem",
-                desc: masaZobciazeniem,
-              },
-            }),
-
-            ...(pojemnoscPaliwa && {
-              pojemnoscZbiornikaPaliwa: {
-                title: "Pojemność zbiornika paliwa",
-                desc: pojemnoscPaliwa,
-              },
-            }),
-
-            ...(pojemnoscOleju && {
-              pojemnoscZbiornikaOleju: {
-                title: "Pojemność zbiornika oleju",
-                desc: pojemnoscOleju,
-              },
-            }),
-          },
-        }),
+        ...{
+          silnik: filterByDesc({
+            typSilnika: { title: "Typ silnika", desc: engineType },
+            pojemnosc: { title: "Pojemność", desc: capacity },
+            srednicaXskokTloka: {
+              title: "Średnica x skoku tłoka",
+              desc: diameterXtlok,
+            },
+            stopienSprezania: {
+              title: "Stopień sprężania",
+              desc: stopienSprezania,
+            },
+            ukladSmarowania: {
+              title: "Układ smarowania",
+              desc: ukladSmarowania,
+            },
+            ukladZaplonu: { title: "Układ zapłonu", desc: ukladZaplonu },
+            ukladRozrusznika: {
+              title: "Układ rozrusznika",
+              desc: ukladRozrusznika,
+            },
+            skrzyniaBiegow: { title: "Skrzynia biegów", desc: gearBox },
+            mocMaksymalna: { title: "Moc maksymalna", desc: mocMaksymalna },
+            maxMomentObrotowy: {
+              title: "Maks. moment obrotowy",
+              desc: maxMomentObrotowy,
+            },
+            typSprzegla: { title: "Typ sprzęgła", desc: typSprzegla },
+            spalanie: { title: "Spalanie", desc: spalanie },
+            emisjaCO2: { title: "Emisja CO2", desc: emisjaCO2 },
+            ukladZasilania: { title: "Układ zasilania", desc: ukladZasilania },
+            napedKoncowy: { title: "Napęd końcowy", desc: napedKoncowy },
+          }),
+        },
+        ...{
+          podwozie: filterByDesc({
+            ukladPrzedniegoZawieszenia: {
+              title: "Układ przedniego zawieszenia",
+              desc: ukladPrzedZawieszenia,
+            },
+            ukladTylnegoZawieszenia: {
+              title: "Układ tylnego zawieszenia",
+              desc: ukladTylZawieszenia,
+            },
+            skokPrzedniegoZawieszenia: {
+              title: "Skok przedniego zawieszenia",
+              desc: skokPrzedniegoZawieszenia,
+            },
+            skokTylnegoZawieszenia: {
+              title: "Skok tylnego zawieszenia",
+              desc: skokTylnegoZawieszenia,
+            },
+            rama: { title: "Rama", desc: rama },
+            katWyprzGlowkiRamy: {
+              title: "Kąt wyprzedenia główki ramy",
+              desc: katWyprzGlowkiRamy,
+            },
+            wyprzedzenie: { title: "Wyprzedzenie", desc: wyprzedzenie },
+            hamulecPrzedni: { title: "Hamulec przedni", desc: hamulecPrzedni },
+            hamulecTylny: { title: "Hamulec tylny", desc: hamulecTylny },
+            oponaPrzednia: { title: "Opona przednia", desc: oponaPrzednia },
+            oponaTylna: { title: "Opona tylna", desc: oponaTylna },
+          }),
+        },
+        ...{
+          wymiary: filterByDesc({
+            dlugoscCalkowita: { title: "Długość całkowita", desc: dlugoscCalk },
+            szerokoscCalkowita: {
+              title: "Szerokość całkowita",
+              desc: szerCalk,
+            },
+            wysokoscCalkowita: {
+              title: "Wysokość całkowita",
+              desc: wysokoscCalk,
+            },
+            wysokoscSiodelka: { title: "Wysokość siodełka", desc: wysSiodelka },
+            rozstawKol: { title: "Rozstaw kół", desc: rozstawKol },
+            minimalnyPrzeswit: { title: "Min. prześwit", desc: minPrzeswit },
+            masaZobciazeniem: {
+              title: "Masa z obciążeniem",
+              desc: masaZobciazeniem,
+            },
+            pojemnoscZbiornikaPaliwa: {
+              title: "Pojemność zbiornika paliwa",
+              desc: pojemnoscPaliwa,
+            },
+            pojemnoscZbiornikaOleju: {
+              title: "Pojemność zbiornika oleju",
+              desc: pojemnoscOleju,
+            },
+          }),
+        },
       },
     },
   });
@@ -550,14 +384,14 @@ const updateMoto = async (req, res) => {
   } = req.body;
 
   try {
-    // Znalezienie pojazdu na podstawie ID
+    // find the existing moto by ID
     const moto = await prisma.moto.findUnique({ where: { id } });
 
     if (!moto) {
       return res.status(404).json({ message: "Motocycle not found" });
     }
 
-    // Tworzymy obiekt aktualizacji na podstawie przekazanych danych
+    // create the update data object
     const updateData = {
       ...(name && { name }),
       ...(price && { price }),
@@ -709,13 +543,13 @@ const updateMoto = async (req, res) => {
       ),
     };
 
-    // Wykonanie aktualizacji w bazie
+    // update moto
     const updatedMoto = await prisma.moto.update({
       where: { id },
       data: updateData,
     });
 
-    // Zwracamy zaktualizowany obiekt
+    // return updated moto
     res.status(200).json(updatedMoto);
   } catch (error) {
     console.error(error);

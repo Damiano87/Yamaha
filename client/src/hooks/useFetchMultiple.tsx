@@ -26,13 +26,13 @@ export const useFetchMultiple = (param: string | null, pathname: string) => {
                 setIsLoading(true);
                 setError(null);
                 
-                // Axios version - równoległe pobieranie danych
+                // parallel requests for each product ID
                 const productPromises = productIds?.map((id: string) => 
                     apiRequest.get<Motorcycle[] | Atv[]>(`/vehicles/${path}/${id}`)
                 );
 
                 const responses = await Promise.all(productPromises);
-                // Wyciągamy dane z odpowiedzi axios (są w .data)
+                // get data from each response
                 const productsData = responses.map((response: AxiosResponse) => response.data.data);
                 
                 setProducts(productsData);
