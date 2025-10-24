@@ -42,6 +42,7 @@ const PriceInfo = ({ colorNames, name, price, priceInfo }: priceInfoProps) => {
         className={`${
           isOpen ? "pb-5" : "pb-0"
         } flex w-full justify-between pt-5`}
+        aria-label={isOpen ? "Close tab" : "Open tab"}
         onClick={openInfo}
       >
         <p className="font-bold">Wszystkie informacje o cenach</p>

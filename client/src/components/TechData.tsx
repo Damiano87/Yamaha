@@ -66,6 +66,7 @@ const TechData = ({
                 <button
                   key={index}
                   type="button"
+                  aria-label={tab}
                   className={`${
                     index === page && "border-b-red-500"
                   } px-2 py-3 text-[1.1rem] capitalize border-b border-transparent hover:border-slate-800 hover:bg-slate-100 duration-300`}

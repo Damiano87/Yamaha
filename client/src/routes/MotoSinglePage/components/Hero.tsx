@@ -9,7 +9,10 @@ type HeroProps = {
 
 const Hero = ({name, price, images}: HeroProps) => {
   return (
-    <section className="flex items-end h-80 md:h-screen px-10 bg-black/35 bg-blend-darken bg-center bg-cover" style={{ backgroundImage: `url(${images[3]})` }}>
+    <section 
+      className="flex items-end h-80 md:h-screen px-10 bg-black/35 bg-blend-darken bg-center bg-cover" 
+      style={{ backgroundImage: `url(${images[3]})` }}
+      >
           <div className="text-white h-fit w-full max-w-7xl mx-auto mb-24">
             <h2 className="text-[.8rem] md:text-[1rem] lg:text-[1.3rem] uppercase font-semibold">
               the beauty of work.

@@ -30,6 +30,7 @@ const Info = ({ name, price, description, colorNames }: InfoProps) => {
         <button
           className="font-medium ml-2 cursor-pointer"
           onClick={() => setTextOpen(!isTextOpen)}
+          aria-label={isTextOpen ? "Mniej" : "Więcej"}
         >
           {isTextOpen ? "Mniej" : "Więcej"}
         </button>

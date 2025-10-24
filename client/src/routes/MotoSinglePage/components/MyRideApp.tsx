@@ -1,6 +1,6 @@
-import motor from '../../../images/yamahamoto.webp'
-import googlePlay from "../../../images/googleplay.png";
-import appStore from "../../../images/appstore.png"
+import motor from '/images/yamahamoto.webp'
+import googlePlay from "/images/googleplay.png";
+import appStore from "/images/appstore.png"
 
 const MyrideApp = () => {
   return (
@@ -36,7 +36,7 @@ const MyrideApp = () => {
       <img
         src={motor}
         className="w-[700px] h-[700px] object-cover hidden md:block"
-        alt="man on motocycle"
+        alt="Man on motocycle"
       />
     </div>
   );

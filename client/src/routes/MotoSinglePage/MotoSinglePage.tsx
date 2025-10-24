@@ -113,6 +113,7 @@ const Klauzula = ({ klauzula }: KlauzulaProps) => {
         <button
           type="button"
           className="mt-1"
+          aria-label={isOpen ? "Close clause": "Open clause"}
           onClick={() => setIsOpen(!isOpen)}
         >
           <MdKeyboardArrowDown
