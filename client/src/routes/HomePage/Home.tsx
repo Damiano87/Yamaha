@@ -18,10 +18,11 @@ const Home = () => {
           type="image/webp"
         />
       </Helmet>
-      <section className="relative -z-10 bg-[url('images/hero.webp')] h-screen bg-cover bg-top bg-no-repeat mt-[5.4rem]">
+      <section className="relative -z-10 h-screen bg-cover bg-top bg-no-repeat mt-[5.4rem]">
         <img 
           src="/images/hero.webp"
           alt="Yamaha hero image"
+          fetchPriority="high"
           className="absolute inset-0 w-full h-full object-cover object-top"
         />
       </section>
