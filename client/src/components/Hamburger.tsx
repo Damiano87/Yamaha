@@ -9,6 +9,7 @@ const Hamburger = ({sidebarOpen, setSidebarOpen}: HamburgerProps) => {
   return (
     <button
           type="button"
+          aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
           className="p-2 hover:bg-slate-200 rounded-full lg:hidden"
           onClick={() => setSidebarOpen(!sidebarOpen)}
         >

@@ -31,6 +31,7 @@ const RegisterButton = () => {
 
             <button 
                 className="w-full flex items-center justify-between gap-4 px-3 py-1 hover:bg-slate-100"
+                aria-label="Log out"
                 onClick={ async () => {
                     await logout();
                     setWishList([]);
@@ -51,12 +52,12 @@ const RegisterButton = () => {
             <FaUser size={20}/>
         </div>
         <div className="absolute hidden group-hover:block right-0 bg-white px-1 py-1 rounded-md shadow-md">
-            <Link to={'/login'} className="flex items-center justify-between gap-4 px-3 py-1 hover:bg-slate-100">
+            <Link to={'/login'} aria-label="Login" className="flex items-center justify-between gap-4 px-3 py-1 hover:bg-slate-100">
                 <span className="text-nowrap">Zaloguj się</span>
                 <CiLogin size={25}/>
             </Link>
 
-            <Link to={'/register'} className="flex items-center justify-between gap-4 px-3 py-1 hover:bg-slate-100">
+            <Link to={'/register'} aria-label="Register" className="flex items-center justify-between gap-4 px-3 py-1 hover:bg-slate-100">
                 <span className="text-nowrap">Zarejestruj się</span>
                 <FaPencil size={17}/>
             </Link>
