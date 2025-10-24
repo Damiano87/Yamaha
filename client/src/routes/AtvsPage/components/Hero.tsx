@@ -3,7 +3,7 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 
 const Hero = () => {
   return (
-    <section className="flex items-end m-auto max-w-[95rem] h-80 md:h-screen bg-[url('images/coolquad.webp')] bg-blend-darken bg-cover bg-center bg-no-repeat">
+    <section className="flex items-end m-auto max-w-[95rem] h-80 md:h-screen bg-[url('/images/coolquad.webp')] bg-blend-darken bg-cover bg-center bg-no-repeat">
         <div className="text-white max-w-7xl w-full mx-auto mb-7 md:mb-28 px-5">
           <h4 className="uppercase text-slate-200 text-[.8rem] md:text-[1.2rem] font-semibold tracking-wider">
             #drivenbyvictory
