@@ -82,7 +82,8 @@ const AddToWishlist = ({vehicleId, vehicleType, setIsOpenLoginModal}: WishlistPr
   const isInWishList = wishList.some(item => item.vehicleId === vehicleId);
 
   return (
-    <button 
+    <button
+        aria-label={isInWishList ? "Remove from wishlist" : "Add to wishlist"} 
         className={`${isInWishList ? "text-red-600" : "text-black"} group cursor-pointer absolute bottom-0 right-6 hover:text-red-600 active:scale-95 active:text-red-800`}
         onClick={(e) => {
         e.preventDefault();
