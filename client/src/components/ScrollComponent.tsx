@@ -46,6 +46,7 @@ const ScrollComponent = () => {
         isVisible ? "bg-black/60" : "opacity-0"
       }`}
       style={{ bottom: `${offset}px` }}
+      aria-label="Scroll to top"
     >
       <ArrowBigUpDash />
     </button>

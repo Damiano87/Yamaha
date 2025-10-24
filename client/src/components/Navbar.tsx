@@ -1,4 +1,4 @@
-import logo from "../images/logo.webp";
+import logo from "/images/logo.webp";
 import { useRef, useState } from "react";
 import { useDropdownContext } from "../hooks/useDropdownContext";
 import DropdownMenu from "../components/DropdownMenu";

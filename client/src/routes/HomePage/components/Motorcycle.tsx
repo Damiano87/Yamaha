@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom"
-import motocycles from "../../../images/Yamaha-Motorcycle-Transparent-Image.png";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
@@ -34,7 +33,16 @@ const Motorcycle = () => {
           className="p-3"
         >
           <div className="flex hover:scale-105 duration-300 flex-col justify-between h-[220px] aspect-square">
-            <img src={motocycles}  alt="motocycle" className="w-full h-full object-contain"/>
+            <picture>
+              <source srcSet="/images/motocycle-transparent.webp" type="image/webp"/>
+              <img 
+              src="/images/Yamaha-Motorcycle-Transparent-Image.png"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-contain" 
+              alt="atv vehicle" 
+              />
+            </picture>
             <h4 className="uppercase font-semibold tracking-wider text-white">
               motocykle
             </h4>

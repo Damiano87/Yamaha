@@ -8,8 +8,8 @@ import {
 import { useState } from "react";
 import AtvForm from "./components/AtvForm";
 import MotoForm from "./components/MotoForm";
-import atvPicture from "../../images/atv-transparent.png";
-import motoPicture from "../../images/Yamaha-Motorcycle-Transparent-Image.png";
+import atvPicture from "/images/atv-transparent.webp";
+import motoPicture from "/images/motocycle-transparent.webp";
 
 
 const CreateVehiclePage = () => {
